@@ -80,11 +80,15 @@ export class ListPage {
   }
 
   mobilisation(){
-    this.navCtrl.push(CapacityPage)
+    for (var x = 0; x < this.viewCSoArr.length; x++) {
+      this.navCtrl.push(CapacityPage, { orgObject: this.viewCSoArr[x] });
+    }
   }
 
   takeAssessemnt(){
-  this.navCtrl.push(ViewMemberAssessPage)
+    for (var x = 0; x < this.viewCSoArr.length; x++) {
+      this.navCtrl.push(ViewMemberAssessPage, { orgObject: this.viewCSoArr[x] });
+    }
   }
 
   seeMember(){

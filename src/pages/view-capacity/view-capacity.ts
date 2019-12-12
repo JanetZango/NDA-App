@@ -26,19 +26,21 @@ export class ViewCapacityPage {
   partner_id;
   start_date;
   attendance_register;
+  created_date;
+  modified_date;
+  venue;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.viewCSoArr.push(this.navParams.get('orgObject'));
     console.log(this.viewCSoArr);
     this.capacity_building_type_id = this.viewCSoArr[0].capacity_building_type_id;
-    this.co_facilitor_name = this.viewCSoArr[0].co_facilitor_name;
-    this.collected_by = this.viewCSoArr[0].collected_by;
-    this.district_id = this.viewCSoArr[0].district_id;
-    this.province_id = this.viewCSoArr[0].  province_id;
-    this.end_date = this.viewCSoArr[0].end_date;
-    this.province_id = this.viewCSoArr[0].province_id;
-    this.partner_id = this.viewCSoArr[0].partner_id;
-    this.start_date = this.viewCSoArr[0].start_date;   
+    this.co_facilitor_name = this.viewCSoArr[0].facilitator_name;
+    this.start_date = this.viewCSoArr[0].start_date;  
+    this.created_date = this.viewCSoArr[0].created_date; 
     this.attendance_register = this.viewCSoArr[0].attendance_register; 
+    this.capacity_building_type_id = this.viewCSoArr[0].capacity_building_type_id; 
+    this.end_date = this.viewCSoArr[0].end_date; 
+    this.modified_date = this.viewCSoArr[0].modified_date; 
+    this.venue = this.viewCSoArr[0].venue; 
   }
 
   ionViewDidLoad() {

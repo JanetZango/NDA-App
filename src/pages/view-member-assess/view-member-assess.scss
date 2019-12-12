@@ -1,3 +1,59 @@
 page-view-member-assess {
+    .top{
+        width:100%;
+        height:10%;
+        background-color: #00919E;
+        padding:10px;
+        position: relative;
+        
+    }
 
+    .btn{
+        text-align: left;
+        button{
+            font-size: 1.5em;
+        }
+    }
+    h3{
+        font-family: 'ZCOOL XiaoWei', serif;
+    }
+    .infor{
+        padding:20px;
+    }
+   
+    .btnCreate{
+        text-align: right;
+        margin-top: -50px;
+        button{
+            background-color: #00919E;
+            color: white;
+            border: 1px solid white;
+        }
+    }
+    .Bottom{
+        height: 90%;
+        width:100%;
+        position: absolute;
+        text-align: center;
+        background-color: #EDEDED;
+    }
+    .card{
+        padding:5px;
+        height: 100px;
+        font-family: 'ZCOOL XiaoWei', serif;
+        button{
+            margin-top:-80px;
+            margin-left:250px;
+            text-align: right;
+            background-color: #00919E;
+            color:white;
+        }
+        p{
+            text-align: left;
+        }
+        img{
+            height:100px;
+            width:100px;
+        }
+    }
 }

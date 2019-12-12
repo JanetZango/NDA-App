@@ -107,10 +107,8 @@ export class SqliteProvider {
   Remoteconnection() {
     SqlServer.init("156.38.140.58", "MSSQLSERVER", "sa", "T1r1s@n", "cso_tra", function (event) {
       alert("successful:" + JSON.stringify(event));
-      // console.log(JSON.stringify(event))
     }, function (error) {
       alert("Not Successful:" + JSON.stringify(error));
-      // console.log(JSON.stringify(error))
     });
 
     // SqlServer.init("MSTCSOTRA07", "MSSQLSERVER", "csomobapp", "K@kany02019", "cso_tra", function (event) {
@@ -137,6 +135,7 @@ export class SqliteProvider {
     // this.remoteCsoAssessmentData();
     // this.remoteCapacityBuildingParticipantData();
     // this.remoteCapacityBuildingData();
+    this.remoteCsoAssessmentData();
 
   }
 
@@ -151,19 +150,19 @@ export class SqliteProvider {
         db.executeSql("CREATE TABLE IF NOT EXISTS tbl_cso_member (id INTEGER CONSTRAINT pk_id PRIMARY KEY NOT NULL,cso_id INTEGER ,member_position_id INTEGER ,first_name TEXT ,last_name TEXT,id_number TEXT ,passport_number TEXT,nationality TEXT,race TEXT,gender TEXT,disability TEXT,physical_address TEXT,contact_number TEXT,start_date DATE ,end_date DATE ,modified_by INTEGER ,modified_date DATE ,created_by INTEGER ,created_date DATE)", [])
         db.executeSql("CREATE TABLE IF NOT EXISTS tbl_cso_assessment (id INTEGER CONSTRAINTEGER pk_id PRIMARY KEY  ,cso_id INTEGER  ,assessment_type_id INTEGER ,calc_assessment_score decimal(18, 5) ,calc_assessment_level INTEGER ,poe_link TEXT ,assessment_DATE DATE ,assessment_completed bit  ,collected_by TEXT ,modified_by INTEGER ,modified_DATE DATE ,created_by INTEGER ,created_DATE DATE)", [])
         // db.executeSql("CREATE TABLE IF NOT EXISTS tbl_assessment_question_answer (id int CONSTRAINT pk_id PRIMARY KEY NOT NULL,cso_assessment_id int NOT NULL,assessment_question_id int NOT NULL,assessment_answer_id int NOT NULL, user_answer nvarchar(255) NULL,modified_by int NULL,modified_date datetime NULL,created_by int NULL,created_date datetime NULL)", [])
-        db.executeSql("CREATE TABLE IF NOT EXISTS tbl_capacity_building (id int CONSTRAINT pk_id PRIMARY KEY NOT NULL,capacity_building_type_id int NOT NULL,province_id int NOT NULL,district_id int NOT NULL,municipality_id int NOT NULL,partner_id int NULL,venue nvarchar(255) NULL,facilitator_name nvarchar(255) NULL,co_facilitator_name nvarchar(255) NULL,start_date date NOT NULL,end_date date NOT NULL,funding_source_id int NULL,collected_by nvarchar(255) NULL,modified_by int NULL,modified_date datetime NULL,created_by int NULL,created_date datetime NULL,attendance_register nvarchar(512) NULL,poe_link nvarchar(512) NULL)", []) 
+        db.executeSql("CREATE TABLE IF NOT EXISTS tbl_capacity_building (id INTEGER CONSTRAINT pk_id PRIMARY KEY  ,capacity_building_type_id INTEGER  ,province_id INTEGER  ,district_id INTEGER  ,municipality_id INTEGER  ,partner_id INTEGER ,venue TEXT ,facilitator_name TEXT ,co_facilitator_name TEXT ,start_date date  ,end_date date  ,funding_source_id INTEGER ,collected_by TEXT ,modified_by INTEGER ,modified_date DATE ,created_by INTEGER ,created_date DATE ,attendance_register TEXT ,poe_link TEXT )", []) 
         // db.executeSql("CREATE TABLE IF NOT EXISTS tbl_capacity_building_participant (id int CONSTRAINT pk_id PRIMARY KEY NOT NULL,capacity_building_id int NOT NULL,cso_member_id int NOT NULL,date_attended date NULL,modified_by int NULL,modified_date datetime NULL,created_by int NULL,created_date datetime NULL)", [])
         this.isOpen = true;
         console.log('TABLE CREATED: ');
 
-        this.UserData();
+        // this.UserData();
         // this.CSOData();
         // this.getUser();
         // this.getCso(); 
         // this.remoteCsoDataMainDB();
         // this.CsoMemberData();
-        // this.CsoAssessmentData();
-      
+        // this.remoteCapacityBuildingData()
+        // this.insertcapacityBuilding()
         alert("Data Collected");
 
       }).catch((error) => {
@@ -688,6 +687,143 @@ export class SqliteProvider {
   }
 
 
+  DisplayAssessment(cso_id) {
+    return new Promise((resolve, reject) => {
+      let loading = this.loadingCtrl.create({
+        spinner: 'bubbles',
+        content: 'loading...',
+        duration: 4000000
+      });
+      loading.present();
+      this.db.executeSql("SELECT * FROM tbl_cso_assessment WHERE created_by ="+cso_id, []).then((data) => {
+        let addAssesment = [];
+        if (data.rows.length > 0) {
+          for (var i = 0; i < data.rows.length; i++) {
+            addAssesment.push({
+              assessment_completed: data.rows.item(i).assessment_completed,
+              assessment_date: data.rows.item(i).assessment_date,
+              assessment_type_id: data.rows.item(i).assessment_type_id,
+              calc_assessment_level: data.rows.item(i).calc_assessment_level,
+              calc_assessment_score: data.rows.item(i).calc_assessment_score,
+              collected_by: data.rows.item(i).collected_by,
+              created_by: data.rows.item(i).created_by,
+              created_date: data.rows.item(i).created_date,
+              cso_id: data.rows.item(i).cso_id,
+              id: data.rows.item(i).id,
+              modified_by: data.rows.item(i).modified_by,
+              modified_date: data.rows.item(i).modified_date,
+              poe_link: data.rows.item(i).poe_link,
+            });
+          }
+        }
+        resolve(addAssesment);
+        loading.dismiss();
+        console.log(addAssesment);
+      }, (error) => {
+        reject(error);
+        loading.dismiss();
+      })
+    })
+  }
+
+
+  remoteCapacityBuildingData() {
+    return new Promise((resolve, reject) => {
+      SqlServer.executeQuery("select * from [cso_tra].[dbo].[tbl_capacity_building]", function (data) {
+        let capacityresults = JSON.parse(data);
+        resolve(capacityresults);
+        alert(capacityresults)
+        console.log(capacityresults)
+        // alert(results)
+      })
+    })
+  }
+
+  insertcapacityBuilding(){
+    return new Promise((resolve, db) => {
+      let capacityresults = this.remoteCapacityBuildingData().then((data) => {
+        console.log(data)
+        for (var i = 0; i < data[0].length; i++) {
+          let obj = {
+            capacity_building_type_id: data[0][i].capacity_building_type_id,
+            created_by: data[0][i].created_by,
+            created_date: data[0][i].created_date,
+            district_id: data[0][i].district_id,
+            end_date: data[0][i].end_date,
+            facilitator_name: data[0][i].facilitator_name,
+            funding_source_id: data[0][i].funding_source_id,
+            id: data[0][i].id,
+            modified_by: data[0][i].modified_by,
+            modified_date: data[0][i].modified_date,
+            municipality_id: data[0][i].municipality_id,
+            province_id: data[0][i].province_id,
+            start_date: data[0][i].start_date,
+            venue: data[0][i].venue,
+            partner_id: data[0][i].partner_id,
+            co_facilitator_name: data[0][i].co_facilitator_name,
+            collected_by: data[0][i].collected_by,
+            attendance_register: data[0][i].attendance_register,
+            poe_link: data[0][i].poe_link,
+          }
+          let sql = "INSERT INTO tbl_capacity_building (id,capacity_building_type_id,province_id,district_id,municipality_id,partner_id,venue,facilitator_name,co_facilitator_name,start_date,end_date,funding_source_id,collected_by,modified_by,modified_date,created_by,created_date,attendance_register,poe_link  ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+          this.db.executeSql(sql, [obj.id  ,obj.capacity_building_type_id   ,obj.province_id   ,obj.district_id   ,obj.municipality_id   ,obj.partner_id  ,obj.venue  ,obj.facilitator_name  ,obj.co_facilitator_name  ,obj.start_date   ,obj.end_date   ,obj.funding_source_id  ,obj.collected_by  ,obj.modified_by  ,obj.modified_date  ,obj.created_by  ,obj.created_date  ,obj.attendance_register  ,obj.poe_link ]).then((data) => {
+            console.log("INSERTED: " + JSON.stringify(data) + sql);
+            resolve("true")
+            console.log("true")
+          }, (error) => {
+          })
+          this.insertUser.push(obj)
+        }
+        resolve(this.insertUser)
+      });
+    });
+  }
+
+  DisplayCapacityBuilding(user_id){
+    return new Promise((resolve, reject) => {
+      let loading = this.loadingCtrl.create({
+        spinner: 'bubbles',
+        content: 'loading...',
+        duration: 4000000
+      });
+      loading.present();
+      this.db.executeSql("SELECT * FROM tbl_capacity_building WHERE created_by ="+user_id, []).then((data) => {
+        let displayCapacaityArr = [];
+        if (data.rows.length > 0) {
+          for (var i = 0; i < data.rows.length; i++) {
+            displayCapacaityArr.push({
+              capacity_building_type_id: data.rows.item(i).capacity_building_type_id,
+              created_by: data.rows.item(i).created_by,
+              created_date: data.rows.item(i).created_date,
+              district_id: data.rows.item(i).district_id,
+              end_date: data.rows.item(i).end_date,
+              funding_source_id: data.rows.item(i).funding_source_id,
+              facilitator_name: data.rows.item(i).facilitator_name,
+              id: data.rows.item(i).id,
+              modified_by: data.rows.item(i).modified_by,
+              modified_date: data.rows.item(i).modified_date,
+              municipality_id: data.rows.item(i).municipality_id,
+              province_id: data.rows.item(i).province_id,
+              start_date: data.rows.item(i).start_date,
+              venue: data.rows.item(i).venue,
+              partner_id: data.rows.item(i).partner_id,
+              co_facilitator_name: data.rows.item(i).co_facilitator_name,
+              collected_by: data.rows.item(i).collected_by,
+              attendance_register: data.rows.item(i).attendance_register,
+              poe_link: data.rows.item(i).poe_link,
+            });
+          }
+        }
+        resolve(displayCapacaityArr);
+        loading.dismiss();
+        console.log(displayCapacaityArr);
+      }, (error) => {
+        reject(error);
+        loading.dismiss();
+      })
+    })
+  }
+
 
 
   remoteAssessmentQuestionsAnswerData() {
@@ -700,16 +836,7 @@ export class SqliteProvider {
       })
     })
   }
-  remoteCapacityBuildingData() {
-    return new Promise((resolve, reject) => {
-      SqlServer.executeQuery("select * from [cso_tra].[dbo].[tbl_capacity_building]", function (data) {
-        let results = JSON.parse(data);
-        resolve(results);
-        console.log(results)
-        // alert(results)
-      })
-    })
-  }
+ 
 
   remoteCapacityBuildingParticipantData() {
     return new Promise((resolve, reject) => {

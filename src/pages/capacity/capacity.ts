@@ -19,11 +19,61 @@ import { ViewCapacityPage } from '../view-capacity/view-capacity';
 export class CapacityPage {
   getCurrentUser = new Array();
   displayCapacity = new Array();
+  viewCSoArr = new Array();
   getCso = new Array();
-  attendance_register 
+  attendance_register;
+  auth_key;
+  created_at;
+  email;
+  full_name;
+  username;
+  legacy_user_id;
+  password_reset_token;
+  password_hash;
+  province_name;
+  province_id;
+  office;
+  updated_at;
+  user_group;
+  title;
+  status;
+  role;
+  id;
+  items;
+  names;
   constructor(public navCtrl: NavController, public navParams: NavParams,public sqliteService :SqliteProvider ) {
-    this.get();
+    // this.get();
+  
+
+    
+    this.viewCSoArr.push(this.navParams.get('orgObject'));
+    console.log(this.viewCSoArr);
+    this.auth_key = this.viewCSoArr[0].auth_key;
+    this.created_at = this.viewCSoArr[0].created_at;
+    this.email = this.viewCSoArr[0].email;
+    this.full_name = this.viewCSoArr[0].full_name;
+    this.id = this.viewCSoArr[0].id;
+    this.legacy_user_id = this.viewCSoArr[0].legacy_user_id;
+    this.office = this.viewCSoArr[0].office;
+    this.password_hash = this.viewCSoArr[0].password_hash;
+    this.password_reset_token = this.viewCSoArr[0].password_reset_token;
+    this.province_id = this.viewCSoArr[0].province_id;
+    this.province_name = this.viewCSoArr[0].province_name;
+    this.role = this.viewCSoArr[0].role;
+    this.status = this.viewCSoArr[0].status;
+    this.title = this.viewCSoArr[0].title;
+    this.updated_at = this.viewCSoArr[0].updated_at;
+    this.user_group = this.viewCSoArr[0].user_group;
+    this.username = this.viewCSoArr[0].username;
+    console.log(this.viewCSoArr);
+    console.log(this.id);
+
+
+    let str="hello\\ab"
+    console.log(JSON.stringify(str))
+
     this.getcso();
+
   }
 
   ionViewDidLoad() {
@@ -48,7 +98,7 @@ export class CapacityPage {
 
   getcso(){
     this.sqliteService
-    .getcapacity_building()
+    .DisplayCapacityBuilding(this.id)
     .then((s:any) => {
       this.displayCapacity = s;
       console.log(s)

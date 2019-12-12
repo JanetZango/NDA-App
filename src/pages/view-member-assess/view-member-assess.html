@@ -1,15 +1,28 @@
-<!--
-  Generated template for the ViewMemberAssessPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
-<ion-header>
-  <ion-navbar>
-    <ion-title>viewMemberAssess</ion-title>
-  </ion-navbar>
-</ion-header>
-
-<ion-content padding>
+<ion-content>
+    <div class="top">
+        <div class="btn">
+            <button ion-button clear (click)="gotoback()">
+                <ion-icon ios="ios-arrow-round-back" md="md-arrow-round-back"></ion-icon>
+            </button>
+        </div>
+        <div class="btnCreate">
+            <button ion-button (click)="building()">Create Capacity Building Intervention</button>
+        </div>
+    </div>
+    <div class="Bottom">
+        <h3>*Manage Capacity Building Interventions</h3>
+        <ion-card *ngFor="let x of displayCapacity">
+            <div class="card">
+                <p><b>Assessment completed:</b>{{x.assessment_completed}}</p>
+                <p><b>Created date:</b>{{x.created_date}}</p>
+                <p><b>Modified date:</b>{{x.modified_date}}</p>
+                <p><b>Assessment date:</b>{{x.assessment_date}}</p>
+                <p><b>Calc Assessment Score:</b>{{x.calc_assessment_score}}</p>
+                <p><b>Calc Assessment Level:</b>{{x.calc_assessment_level}}</p>
+                <p><b>Poe Link:</b>{{x.poe_link}}</p>
+                <button ion-button (click)="viewMore(x.Fname)">View More</button>
+            </div>
+        </ion-card>
+    </div>
 
 </ion-content>
