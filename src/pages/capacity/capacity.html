@@ -1,0 +1,31 @@
+<ion-content>
+  <div class="top">
+      <div class="btn">
+          <button ion-button clear (click)="gotoback()">
+              <ion-icon ios="ios-arrow-round-back" md="md-arrow-round-back"></ion-icon>
+          </button>
+      </div>
+      <div class="btnCreate">
+          <button ion-button (click)="building()">Create Capacity Building Intervention</button>
+      </div>
+  </div>
+  <div class="Bottom">
+      <h3>*Manage Capacity Building Interventions</h3>
+      <ion-card *ngFor="let x of displayCapacity">
+          <div class="card">
+              <!-- <p><b>Province:</b>{{x.capacity_building_type_id}}</p> -->
+              <p><b>facilitor Name:</b>{{x.Fname}}</p>
+              <!-- <p><b>Collected by:</b>{{x.collected_by}}</p> -->
+              <!-- <p><b>District:</b>{{x.district_id}}</p> -->
+              <!-- <p><b>End_date:</b>{{x.end_date}}</p> -->
+              <p><b>partner:</b>{{x.partner}}</p>
+              <!-- <p><b>Province:</b>{{x.province_id}}</p> -->
+              <!-- <p><b>Start_date:</b>{{x.start_date}}</p> -->
+              <p><b>Collected:</b>{{x.Collected}}</p>
+              <!-- <img src="{{x.attendance_register}}" imageViewer > -->
+              <button ion-button (click)="viewMore(x.Fname)">View More</button>
+          </div>
+      </ion-card>
+  </div>
+
+</ion-content>

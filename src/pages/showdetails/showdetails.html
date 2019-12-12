@@ -1,0 +1,33 @@
+
+<ion-content>
+  <div class="round"></div>
+  <div class="btn">
+    <button ion-button clear (click)="gotoback()">
+      <ion-icon ios="ios-arrow-round-back" md="md-arrow-round-back"></ion-icon>
+    </button>
+  </div>
+  <div class="btnCreate">
+    <button ion-button (click)="seeMmbers()">
+      Manage Cso Members
+    </button>
+  </div>
+  <div class="card">
+    <ion-card *ngFor="let a of viewCSoArr">
+      <div class="infor">
+        <p><b>CsoName:</b>{{a.name_of_cso}}</p>
+        <p><b>Collected_by:</b>{{a.collected_by}}</p>
+        <p><b>Contact_Number:</b>{{a.contact_number}}</p>
+        <p><b>Cso_sector:</b>{{a.cso_sector_id}}</p>
+        <p><b>Cso_type:</b>{{a.cso_type_id}}</p>
+        <p><b>District:</b>{{a.district_id}}</p>
+        <p><b>Municipality:</b>{{a.municipality_id}}</p>
+        <p><b>Physical Address:</b>{{a.physical_address}}</p>
+        <p><b>Total_Staff:</b>{{a.total_staff}}</p>
+        <p><b>Modified_date:</b>{{a.modified_date}}</p>
+        <p><b>Total_Staff:</b>{{a.total_staff}}</p>
+        <p><b>Email_address:</b>{{a.email_address}}</p>
+
+      </div>
+    </ion-card>
+  </div>
+</ion-content>

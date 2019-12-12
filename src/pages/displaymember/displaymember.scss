@@ -1,0 +1,58 @@
+page-displaymember {
+
+}page-displaymember {
+    .round{
+        height: 70vh;
+        width: 100vh;
+        position: absolute;
+        bottom: 50%;
+        right: -50%;
+        background-color: #00919E;
+        border-radius: 100%;
+    }
+    ion-card{
+        position: relative;
+        padding:20px;
+       
+
+        b{
+            font-family: 'Jomolhari', serif;
+            text-transform: capitalize;
+        }
+        p{
+            font-family: 'Jomolhari', serif;
+            text-transform: capitalize;
+        }
+    }
+    .card{
+        margin-top:30px;
+        height:370px;
+        
+ 
+    
+    }
+    .btn{
+        text-align: left;
+        button{
+            font-size: 1.5em;
+        }
+    }
+    .infor{
+        padding:20px;
+    }
+   
+    .btnCreate{
+        // text-align: right;
+        margin-top: 50px;
+        button{
+            background-color: #00919E;
+            color: white;
+            border: 1px solid white;
+        }
+    }
+    h1{
+        font-family: 'Yeon Sung', cursive;
+        text-align: center;
+    }
+}
+

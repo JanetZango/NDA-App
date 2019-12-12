@@ -1,0 +1,139 @@
+page-members {
+    .move{
+        height:100%;
+        // margin-top:60px;
+
+    }
+    .divImage{
+        text-align: center;
+        img{
+            height:200px;
+        }
+        p{
+            font-size: 1.7em;
+            color:#00919E;
+            font-family: 'Righteous', cursive;
+        }
+
+    }
+    .btnSign{
+        height: 40px;
+        // border-radius: 10px;
+        width:50%;
+        text-align: center;
+    }
+    .slide{
+        height: 350px;
+    }
+    .insideSlide{
+        margin-top:-80px;
+    }
+    .insideSlide1{
+        // margin-top:-60px;
+    }
+    .Contacts {
+        width: calc(80% + 10px);
+        margin: 10px auto;
+        // display: flex;
+    
+        // border: 1px solid red;
+        #input-field {
+          margin: 5px;
+        //   width: 50% !important;
+          background-color:  whitesmoke;
+          width:100%;  
+          border-radius: 100px;
+          height:50px;
+          padding:20px;
+          color:rgb(46, 45, 45);
+        }
+      }
+      .bigCard{
+          height: 650px;
+          width:90%;
+          background-color: rgb(255, 255, 255);
+          position: relative;
+          margin:0px auto;
+          margin-top:150px;
+          border-radius: 10px;
+          box-shadow: 0px 15px 30px -15px rgb(0, 0, 0); 
+      }
+      .round{
+        height: 80vh;
+        width: 100vh;
+        position: absolute;
+        bottom: 50%;
+        right: -50%;
+        background-color: #00919E;
+        border-radius: 100%;
+   
+    }
+    #anim1{
+        background-color:  whitesmoke;
+        width:90%;  
+        height:50px;
+        text-align: center;
+        border-radius: 100px;
+        margin:15px auto;
+        color:black;
+        padding-left: 10px;
+        border-radius: 100px;
+        box-shadow: 0px 15px 20px -15px #000; 
+    }
+    #anim2{
+        // border-radius: 5px;
+        width:60%;  
+        text-transform: capitalize;
+        button{
+            background-color:  whitesmoke;
+            color:white;
+        }
+
+    }
+    .moveCont{
+        text-align: center;
+        margin-top:35px;
+        
+        button{
+            background-color:  #00919E;
+            color:white;
+        }
+    }
+    .moveCont{
+        text-align: center;
+        button{
+            width:70%;
+            // border-radius: 100px;
+        }
+    }
+    span{
+        justify-content: center;
+    }
+    .help-block{
+        justify-content: center;
+    }
+    .moveCont2{
+        text-align: center; 
+        // margin-top:30px;
+        button{
+
+            text-transform: capitalize;
+        }
+        b{
+            color:#5C861E;
+        }
+  
+    }
+    .theCard{
+        text-align: center;
+    }
+
+    #item{
+        // border:1px solid #5C861E;
+        width:90%;
+        margin:15px auto;
+        background-color: whitesmoke;
+        border-radius: 100px;
+        box-shadow: 0px 15px 20px -15px #000;
+    }
+}

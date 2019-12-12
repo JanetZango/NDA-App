@@ -1,0 +1,30 @@
+<ion-content padding>
+  <div class="round"></div>
+  <div class="btn">
+    <button ion-button clear (click)="gotoback()">
+      <ion-icon ios="ios-arrow-round-back" md="md-arrow-round-back"></ion-icon>
+    </button>
+  </div>
+<!-- 
+  <div class="btnCreate">
+    <button ion-button (click)="seeMmbers()">
+      Manage Ndzalama User Guide Members
+    </button>
+  </div> -->
+
+  <div class="card">
+    <ion-card *ngFor="let a of viewCSoArr">
+      <div class="infor">
+        <p><b>First name:</b>{{a.first_name}}</p>
+        <p><b>Last name:</b>{{a.last_name}}</p>
+        <p><b>Disability:</b>{{a.disability}}</p>
+        <p><b>Contact_Number:</b>{{a.contact_number}}</p>
+        <p><b>Created_by:</b>{{a.created_by}}</p>
+        <p><b>Gender:</b>{{a.gender}}</p>
+        <p><b>Race:</b>{{a.race}}</p>
+        <p><b>Created date:</b>{{a.created_date}}</p>
+        <p><b>Modified date:</b>{{a.modified_date}}</p>
+      </div>
+    </ion-card>
+  </div>
+</ion-content>

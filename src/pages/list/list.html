@@ -1,0 +1,36 @@
+
+<ion-content>
+    <div class="top">
+        <div (click)="get()">
+          <img  src="../../assets/pic.png">
+          <p>{{full_name}}</p>
+        </div>
+      
+      </div>
+    
+      <div class="Bottom">
+        <ion-card class="card" (click)="registerCSO()">
+          <p>Mobilisation</p>
+          <!-- <p>Use this section to manage CSO's identified during
+            mobilisation activities.This includes adding(registration),
+            viewing and changing and deleting CSO details.This
+            section also includes CSO Member's managment.
+         </p> -->
+        </ion-card>
+        <ion-card class="card2" (click)="takeAssessemnt()">
+          <p>Assessment</p>
+          <!-- <p>Use this section to conduct an assessment on registered
+           CSOS.Re-assessment are important in monitoring
+           growth of CSOs and are conducted at NDA specified
+           intervals after the intial one.
+         </p> -->
+        </ion-card>
+        <ion-card class="card3" (click)="mobilisation()">
+          <p>Interventions & Classifications</p>
+          <!-- <p>Use this section to manage CSO Classification and 
+           inteevention activites.</p> -->
+        </ion-card>
+    
+      </div>
+    
+</ion-content>

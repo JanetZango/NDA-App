@@ -1,0 +1,153 @@
+<ion-content class="content">
+  <div class="round"></div>
+  <div class="bigCard">
+    <div class="btn">
+      <button ion-button clear (click)="gotoback()">
+        <ion-icon ios="ios-arrow-round-back" md="md-arrow-round-back"></ion-icon>
+      </button>
+    </div>
+    <div class="divImage">
+      <img src="../../assets/logo2.jpg">
+      <!-- <p>Create Capacity Building Intervention</p> -->
+    </div>
+    <ion-slides pager="true" class="slide">
+      <ion-slide>
+        <ion-input placeholder="Name_of_Cso" type="text" class="user-input" [(ngModel)]="CsoName" id="anim1">
+        </ion-input>
+
+
+  
+        <ion-item id="item">
+          <ion-label> Select Capacity Building Type</ion-label>
+          <ion-select [(ngModel)]="Capacity">
+            <ion-option value="Trustee">Training Governance</ion-option>
+            <ion-option value="Management">Training Conflict Management</ion-option>
+            <ion-option value="General Member">Training Financial Management</ion-option>
+            <ion-option value="5 months">Training Project Management</ion-option>
+            <ion-option value="6 months">Training Resource Mobilisation</ion-option>
+            <ion-option value="6 months">Training Mentoring Support</ion-option>
+            <ion-option value="6 months">Training Legislation Compliance</ion-option>
+            <ion-option value="6 months">Training Community Development Practice</ion-option>
+            <ion-option value="6 months">Training Organisational Development</ion-option>
+            <ion-option value="6 months">Mentoring Governance</ion-option>
+            <ion-option value="6 months">Incubation</ion-option>
+            <ion-option value="6 months">Mentoring Conflict Managment</ion-option>
+            <ion-option value="6 months">Mentoring Financial Managment</ion-option>
+            <ion-option value="6 months">Mentoring Project Managment</ion-option>
+            <ion-option value="6 months">Mentoring Resource Mobilisation </ion-option>
+            <ion-option value="6 months">Mentoring Legislation Compliance </ion-option>
+            <ion-option value="6 months">Mentoring Community Development Pratice </ion-option>
+            <ion-option value="6 months">Mentoring Organisational Development </ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item id="item">
+          <ion-label> Select Province</ion-label>
+          <ion-select [(ngModel)]="Province">
+            <ion-option value="Eastern Cape">Eastern Cape</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item id="item">
+          <ion-label> Select District</ion-label>
+          <ion-select [(ngModel)]="District">
+            <ion-option value="Sarah Baartman">Sarah Baartman</ion-option>
+            <ion-option value="Amathole">Amathole</ion-option>
+            <ion-option value="Chris Hani">Chris Hani</ion-option>
+            <ion-option value="Joe Gqabi">Joe Gqabi</ion-option>
+            <ion-option value="O.R.Tambo">O.R.Tambo</ion-option>
+            <ion-option value="Alfred Nzo">Alfred Nzo</ion-option>
+            <ion-option value="Nelson Mandela Bay">Nelson Mandela Bay</ion-option>
+            <ion-option value="Buffalo City<">Buffalo City</ion-option>
+            <ion-option value="Xhariep">Xhariep</ion-option>
+            <ion-option value="Lejweleputswa">Lejweleputswa</ion-option>
+            <ion-option value="Thabo Mofutsanyane">Thabo Mofutsanyane</ion-option>
+            <ion-option value="Fezile Dabi">Fezile Dabi</ion-option>
+            <ion-option value="Mangaung">Mangaung</ion-option>
+            <ion-option value="West Rand">West Rand</ion-option>
+            <ion-option value="City of Tshwane">City of Tshwane</ion-option>
+            <ion-option value="Sedibeng">Sedibeng</ion-option>
+          </ion-select>
+        </ion-item>
+      </ion-slide>
+      <ion-slide>
+
+        <ion-item id="item">
+          <ion-label> Select Municipality</ion-label>
+          <ion-select [(ngModel)]="Municipality">
+            <ion-option value="Dr Beyer Naude">Dr Beyer Naude</ion-option>
+            <ion-option value="Makana">Makana</ion-option>
+            <ion-option value="Ndlambe">Ndlambe</ion-option>
+            <ion-option value="Mbhashe">Mbhashe</ion-option>
+            <ion-option value="Mnquma">Mnquma</ion-option>
+            <ion-option value="Inxuba Yethemba">Inxuba Yethemba</ion-option>
+            <ion-option value="Engcono">Engcono</ion-option>
+            <ion-option value="Elundini">Elundini</ion-option>
+            <ion-option value="Senqu">Senqu</ion-option>
+            <ion-option value="Ngquza Hill">Ngquza Hill</ion-option>
+            <ion-option value="Port St Johns">Port St Johns</ion-option>
+            <ion-option value="Nyandeni">Nyandeni</ion-option>
+            <ion-option value="Mhlontlo">Mhlontlo</ion-option>
+            <ion-option value="King Sabata Dali">King Sabata Dali</ion-option>
+            <ion-option value="Matatiele">Matatiele</ion-option>
+            <ion-option value="Umzimvubu">Umzimvubu</ion-option>
+            <ion-option value="Ntabankulu">Ntabankulu</ion-option>
+            <ion-option value="Mbizana">Mbizana</ion-option>
+          </ion-select>
+        </ion-item>
+
+
+        <ion-item id="item">
+          <ion-label> Select Partner</ion-label>
+          <ion-select [(ngModel)]="partner">
+            <ion-option value="African">Funder</ion-option>
+            <ion-option value="Colored">Service Provider</ion-option>
+            <ion-option value="Indian">Referral Institution</ion-option>
+            <ion-option value="White">Government</ion-option>
+            <ion-option value="White">Business</ion-option>
+            <ion-option value="White">Non-profit making</ion-option>
+            <ion-option value="White">Individuals</ion-option>
+            <ion-option value="White">International</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-input placeholder="Venue" type="text" class="user-input" [(ngModel)]="venue" id="anim1"></ion-input>
+
+      </ion-slide>
+
+      <ion-slide>
+        <ion-input placeholder="Facilitor Name" type="text" class="user-input" [(ngModel)]="Fname" id="anim1">
+        </ion-input>
+
+        <ion-input placeholder="Funding Source" type="text" class="user-input" [(ngModel)]="Fsource"
+          id="anim1" ></ion-input>
+
+        <ion-input placeholder="Colllected by" type="text" class="user-input" [(ngModel)]="Collected"
+        id="anim1" ></ion-input>
+
+      </ion-slide>
+      <ion-slide>
+
+        <div class="Contacts">
+          <ion-label>Start date</ion-label>
+          <input type="date" id="input-field" [(ngModel)]="StartDate">
+          <br>
+          <ion-label>End date</ion-label>
+          <input type="date" id="input-field" [(ngModel)]="EndDate">
+        </div>
+
+        <input type="file" accept="image*/" id="cover-image" (change)="insertpic2($event)">
+
+        <div class="moveCont">
+          <button ion-button round class="btnSign" id="anim2"
+            (click)="addCapacity()">Rgister
+            A Member</button>
+        </div>
+
+      </ion-slide>
+    </ion-slides>
+  </div>
+\
+
+
+</ion-content>

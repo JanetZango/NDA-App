@@ -1,0 +1,10 @@
+
+<ion-content padding>
+    <h2>Register User</h2>
+    <ion-input placeholder="username" type="text" [(ngModel)]="username"></ion-input>
+    <ion-input placeholder="email" type="text" [(ngModel)]="email"></ion-input>
+    <ion-input placeholder="password" type="text" [(ngModel)]="password"></ion-input>
+    <button ion-button (click)="register()">save</button>
+    <button block round ion-button block color="secAlert"
+    (click)="get()">get infor</button>
+</ion-content>

@@ -1,0 +1,53 @@
+page-see-members {
+ 
+    .top{
+        width:100%;
+        height:10%;
+        background-color: #00919E;
+        padding:10px;
+        position: relative;
+        
+    }
+
+  
+    .infor{
+        padding:20px;
+    }
+   
+    .btnCreate{
+        text-align: right;
+        margin-top: -50px;
+        button{
+            background-color: #00919E;
+            color: white;
+            border: 1px solid white;
+        }
+    }
+    .btn{
+        text-align: right;
+    }
+    .Bottom{
+        height: 90%;
+        width:100%;
+        position: absolute;
+        text-align: center;
+        background-color: #EDEDED;
+    }
+    .card{
+        padding:5px;
+        height: 110px;
+        font-family: 'ZCOOL XiaoWei', serif;
+        button{
+            margin-top:-80px;
+            justify-content: left;
+            background-color: #00919E;
+            color:white;
+        }
+        p{
+            text-align: left;
+        }
+    }
+    h3{
+        font-family: 'ZCOOL XiaoWei', serif;
+    }
+}

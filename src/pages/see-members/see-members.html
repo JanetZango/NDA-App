@@ -1,0 +1,33 @@
+
+
+<ion-content>
+  <div class="top">
+    <div class="btn">
+      <button ion-button clear (click)="gotoback()">
+        <ion-icon ios="ios-arrow-round-back" md="md-arrow-round-back"></ion-icon>
+      </button>
+    </div>
+
+    <div class="btnCreate">
+      <button ion-button (click)="addMember()"><ion-icon ios="ios-add" md="md-add"></ion-icon>
+        Create CSO Member
+      </button>
+    </div>
+  </div>
+  <div class="Bottom">
+      <h3 style="text-align: center;">Manage Cso Members</h3>
+    <ion-card *ngFor="let a of ViewMemberArr">
+      <div class="card">
+        <p><b>First name:</b>{{a.first_name}}</p>
+        <p><b>Last name:</b>{{a.last_name}}</p>
+        <p><b>Nationality:</b>{{a.nationality}}</p>
+        <!-- <p><b>Position:</b>{{a.Position}}</p> -->
+        <div class="btn">
+            <button ion-button (click)="viewMore(a.first_name)">View More
+              </button>
+        </div>
+     
+      </div>
+    </ion-card>
+  </div>
+</ion-content>

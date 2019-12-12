@@ -1,0 +1,43 @@
+<ion-content padding>
+
+    <div class="round"></div>
+  
+    <!-- <button (click)="back()">
+      <ion-icon name="arrow-round-back"></ion-icon>
+    </button> -->
+  
+    <div class="btn">
+      <button ion-button clear (click)="back()">
+        <ion-icon ios="ios-arrow-round-back" md="md-arrow-round-back"></ion-icon>
+      </button>
+    </div>
+    <div class="btn2">
+      <button ion-button clear (click)="logout()">
+        <ion-icon name="more"></ion-icon>
+      </button>
+    </div>
+  
+  
+    <div class="card">
+      <ion-card>
+        <h1>Profile</h1>
+        <div class="paragraph">
+          <p><b>username:</b>{{username}}</p>
+          <p><b>full_name:</b>{{full_name}}</p>
+          <p><b>email:</b>{{email}}</p>
+          <p><b>province_id:</b>{{province_id}}</p>
+          <p><b>status:</b>{{status}}</p>
+          <p><b>role:</b>{{role}}</p>
+          <p><b>legacy_user_id:</b>{{legacy_user_id}}</p>
+          <p><b>created_at:</b>{{created_at}}</p>
+          <p><b>updated_id:</b>{{updated_id}}</p>
+          <p><b>office:</b>{{office}}</p>
+          <p><b>title:</b>{{title}}</p>
+          <p><b>province_name:</b>{{province_name}}</p>
+          <p><b>user_group:</b>{{user_group}}</p>
+        </div>
+  
+      </ion-card>
+    </div>
+  
+  </ion-content>

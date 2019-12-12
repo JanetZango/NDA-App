@@ -1,0 +1,16 @@
+<ion-content>
+  <ion-input placeholder="Name_of_Cso" [(ngModel)]="itemName" type="text" class="user-input" id="anim1"
+    (input)="getItems($event)"></ion-input>
+
+  <div id="results">
+    <ion-item no-lines *ngFor="let item of items; let i=index" (click)="openMarkerInfo()">
+      <p>{{item}}</p>
+    </ion-item>
+  </div>
+
+  <!-- <div *ngFor="let a of loclenght">
+    <p>Member Name:{{a.start_date}}</p>
+    <p>Start Date:{{a.start_date}}</p>
+    <p>End Date:{{a.start_date}}</p>
+  </div> -->
+</ion-content>
