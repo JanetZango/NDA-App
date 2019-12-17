@@ -76,7 +76,6 @@ export class ListPage {
     for (var x = 0; x < this.viewCSoArr.length; x++) {
       this.navCtrl.push(ViewMemberPage, { orgObject: this.viewCSoArr[x] });
     }
-    // this.navCtrl.push(ViewMemberPage)
   }
 
   mobilisation(){

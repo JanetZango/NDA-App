@@ -7,13 +7,13 @@
     </div>
     <ion-slides pager="true" class="slide">
       <ion-slide class="insideSlide">
-        <ion-input placeholder="First_name" type="text" class="user-input" [(ngModel)]="fname" id="anim1"></ion-input>
+        <ion-input placeholder="First_name" type="text" class="user-input" [(ngModel)]="first_name" id="anim1"></ion-input>
 
 
-        <ion-input placeholder="Last_name" type="text" class="user-input" [(ngModel)]="lname" id="anim1"></ion-input>
+        <ion-input placeholder="Last_name" type="text" class="user-input" [(ngModel)]="last_name" id="anim1"></ion-input>
 
 
-        <ion-item id="item">
+        <!-- <ion-item id="item">
           <ion-label> Select Member Position</ion-label>
           <ion-select [(ngModel)]="Position">
             <ion-option value="Trustee">Trustee</ion-option>
@@ -22,12 +22,12 @@
             <ion-option value="5 months">Baord Monitor</ion-option>
             <ion-option value="6 months">Other</ion-option>
           </ion-select>
-        </ion-item>
+        </ion-item> -->
       </ion-slide>
       <ion-slide class="insideSlide">
         <ion-item id="item">
           <ion-label> Select Gender</ion-label>
-          <ion-select [(ngModel)]="Gender">
+          <ion-select [(ngModel)]="gender">
             <ion-option value="Female">Female</ion-option>
             <ion-option value="Male">Male</ion-option>
           </ion-select>
@@ -37,7 +37,7 @@
 
         <ion-item id="item">
           <ion-label> Select Race</ion-label>
-          <ion-select [(ngModel)]="Race">
+          <ion-select [(ngModel)]="race">
             <ion-option value="African">African</ion-option>
             <ion-option value="Colored">Colored</ion-option>
             <ion-option value="Indian">Indian</ion-option>
@@ -46,7 +46,7 @@
         </ion-item>
 
         <ion-input placeholder="Passport_number" type="text" class="user-input" name="Passport_number"
-          [(ngModel)]="Passport_number" id="anim1"></ion-input>
+          [(ngModel)]="passport_number" id="anim1"></ion-input>
         <!-- <span class="help-block" style="color: red" *ngIf="!pAddress.valid && pAddress.touched">Please enter
           your Passport_number</span> -->
       </ion-slide>
@@ -54,7 +54,7 @@
 
         <ion-item id="item">
           <ion-label> Select Disability</ion-label>
-          <ion-select [(ngModel)]="Disability">
+          <ion-select [(ngModel)]="disability">
             <ion-option value="Yes">Yes</ion-option>
             <ion-option value="No">No</ion-option>
           </ion-select>
@@ -62,7 +62,7 @@
 
         <ion-item id="item">
           <ion-label> Select Nationality</ion-label>
-          <ion-select [(ngModel)]="Nationality">
+          <ion-select [(ngModel)]="nationality">
             <ion-option value="South African">South African</ion-option>
             <ion-option value="Other">Other</ion-option>
           </ion-select>
@@ -70,30 +70,23 @@
 
 
 
-        <ion-input placeholder="Physical_Address" [(ngModel)]="pAddress" type="text" class="user-input" name="pAddress"
-          id="anim1"></ion-input>
+        
 
       </ion-slide>
 
       <ion-slide class="insideSlide">
-        <ion-input placeholder="Contact_Number" [(ngModel)]="Contact_Number" type="number" class="user-input"
+        <ion-input placeholder="Contact_Number" [(ngModel)]="contact_number" type="number" class="user-input"
           id="anim1"></ion-input>
 
         <form name="pleasevalidateme">
-          <ion-input type="text" name="idnumber" [(ngModel)]="idnumber" placeholder="ID number" id="anim1"></ion-input>
+          <ion-input type="text" name="idnumber" [(ngModel)]="id_number" placeholder="ID number" id="anim1"></ion-input>
           <input type="checkbox" name="saidCB" /> SA ID number
           <button ion-button (click)="validateID()">verify</button>
         </form>
 
       </ion-slide>
       <ion-slide class="insideSlide1">
-        <div class="Contacts">
-          <ion-label>Start date</ion-label>
-          <input type="date" id="input-field" [(ngModel)]="StartDate">
-          <br>
-          <ion-label>End date</ion-label>
-          <input type="date" id="input-field" [(ngModel)]="EndDate">
-        </div>
+
         <div class="moveCont">
           <button ion-button round class="btnSign" id="anim2"
             (click)="addMemember()">Rgister

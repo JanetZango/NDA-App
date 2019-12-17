@@ -41,7 +41,7 @@ export class SeeMembersPage {
   id;
   constructor(public navCtrl: NavController, public navParams: NavParams, public sqliteService: SqliteProvider,platform: Platform) {
     this.viewCSoArr.push(this.navParams.get('orgObject'));
-    // console.log(this.viewCSoArr);
+    console.log(this.viewCSoArr);
     this.name_of_cso = this.viewCSoArr[0].name_of_cso;
     this.Collected_by = this.viewCSoArr[0].Collected_by;
     this.email_address = this.viewCSoArr[0].email_address;

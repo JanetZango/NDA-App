@@ -19,31 +19,31 @@ export class DisplaydatesofmemberPage {
   orgNames = new Array();
   displaypart = new Array();
   constructor(public navCtrl: NavController, public navParams: NavParams,public sqliteService:SqliteProvider) {
-    this.get();
+    // this.get();
 
     this.sqliteService
-    .getcapacity_building()
-    .then((s: any) => {
-      this.displaypart = s;
-      console.log(s)
-      console.log(this.displaypart)
-    })
+    // .getcapacity_building()
+    // .then((s: any) => {
+    //   this.displaypart = s;
+    //   console.log(s)
+    //   console.log(this.displaypart)
+    // })
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DisplaydatesofmemberPage');
   }
-  get() {
-    this.sqliteService
-      .getRegisteredCso()
-      .then((s: any) => {
-        this.getCurrentUser = s;
-        // var names = this.sqliteService.getOrgNames()
-        // this.storeOrgNames(names)
-        console.log(s)
-        console.log(this.getCurrentUser)
-      })
-  }
+  // get() {
+  //   this.sqliteService
+  //     .getRegisteredCso()
+  //     .then((s: any) => {
+  //       this.getCurrentUser = s;
+  //       // var names = this.sqliteService.getOrgNames()
+  //       // this.storeOrgNames(names)
+  //       console.log(s)
+  //       console.log(this.getCurrentUser)
+  //     })
+  // }
 
   storeOrgNames(names) {
     this.orgNames = names;

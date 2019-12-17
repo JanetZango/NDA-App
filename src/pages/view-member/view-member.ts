@@ -42,22 +42,7 @@ export class ViewMemberPage {
   items;
   names;
   constructor(public navCtrl: NavController, public navParams: NavParams, public sqliteService: SqliteProvider, platform: Platform) {
-
-    // this.memberArr.push(this.navParams.get('orgObject'));
-    // console.log(this.memberArr);
-    // this.get();
-
-
-    // platform.ready().then(() => {
-    //   this.sqliteService
-    //     .getUser()
-    //     .then((s) => {
-    //       console.log(s)
-    //     })
-    // })
-
     this.viewCSoArr.push(this.navParams.get('orgObject'));
-    // console.log(this.viewCSoArr);
     this.auth_key = this.viewCSoArr[0].auth_key;
     this.created_at = this.viewCSoArr[0].created_at;
     this.email = this.viewCSoArr[0].email;
@@ -75,9 +60,8 @@ export class ViewMemberPage {
     this.updated_at = this.viewCSoArr[0].updated_at;
     this.user_group = this.viewCSoArr[0].user_group;
     this.username = this.viewCSoArr[0].username;
-
-
     console.log(this.id)
+    console.log(this.viewCSoArr)
 
     this.get();
   }
@@ -86,19 +70,11 @@ export class ViewMemberPage {
     console.log('ionViewDidLoad ViewMemberPage');
   }
 
-  viewMore(name) {
-    for (var x = 0; x < this.ViewMemberArr.length; x++) {
-      if (name == this.ViewMemberArr[x].name_of_cso) {
-        this.navCtrl.push(ShowdetailsPage, { orgObject: this.ViewMemberArr[x] });
-        break;
-      }
-    }
-  }
+
   registerCSO() {
-    // for (var x = 0; x < this.memberArr.length; x++) {
-    //   this.navCtrl.push(RegisterPage, { orgObject: this.memberArr[x] });
-    // }
-    this.navCtrl.push(RegisterPage)
+    for (var x = 0; x < this.viewCSoArr.length; x++) {
+      this.navCtrl.push(RegisterPage, { orgObject: this.viewCSoArr[x] });
+    }
   }
 
   get() {
@@ -109,7 +85,17 @@ export class ViewMemberPage {
       console.log(this.ViewMemberArr)
     })
   }
+  viewMore(name) {
+    for (var x = 0; x < this.ViewMemberArr.length; x++) {
+      if (name == this.ViewMemberArr[x].name_of_cso) {
+        this.navCtrl.push(ShowdetailsPage, { orgObject: this.ViewMemberArr[x] });
+        break;
+      }
 
+    }
+
+
+  }
 
 
   getItems(ev: any) {
@@ -133,13 +119,12 @@ export class ViewMemberPage {
   initializeItems() {
     this.items = []
     this.items = this.namesArr
-
     console.log(this.items)
   }
   namesArr = new Array()
   storeNames() {
     this.namesArr = this.sqliteService.getName();
-      console.log(this.namesArr)
+    console.log(this.namesArr)
   }
 
 

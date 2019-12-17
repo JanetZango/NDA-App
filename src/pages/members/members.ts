@@ -19,34 +19,69 @@ import { ViewMemberPage } from '../view-member/view-member';
 export class MembersPage {
   memberArr = new Array();
   ViewMemberArr = new Array();
-  key;
-  fname
-  lname
-  Position
-  Gender
-  Race
-  Passport_number
-  Disability
-  Nationality
-  pAddress
-  Contact_Number
-  idnumber
-  StartDate
-  EndDate
+  viewCSoArr = new Array();
+  name_of_cso;
+  Collected_by;
+  email_address;
+  contact_person;
+  contact_number;
+  cso_sector_id;
+  cso_type_id;
+  district_id;
+  Municipality;
+  Paddress;
+  total_staff;
+  ward_number;
+  province_id;
+  physical_address;
+  nda_registration;
+  municipality_id;
+  modified_date;
+  modified_by;
+  id;
+  member_position_id;
+  cso_id;
+  first_name;
+  last_name;
+  id_number;
+  passport_number;
+  nationality;
+  race;
+  gender;
+  disability;
+  start_date;
+  end_date;
+  created_by;
+  created_date;
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController, public sqliteService: SqliteProvider,public toastCtrl: ToastController) {
-    this.memberArr.push(this.navParams.get('orgObject'));
-    console.log(this.memberArr);
+    this.viewCSoArr.push(this.navParams.get('orgObject'));
+    console.log(this.viewCSoArr);
+    this.name_of_cso = this.viewCSoArr[0].name_of_cso;
+    this.Collected_by = this.viewCSoArr[0].Collected_by;
+    this.email_address = this.viewCSoArr[0].email_address;
+    this.contact_person = this.viewCSoArr[0].contact_person;
+    this.contact_number = this.viewCSoArr[0].contact_number;
+    this.cso_type_id = this.viewCSoArr[0].cso_type_id;
+    this.district_id = this.viewCSoArr[0].district_id;
+    this.cso_sector_id = this.viewCSoArr[0].cso_sector_id;
+    this.physical_address = this.viewCSoArr[0].physical_address;
+    this.municipality_id = this.viewCSoArr[0].municipality_id;
+    this.total_staff = this.viewCSoArr[0].total_staff;
+    this.ward_number = this.viewCSoArr[0].ward_number;
+    this.province_id = this.viewCSoArr[0].province_id
+    this.nda_registration =this.viewCSoArr[0].nda_registration
+    this.modified_date = this.viewCSoArr[0].modified_date
+    this.modified_by = this.viewCSoArr[0].modified_by
+    this.cso_id = this.viewCSoArr[0].id
 
-
-    this.key = this.memberArr[0].id
-    console.log(this.key);
+   console.log(this.cso_id)
 
   }
 
   addMemember() {
     this
       .sqliteService
-      .regsiterCsoMember(this.key, this.fname, this.lname, this.Position, this.Gender, this.Race, this.Passport_number, this.Disability, this.Nationality, this.pAddress, this.Contact_Number, this.idnumber, this.StartDate, this.EndDate)
+      .regsiterCsoMember(this.id,this.cso_id  ,this.member_position_id ,this.first_name ,this.last_name ,this.id_number  ,this.passport_number ,this.nationality ,this.race ,this.gender ,this.disability ,this.physical_address ,this.contact_number ,this.start_date  ,this.end_date  ,this.modified_by  ,this.modified_date  ,this.created_by  ,this.created_date)
       .then(s => {
         console.log(s)
         this.navCtrl.push(ViewMemberPage)

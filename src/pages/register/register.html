@@ -7,7 +7,7 @@
     </div>
     <ion-slides pager="true" class="slide">
       <ion-slide class="insideSlide">
-        <ion-input placeholder="Name_of_Cso" [(ngModel)]="CsoName" type="text" class="user-input" id="anim1"
+        <ion-input placeholder="Name_of_Cso" [(ngModel)]="name_of_cso" type="text" class="user-input" id="anim1" (input)="getItems($event)"
         ></ion-input>
 
         <div id="results">
@@ -18,40 +18,40 @@
 
         <ion-item id="item">
           <ion-label> Mobilisation Method</ion-label>
-          <ion-select [(ngModel)]="MobiMethod">
-            <ion-option value="Non Profit organization">Non Profit organization</ion-option>
-            <ion-option value="Community based organization">Community based organization</ion-option>
-            <ion-option value="Faith based organization">Faith based organization</ion-option>
-            <ion-option value="Early Childhood development">Early Childhood development</ion-option>
-            <ion-option value="Cooperate">Cooperate</ion-option>
-            <ion-option value="Community structure">Community structure</ion-option>
-            <ion-option value="CompanyCC">CompanyCC</ion-option>
-            <ion-option value="Disability people organization">Disability people organization</ion-option>
-            <ion-option value="SPort">SPort</ion-option>
+          <ion-select [(ngModel)]="cso_mobilisation_method_id">
+            <ion-option value="1">Non Profit organization</ion-option>
+            <ion-option value="2">Community based organization</ion-option>
+            <ion-option value="3">Faith based organization</ion-option>
+            <ion-option value="4">Early Childhood development</ion-option>
+            <ion-option value="5">Cooperate</ion-option>
+            <ion-option value="6">Community structure</ion-option>
+            <ion-option value="7">CompanyCC</ion-option>
+            <ion-option value="8">Disability people organization</ion-option>
+            <ion-option value="9">SPort</ion-option>
 
           </ion-select>
         </ion-item>
         <div class="Contacts">
-          <input type="date" placeholder="Mobilisation_date" id="input-field" [(ngModel)]="mobiDate">
+          <input type="date" placeholder="Mobilisation_date" id="input-field" [(ngModel)]="created_date">
         </div>
       </ion-slide>
       <ion-slide class="insideSlide">
-        <ion-input placeholder="Physical_Address" type="text" class="user-input" [(ngModel)]="Paddress" id="anim1">
+        <ion-input placeholder="Physical_Address" type="text" class="user-input" [(ngModel)]="physical_address" id="anim1">
         </ion-input>
 
 
         <ion-item id="item">
           <ion-label> Select Cso_type</ion-label>
-          <ion-select [(ngModel)]="Cso_type">
-            <ion-option value=" Non Profit organization">Non Profit organization</ion-option>
-            <ion-option value="Community based organization">Community based organization</ion-option>
-            <ion-option value="Faith based organization">Faith based organization</ion-option>
-            <ion-option value="Early Childhood development">Early Childhood development</ion-option>
-            <ion-option value="Cooperate">Cooperate</ion-option>
-            <ion-option value="Community structure">Community structure</ion-option>
-            <ion-option value="CompanyCC">CompanyCC</ion-option>
-            <ion-option value="Disability people organization">Disability people organization</ion-option>
-            <ion-option value="SPort">SPort</ion-option>
+          <ion-select [(ngModel)]="cso_type_id">
+            <ion-option value="1">Non Profit organization</ion-option>
+            <ion-option value="2">Community based organization</ion-option>
+            <ion-option value="3">Faith based organization</ion-option>
+            <ion-option value="4">Early Childhood development</ion-option>
+            <ion-option value="5">Cooperate</ion-option>
+            <ion-option value="6">Community structure</ion-option>
+            <ion-option value="7">CompanyCC</ion-option>
+            <ion-option value="8">Disability people organization</ion-option>
+            <ion-option value="9">SPort</ion-option>
 
           </ion-select>
         </ion-item>
@@ -59,20 +59,20 @@
 
         <ion-item id="item">
           <ion-label> Select Cso_sector</ion-label>
-          <ion-select [(ngModel)]="Cso_sector">
-            <ion-option value="Education">Education</ion-option>
-            <ion-option value="Health Care">Health Care</ion-option>
-            <ion-option value="Older Person/Senior Citizens">Older Person/Senior Citizens</ion-option>
-            <ion-option value="Youth">Youth</ion-option>
-            <ion-option value="Orphanage and Vulnerable Children">Orphanage and Vulnerable Children</ion-option>
-            <ion-option value="Gender">Gender</ion-option>
-            <ion-option value="Human Rights">Human Rights</ion-option>
-            <ion-option value="Environment">Environment</ion-option>
-            <ion-option value="Trade">Trade</ion-option>
-            <ion-option value="Poverty Alleviation">Poverty Alleviation</ion-option>
-            <ion-option value="Community Safety">Community Safety</ion-option>
-            <ion-option value="Communal Property Association">Communal Property Association</ion-option>
-            <ion-option value="Agriculture">Agriculture</ion-option>
+          <ion-select [(ngModel)]="cso_sector_id">
+            <ion-option value="1">Education</ion-option>
+            <ion-option value="2">Health Care</ion-option>
+            <ion-option value="3">Older Person/Senior Citizens</ion-option>
+            <ion-option value="4">Youth</ion-option>
+            <ion-option value="5">Orphanage and Vulnerable Children</ion-option>
+            <ion-option value="6">Gender</ion-option>
+            <ion-option value="7">Human Rights</ion-option>
+            <ion-option value="8">Environment</ion-option>
+            <ion-option value="9">Trade</ion-option>
+            <ion-option value="10">Poverty Alleviation</ion-option>
+            <ion-option value="11">Community Safety</ion-option>
+            <ion-option value="12">Communal Property Association</ion-option>
+            <ion-option value="13">Agriculture</ion-option>
           </ion-select>
         </ion-item>
       </ion-slide>
@@ -82,82 +82,82 @@
 
         <ion-item id="item">
           <ion-label> Select Province</ion-label>
-          <ion-select [(ngModel)]="Province">
-            <ion-option value="Eastern Cape">Eastern Cape</ion-option>
-            <ion-option value="Free State">Free State</ion-option>
-            <ion-option value="Gauteng">Gauteng</ion-option>
-            <ion-option value="Kwazulu Natal">Kwazulu Natal</ion-option>
-            <ion-option value="Limpopo">Limpopo</ion-option>
-            <ion-option value="Mpumalanga">Mpumalanga</ion-option>
-            <ion-option value="Northern Cape">Northern Cape</ion-option>
-            <ion-option value="North West">North West</ion-option>
-            <ion-option value="Western Cape">Western Cape</ion-option>
+          <ion-select (ionChange)="getDistrict()"  [(ngModel)]="province_id">
+            <ion-option value="1">Eastern Cape</ion-option>
+            <ion-option value="2">Free State</ion-option>
+            <ion-option value="3">Gauteng</ion-option>
+            <ion-option value="4">Kwazulu Natal</ion-option>
+            <ion-option value="5">Limpopo</ion-option>
+            <ion-option value="6">Mpumalanga</ion-option>
+            <ion-option value="7">Northern Cape</ion-option>
+            <ion-option value="8">North West</ion-option>
+            <ion-option value="9">Western Cape</ion-option>
           </ion-select>
         </ion-item>
 
         <ion-item id="item">
           <ion-label> Select District</ion-label>
-          <ion-select [(ngModel)]="District">
-            <ion-option value="Sarah Baartman">Sarah Baartman</ion-option>
-            <ion-option value="Amathole">Amathole</ion-option>
-            <ion-option value="Chris Hani">Chris Hani</ion-option>
-            <ion-option value="Joe Gqabi">Joe Gqabi</ion-option>
-            <ion-option value="O.R.Tambo">O.R.Tambo</ion-option>
-            <ion-option value="Alfred Nzo">Alfred Nzo</ion-option>
-            <ion-option value="Nelson Mandela Bay">Nelson Mandela Bay</ion-option>
-            <ion-option value="Buffalo City<">Buffalo City</ion-option>
-            <ion-option value="Xhariep">Xhariep</ion-option>
-            <ion-option value="Lejweleputswa">Lejweleputswa</ion-option>
-            <ion-option value="Thabo Mofutsanyane">Thabo Mofutsanyane</ion-option>
-            <ion-option value="Fezile Dabi">Fezile Dabi</ion-option>
-            <ion-option value="Mangaung">Mangaung</ion-option>
-            <ion-option value="West Rand">West Rand</ion-option>
-            <ion-option value="City of Tshwane">City of Tshwane</ion-option>
-            <ion-option value="Sedibeng">Sedibeng</ion-option>
+          <ion-select [(ngModel)]="district_id">
+            <ion-option value="1">Sarah Baartman</ion-option>
+            <ion-option value="2">Amathole</ion-option>
+            <ion-option value="3">Chris Hani</ion-option>
+            <ion-option value="4">Joe Gqabi</ion-option>
+            <ion-option value="5">O.R.Tambo</ion-option>
+            <ion-option value="6">Alfred Nzo</ion-option>
+            <ion-option value="7">Nelson Mandela Bay</ion-option>
+            <ion-option value="8">Buffalo City</ion-option>
+            <ion-option value="9">Xhariep</ion-option>
+            <ion-option value="10">Lejweleputswa</ion-option>
+            <ion-option value="11">Thabo Mofutsanyane</ion-option>
+            <ion-option value="12">Fezile Dabi</ion-option>
+            <ion-option value="13">Mangaung</ion-option>
+            <ion-option value="14">West Rand</ion-option>
+            <ion-option value="15">City of Tshwane</ion-option>
+            <ion-option value="16">Sedibeng</ion-option>
           </ion-select>
         </ion-item>
 
         <ion-item id="item">
           <ion-label> Select Municipality</ion-label>
-          <ion-select [(ngModel)]="Municipality">
-            <ion-option value="Dr Beyer Naude">Dr Beyer Naude</ion-option>
-            <ion-option value="Makana">Makana</ion-option>
-            <ion-option value="Ndlambe">Ndlambe</ion-option>
-            <ion-option value="Mbhashe">Mbhashe</ion-option>
-            <ion-option value="Mnquma">Mnquma</ion-option>
-            <ion-option value="Inxuba Yethemba">Inxuba Yethemba</ion-option>
-            <ion-option value="Engcono">Engcono</ion-option>
-            <ion-option value="Elundini">Elundini</ion-option>
-            <ion-option value="Senqu">Senqu</ion-option>
-            <ion-option value="Ngquza Hill">Ngquza Hill</ion-option>
-            <ion-option value="Port St Johns">Port St Johns</ion-option>
-            <ion-option value="Nyandeni">Nyandeni</ion-option>
-            <ion-option value="Mhlontlo">Mhlontlo</ion-option>
-            <ion-option value="King Sabata Dali">King Sabata Dali</ion-option>
-            <ion-option value="Matatiele">Matatiele</ion-option>
-            <ion-option value="Umzimvubu">Umzimvubu</ion-option>
-            <ion-option value="Ntabankulu">Ntabankulu</ion-option>
-            <ion-option value="Mbizana">Mbizana</ion-option>
+          <ion-select [(ngModel)]="municipality_id">
+            <ion-option value="1">Dr Beyer Naude</ion-option>
+            <ion-option value="2">Makana</ion-option>
+            <ion-option value="3">Ndlambe</ion-option>
+            <ion-option value="4">Mbhashe</ion-option>
+            <ion-option value="5">Mnquma</ion-option>
+            <ion-option value="6">Inxuba Yethemba</ion-option>
+            <ion-option value="7">Engcono</ion-option>
+            <ion-option value="8">Elundini</ion-option>
+            <ion-option value="9">Senqu</ion-option>
+            <ion-option value="10">Ngquza Hill</ion-option>
+            <ion-option value="11">Port St Johns</ion-option>
+            <ion-option value="12">Nyandeni</ion-option>
+            <ion-option value="13">Mhlontlo</ion-option>
+            <ion-option value="14">King Sabata Dali</ion-option>
+            <ion-option value="15">Matatiele</ion-option>
+            <ion-option value="16">Umzimvubu</ion-option>
+            <ion-option value="17">Ntabankulu</ion-option>
+            <ion-option value="18">Mbizana</ion-option>
           </ion-select>
         </ion-item>
       </ion-slide>
       <ion-slide class="insideSlide">
-        <ion-input placeholder="Ward_number" type="number" class="user-input" [(ngModel)]="Ward_number" id="anim1">
+        <ion-input placeholder="Ward_number" type="number" class="user-input" [(ngModel)]="ward_number" id="anim1">
         </ion-input>
 
-        <ion-input placeholder="Contact_Person" type="text" class="user-input" [(ngModel)]="Contact_Person" id="anim1">
+        <ion-input placeholder="Contact_Person" type="text" class="user-input" [(ngModel)]="contact_person" id="anim1">
         </ion-input>
 
-        <ion-input placeholder="Contact_Number" type="tel" class="user-input" [(ngModel)]="Contact_Number" id="anim1">
+        <ion-input placeholder="Contact_Number" type="number" class="user-input" [(ngModel)]="contact_number" id="anim1">
         </ion-input>
       </ion-slide>
 
       <ion-slide class="insideSlide1">
 
-        <ion-input placeholder="Total_Staff" type="number" class="user-input" [(ngModel)]="Total_Staff" id="anim1">
+        <ion-input placeholder="Total_Staff" type="number" class="user-input" [(ngModel)]="total_staff" id="anim1">
         </ion-input>
 
-        <ion-input placeholder="Collected_by" type="text" class="user-input" [(ngModel)]="Collected_by" id="anim1"
+        <ion-input placeholder="Collected_by" type="text" class="user-input" [(ngModel)]="collected_by" id="anim1"
           ></ion-input>
 
         <div id="results">
@@ -170,7 +170,7 @@
           <button ion-button round class="btnSign" id="anim2" color="secAlert" id="myBtn"
             (click)="SignUp()">Save</button>
           <button ion-button round class="btnSign" id="anim2" color="secAlert" id="myBtn"
-            (click)="reset(CsoName.value,MobiMethod.value,mobiDate.value,Paddress.value,Cso_type.value,Cso_sector.value,Province.value,District.value,Municipality.value,Ward_number.value,Contact_Person.value,Contact_Number.value,Total_Staff.value,Collected_by.value)">Reset</button>
+            (click)="reset(Name_of_Cso.value,MobiMethod.value,created_date.value,physical_address.value,cso_type_id.value,cso_sector_id.value,province_id.value,district_id.value,municipality_id.value,ward_number.value,contact_person.value,contact_number.value,total_staff.value,collected_by.value)">Reset</button>
         </div>
       </ion-slide>
     </ion-slides>

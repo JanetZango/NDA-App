@@ -17,7 +17,7 @@ import { SeeMembersPage } from '../see-members/see-members';
 export class ShowdetailsPage {
   viewCSoArr = new Array();
   ViewMemberArr = new Array();
-
+  userArr = new Array();
 
   name_of_cso;
   Collected_by;
@@ -40,7 +40,7 @@ export class ShowdetailsPage {
   id;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.viewCSoArr.push(this.navParams.get('orgObject'));
-    // console.log(this.viewCSoArr);
+    console.log(this.viewCSoArr);
     this.name_of_cso = this.viewCSoArr[0].name_of_cso;
     this.Collected_by = this.viewCSoArr[0].Collected_by;
     this.email_address = this.viewCSoArr[0].email_address;
@@ -58,6 +58,10 @@ export class ShowdetailsPage {
     this.modified_date = this.viewCSoArr[0].modified_date
     this.modified_by = this.viewCSoArr[0].modified_by
     this.id = this.viewCSoArr[0].id
+
+
+
+   
   }
 
   ionViewDidLoad() {
