@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { SqliteProvider } from '../../providers/sqlite/sqlite';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { ListPage } from '../list/list';
+import { AlertController } from 'ionic-angular';
 
 /**
  * Generated class for the AddPasswordPage page.
@@ -21,15 +22,15 @@ export class AddPasswordPage {
   id;
   email;
   password_hash;
-  constructor(public navCtrl: NavController, public navParams: NavParams,public sqliteService: SqliteProvider) {
+  constructor(public alertCtrl: AlertController,public navCtrl: NavController, public navParams: NavParams,public sqliteService: SqliteProvider) {
     this.viewCSoArr.push(this.navParams.get('orgObject'));
-    console.log(this.viewCSoArr);
+    // console.log(this.viewCSoArr);
     this.id = this.viewCSoArr[0].id;
     this.email = this.viewCSoArr[0].email;
     this.password_hash = this.viewCSoArr[0].password_hash
-    console.log(this.id)
-    console.log(this.email)
-    console.log(this.password_hash)
+    // console.log(this.id)
+    // console.log(this.email)
+    // console.log(this.password_hash)
   }
 
   ionViewDidLoad() {
@@ -39,6 +40,7 @@ export class AddPasswordPage {
    this.sqliteService.updateUserPssword(this.id,this.password_hash).then((data)=>{
      this.sqliteService.checkingEmail(this.email).then((data)=>{
        console.log(data)
+    ;
        this.navCtrl.push(ListPage);
      })
    })

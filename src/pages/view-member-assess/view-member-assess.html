@@ -14,12 +14,8 @@
         <ion-card *ngFor="let x of displayCapacity">
             <div class="card">
                 <p><b>Assessment completed:</b>{{x.assessment_completed}}</p>
-                <p><b>Created date:</b>{{x.created_date}}</p>
-                <p><b>Modified date:</b>{{x.modified_date}}</p>
-                <p><b>Assessment date:</b>{{x.assessment_date}}</p>
                 <p><b>Calc Assessment Score:</b>{{x.calc_assessment_score}}</p>
                 <p><b>Calc Assessment Level:</b>{{x.calc_assessment_level}}</p>
-                <p><b>Poe Link:</b>{{x.poe_link}}</p>
                 <button ion-button (click)="viewMore(x.Fname)">View More</button>
             </div>
         </ion-card>

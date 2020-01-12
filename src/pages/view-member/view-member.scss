@@ -1,11 +1,11 @@
 page-view-member {
     .card{
-        padding:5px;
+        padding:2px;
         height: 70px;
         font-family: 'ZCOOL XiaoWei', serif;
         text-align: left;
         button{
-            // margin-top:-80px;
+            margin-top:-4px;
             justify-content: left;
             background-color: #00919E;
             color:white;
@@ -23,15 +23,19 @@ page-view-member {
         height:20%;
         background-color: #00919E;
         padding:20px;
+        text-align: right;
 
         button{
             background-color: #00919E;
             color: white;
             border: 1px solid white;
-        
+            text-align: right;
            
             
         }
+    }
+    .search{
+        margin-top:30px;
     }
     .viewBtn{
         text-align: right;

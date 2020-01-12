@@ -20,12 +20,17 @@ export class BuildinginterventionsPage {
   downloadurl2;
   getCurrentUser = new Array();
   memberArr = new Array();
+  ViewMemberArr = new Array();
+  disDistrict = new Array()
   key;
   Capacity;
   Province
   showQuestions: boolean = false;
   items = new Array();
   orgNames = new Array();
+  viewCSoArr = new Array();
+  disDistrict2 = new Array()
+  disDistrict3 = new Array()
   CsoName
   District
   Municipality
@@ -36,34 +41,77 @@ export class BuildinginterventionsPage {
   Collected
   StartDate
   EndDate
+  attendance_register;
+  auth_key;
+  created_at;
+  email;
+  full_name;
+  username;
+  legacy_user_id;
+  password_reset_token;
+  password_hash;
+  province_name;
+  province_id;
+  office;
+  updated_at;
+  user_group;
+  title;
+  status;
+  role;
+  id;
+  names;
+  getCsoId;
+  province_id2
+  district_id;
+  capacity_building_type_id
+  municipality_id;
+  modified_date;
+  funding_source_id;
+  end_date;
+  facilitator_name
+  partner_id
+  co_facilitator_name
+  start_date
+  modified_by
+  created_date;
+  poe_link
   constructor(public navCtrl: NavController, public navParams: NavParams, public sqliteService: SqliteProvider, public toastCtrl: ToastController) {
-    this.memberArr.push(this.navParams.get('orgObject'));
-    console.log(this.memberArr);
+    this.viewCSoArr.push(this.navParams.get('orgObject'));
+    this.auth_key = this.viewCSoArr[0].auth_key;
+    this.created_at = this.viewCSoArr[0].created_at;
+    this.email = this.viewCSoArr[0].email;
+    this.full_name = this.viewCSoArr[0].full_name;
+    this.id = this.viewCSoArr[0].id;
+    this.legacy_user_id = this.viewCSoArr[0].legacy_user_id;
+    this.office = this.viewCSoArr[0].office;
+    this.password_hash = this.viewCSoArr[0].password_hash;
+    this.password_reset_token = this.viewCSoArr[0].password_reset_token;
+    this.province_id = this.viewCSoArr[0].province_id;
+    this.province_name = this.viewCSoArr[0].province_name;
+    this.role = this.viewCSoArr[0].role;
+    this.status = this.viewCSoArr[0].status;
+    this.title = this.viewCSoArr[0].title;
+    this.updated_at = this.viewCSoArr[0].updated_at;
+    this.user_group = this.viewCSoArr[0].user_group;
+    this.username = this.viewCSoArr[0].username;
+    console.log(this.id)
+    console.log(this.viewCSoArr)
 
 
-    this.key = this.memberArr[0].id
-    console.log(this.key);
-    // this.get();
+    this.get()
+    // this.getDistrict()
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BuildinginterventionsPage');
   }
-  get() {
-    this.sqliteService
-      .getUser()
-      .then((s: any) => {
-        this.getCurrentUser = s;
-        console.log(s)
-        console.log(this.getCurrentUser)
-      })
-  }
+
 
   insertpic2(event: any) {
     if (event.target.files && event.target.files[0]) {
       let reader = new FileReader();
       reader.onload = (event: any) => {
-        this.downloadurl2 = event.target.result;
+        this.attendance_register = event.target.result;
       }
       reader.readAsDataURL(event.target.files[0]);
     }
@@ -72,7 +120,7 @@ export class BuildinginterventionsPage {
   addCapacity() {
     this
       .sqliteService
-      .Addcapacity_building(this.key, this.CsoName, this.Capacity, this.Province, this.District, this.Municipality,this.partner,this.venue,this.Fname,this.Fsource,this.Collected,this.StartDate,this.EndDate)
+      .Addcapacity_building(this.capacity_building_type_id, this.province_id, this.district_id, this.municipality_id, this.partner_id, this.venue, this.facilitator_name, this.co_facilitator_name, this.start_date, this.end_date, this.funding_source_id, this.id, this.modified_by, this.modified_date, this.id, this.start_date, this.attendance_register, this.attendance_register)
       .then(s => {
         console.log(s)
         this.navCtrl.push(CapacityPage)
@@ -84,4 +132,93 @@ export class BuildinginterventionsPage {
       });
   }
 
+  getItems(ev: any) {
+    this.initializeItems();
+    // this.searchlist = true
+    // set val to the value of the searchbar
+    const val = ev.target.value;
+    // if the value is an empty string don't filter the items
+    if (val && val.trim() != '') {
+      this.items = this.items.filter((item) => {
+        return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
+      })
+      let searchlist = document.getElementsByClassName('searchitem') as HTMLCollectionOf<HTMLElement>;
+      //searchlist[0].style.display = 'block';
+    }
+    else {
+      this.items = []
+    }
+  }
+  initializeItems() {
+    this.items = []
+    this.items = this.namesArr
+    // this.items.length =0;
+    console.log(this.items)
+  }
+
+  namesArr = new Array()
+  storeNames() {
+    this.namesArr = this.sqliteService.getName();
+    // this.namesArr.length =0;
+    console.log(this.namesArr)
+  }
+
+  get() {
+    console.log(this.id)
+    this.sqliteService.DisplayCso(this.id).then((data: any) => {
+      this.ViewMemberArr = data;
+      this.storeNames();
+      console.log(this.ViewMemberArr)
+    })
+  }
+
+  openMarkerInfo(name){
+    for (var x = 0; x < this.ViewMemberArr.length; x++) {
+      if (name == this.ViewMemberArr[x].name_of_cso) {
+       console.log(name)
+      }
+    }
+    this.sqliteService.getCsoForSearching(name).then((data) => {
+      console.log(data)
+      this.getCsoId = data[0].id
+      this.province_id2 = data[0].province_id
+      console.log(this.province_id2)
+    })
+
+    this.sqliteService.getLookUpprovinceCapacity(this.province_id2).then((data:any)=>{
+      console.log(data)
+      this.disDistrict = data
+      console.log(this.disDistrict)
+    })
+    this.sqliteService.getLookUpDistrict(this.province_id2).then((data:any)=>{
+      console.log(data)
+      this.disDistrict2 = data
+      console.log(this.disDistrict2)
+    })
+  }
+
+  
+  getDistrict(){
+    this.sqliteService.getLookUpprovinceCapacity(this.province_id2).then((data:any)=>{
+      console.log(data)
+      this.disDistrict = data
+      console.log(this.disDistrict)
+    })
+  }
+
+  getDistrictFilter(){
+    this.sqliteService.getLookUpDistrict(this.province_id2).then((data:any)=>{
+      console.log(data)
+      this.disDistrict2 = data
+      console.log(this.disDistrict2)
+    })
+  }
+  getMunicipality(){
+    this.sqliteService.getLookUpMunicipality(this.district_id).then((data:any)=>{
+      console.log(data)
+      this.disDistrict3 = data
+      console.log(this.disDistrict3)
+  
+    })
+  }
 }

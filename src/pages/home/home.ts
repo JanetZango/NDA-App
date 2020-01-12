@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, Keyboard } from 'ionic-angular';
 import { SqliteProvider } from '../../providers/sqlite/sqlite';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { AddPasswordPage } from '../add-password/add-password';
-import { AlertController } from 'ionic-angular';
+import { AlertController, LoadingController } from 'ionic-angular';
 import { empty } from 'rxjs/Observer';
 
 
@@ -22,27 +22,35 @@ export class HomePage {
   displayUser = new Array();
   email;
   email_address
-  constructor(public navCtrl: NavController, public sqliteService: SqliteProvider, public alertCtrl: AlertController) {
+  constructor(private keyboard: Keyboard, public loadingCtrl: LoadingController, public navCtrl: NavController, public sqliteService: SqliteProvider, public alertCtrl: AlertController) {
     // this.displayDta();
 
   }
 
   displayDta() {
+    let loading = this.loadingCtrl.create({
+      spinner: 'bubbles',
+      content: 'Please wait...',
+      duration: 400000
+    });
+    loading.present();
     this.sqliteService.checkingEmail(this.email_address).then((data: any) => {
       this.displayUser = data[0]
       console.log(this.displayUser)
       let obj = {
         email: data[0].email
       }
-      console.log(obj.email)
-      if (obj.email == this.email_address) {
+      // console.log(obj.email)
+      // var areEqual = obj.email.toUpperCase() === this.email_address.toUpperCase();
+      if (obj.email.toUpperCase() == this.email_address.toUpperCase()) {
         console.log("true")
+        loading.dismiss();
         this.navCtrl.push(AddPasswordPage, { orgObject: this.displayUser });
       }
-      if (this.displayUser == undefined) {
+      else {
         console.log("false")
         const alert = this.alertCtrl.create({
-          title: '',
+          title: 'Error',
           subTitle: 'Could not retrieve user account details using the provided email address.Please connect to the network to get the latest user account details',
           buttons: ['OK']
         });

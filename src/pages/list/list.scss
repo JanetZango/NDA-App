@@ -8,16 +8,17 @@ page-list {
     }
     .card{
         height:200px;
-        border: 1.5px solid rgb(241, 241, 241);
+        // border: 1.5px solid rgb(241, 241, 241);
         // width:360px;
         margin:0 auto 10px;
         margin-top:20px;
         background-color: #00919E;
         color:white;
-        box-shadow: 4px 10px 10px  rgba(17, 16, 16, 0.408);
+        box-shadow: 6px 15px 15px  rgba(17, 16, 16, 0.408);
         transition: 0.5s ease;
         padding:35px;
-        cursor: pointer;       
+        cursor: pointer;     
+        border-radius: 10px;  
         p{
             font-size: 2.5em;
             color:white;
@@ -28,15 +29,16 @@ page-list {
             color:white;
         }
     }
-    .card:hover{
-        transform:scale(1.2);
-    }
+    // .card:hover{
+    //     transform:scale(1.2);
+    // }
     .card2{
         height:200px;
         // width:360px;
         margin:0 auto 10px;
         margin-top:20px;
         background-color: orangered;
+        border-radius: 10px; 
 
         p{
             font-size: 2.5em;
@@ -51,6 +53,7 @@ page-list {
         margin:0 auto 10px;
         margin-top:20px;
         background-color: goldenrod;
+        border-radius: 10px; 
 
         p{
             font-size: 2.3em;
@@ -82,6 +85,7 @@ page-list {
         img{
             height:40px;
             width:40px;
+            margin-top:20px;
         }
         p{
             // border:2px solid red;

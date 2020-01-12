@@ -25,6 +25,8 @@ export class RegisterPage {
   getCurrentUser = new Array();
   viewCSoArr = new Array();
   ViewMemberArr = new Array();
+  disDistrict = new Array()
+  disMunicipality = new Array()
   name_of_cso
   MobiMethod
   created_date
@@ -64,6 +66,7 @@ export class RegisterPage {
   contact_number;
   contact_person;
   created_by;
+  getCsoId;;
   constructor(public navCtrl: NavController, public navParams: NavParams, public sqliteService: SqliteProvider, public toastCtrl: ToastController) {
     this.viewCSoArr.push(this.navParams.get('orgObject'));
 
@@ -88,7 +91,8 @@ export class RegisterPage {
 
 
     this.get();
-    // this.getDistrict();
+    this.getDistrict();
+    this.getMunicipality()
   }
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegisterPage');
@@ -99,21 +103,30 @@ export class RegisterPage {
       .sqliteService
       .regsiterCso(this.cso_type_id, this.cso_sector_id, this.province_id, this.district_id, this.municipality_id, this.ward_number, this.registration_number, this.nda_registration, this.name_of_cso, this.contact_person, this.physical_address, this.contact_number, this.email_address, this.total_staff, this.collected_by, this.modified_by, this.modified_date, this.id, this.created_date, this.cso_mobilisation_method_id, this.mobilisation_date)
       .then(s => {
+        this.navCtrl.pop()
         console.log(s)
         const toast = this.toastCtrl.create({
           message: 'cso was added successfully',
           duration: 3000
         });
         toast.present();
-        this.navCtrl.push(ViewMemberPage)
+        
       });
   }
 
   getDistrict(){
-    this.sqliteService.getLookUpDistrict(this.province_id).then((data)=>{
+    this.sqliteService.getLookUpDistrict(this.province_id).then((data:any)=>{
+      console.log(data)
+      this.disDistrict = data
+      console.log(this.disDistrict)
+    })
+  }
+  getMunicipality(){
+    this.sqliteService.getLookUpMunicipality(this.district_id).then((data)=>{
       console.log(data)
     })
   }
+  
 
 
   getItems(ev: any) {
@@ -136,13 +149,14 @@ export class RegisterPage {
   initializeItems() {
     this.items = []
     this.items = this.namesArr
-
+    // this.items.length =0;
     console.log(this.items)
   }
 
   namesArr = new Array()
   storeNames() {
     this.namesArr = this.sqliteService.getName();
+    // this.namesArr.length =0;
     console.log(this.namesArr)
   }
 
@@ -153,6 +167,15 @@ export class RegisterPage {
       this.storeNames();
       console.log(this.ViewMemberArr)
     })
+  }
+  openMarkerInfo(name){
+    for (var x = 0; x < this.ViewMemberArr.length; x++) {
+      if (name == this.ViewMemberArr[x].name_of_cso) {
+       console.log(name)
+      }
+      
+    }
+   
   }
 
 }

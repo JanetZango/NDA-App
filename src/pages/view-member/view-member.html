@@ -1,9 +1,13 @@
 <ion-content>
   <div class="top">
+    
     <button ion-button (click)="registerCSO()">
       <ion-icon ios="ios-add" md="md-add"></ion-icon>Register CSO
     </button>
-    <ion-searchbar (input)="getItems($event)"></ion-searchbar>
+    <div class="search"> 
+        <ion-searchbar (input)="getItems($event)"></ion-searchbar>
+    </div>
+
   </div>
   <div class="bottom">
   </div>
@@ -14,7 +18,7 @@
   </ion-list>
   <h3 style="text-align: center;">Manage Mobilisation-CSO <br>Registration</h3>
   <div class="mainInfor">
-      <ion-card *ngFor="let a of ViewMemberArr">
+    <ion-card *ngFor="let a of ViewMemberArr">
       <div class="card">
         <p><b>CsoName:</b>{{a.name_of_cso}}</p>
         <div class="viewBtn">

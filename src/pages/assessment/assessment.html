@@ -1,0 +1,1012 @@
+<ion-content>
+    <div class="round">
+      <div class="btn">
+        <button ion-button clear (click)="gotoback()">
+          <ion-icon ios="ios-arrow-round-back" md="md-arrow-round-back"></ion-icon>
+        </button>
+      </div>
+    </div>
+    <div class="bigCard">
+      <div class="divImage">
+        <img src="../../assets/logo2.jpg">
+  
+      </div>
+      <!-- <div class="theCard"> -->
+      <ion-slides pager="true" class="slide">
+        <ion-slide>
+          <ion-input placeholder="Type the name of CSO" type="search" id="site-search" class="user-input"
+            [(ngModel)]="item" (input)="getItems($event)" id="anim1"></ion-input>
+  
+          <div id="results">
+            <ion-item no-lines *ngFor="let item of items; let i=index" for="site-search" (click)="openMarkerInfo(item)">
+              <p>{{item}}</p>
+            </ion-item>
+          </div>
+  
+      
+          <div class="Contacts">
+            <ion-label>Assessment date</ion-label>
+            <input type="date" id="input-field" [(ngModel)]="assessment_date">
+            <br>
+          </div>
+  
+        </ion-slide>
+        <ion-slide>
+          <ion-item id="item">
+            <ion-label> Assessment Type</ion-label>
+            <ion-select [(ngModel)]="assessment_type_id" (ionChange)="AssessmentQuestions()">
+              <ion-option value="1">CSO Mobilisation Needs Assessment Form</ion-option>
+              <ion-option value="2">Formalisation Needs Assessment</ion-option>
+              <ion-option value="3">Registration and Compliance</ion-option>
+              <ion-option value="4">Community Development</ion-option>
+              <ion-option value="5">Workplace Conflict</ion-option>
+              <ion-option value="6">Financial Management Needs Assessment
+              </ion-option>
+              <ion-option value="7">Capacity Building Governanace Needs
+                Assessment</ion-option>
+              <ion-option value="8">Capacity Building
+                Legislative
+                Registration and Governanace</ion-option>
+              <ion-option value="9">Organisational Management and Human
+                Resource Nedds</ion-option>
+              <ion-option value="10">Project Management Needs</ion-option>
+              <ion-option value="11">Resource Mobilisation and Sustainability
+              </ion-option>
+              <ion-option value="12">Networking and External Relations</ion-option>
+              <ion-option value="13">Grant Funding and Resource Needs</ion-option>
+              <ion-option value="14">Linkage for Sustainability Needs</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-slide>
+      </ion-slides>
+  
+      <div id="placeholderDiv" *ngIf="showQuestions">
+        <div class="Qcard">
+          <ion-slides pager="true">
+            <ion-slide>
+              <h2>Section One</h2>
+              <b>Institutional Arrangement</b>
+              <p>1.The CSO/NPO has a contituion approved by members of the <br>organisation</p>
+              <ion-list [(ngModel)]="assessmentQ" radio-group>
+                <ion-item id="item2">
+                  <ion-label id="label">No constitution</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+                <ion-item>
+                  <ion-label id="label">Draft constitution not approved by members</ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label id="label">Approved constitution</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+              <p>2.The CSO/NPO has an independent Board/Committee governed by a constitution</p>
+              <ion-list [(ngModel)]="assessmentQ2" radio-group>
+                <ion-item>
+                  <ion-label id="label">No Board/Committee appointed</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label id="label">Board/Commitee not appointed<br> by members</ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label id="label">Board/Commitee appointed by members</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+  
+              <p>3.The Board/Committee is diverse,representative and provides technical expertise</p>
+              <ion-list [(ngModel)]="assessmentQ3" radio-group>
+                <ion-item>
+                  <ion-label id="label">No diverse membership</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label id="label">Less than 70% diverse membership</ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label id="label">More than 70% diverse membership</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+            </ion-slide>
+  
+  
+  
+  
+            <ion-slide>
+              <p>4.The Board/Commitee meets every quarter(three months) of the year</p>
+              <ion-list [(ngModel)]="assessmentQ4" radio-group>
+                <ion-item>
+                  <ion-label id="label">Board /Committee never meet</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label id="label">Board/Commitee meet less than four times a year</ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label id="label">Board /Commitee meet four or more times a year</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+  
+  
+              <p>5.The CSO/NPO has a documented stragetic plan,understood by all staff and used for operational planning
+              </p>
+              <ion-list [(ngModel)]="assessmentQ5" radio-group>
+                <ion-item>
+                  <ion-label id="label">CSO/NPO does not have stragetic plan</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label id="label">CSO/NPO has a stragetic plan but has not been shared with staff</ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label id="label">CSO/NPO has a stragetic plan and used for operational planning</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+  
+  
+              <p>6.The CSO/NPO has organisational structure for delegating responsibilities</p>
+              <ion-list [(ngModel)]="assessmentQ6" radio-group>
+                <ion-item>
+                  <ion-label id="label">CSO/NPO does not have an organogram</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label id="label">CSO/NPO has an organogram but not approved by Board /Commitee</ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label id="label">CSO/NPO has approved arganogram</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+            </ion-slide>
+            <ion-slide>
+              <p>7.The CSO/NPO is legally registered with the appropriate regustration authority</p>
+              <ion-list [(ngModel)]="assessmentQ7" radio-group>
+                <ion-item>
+                  <ion-label id="label">CSO/NPO is not legally registered</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label id="label">CSO/NPO is in the process of registration /provisional registered</ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label id="label">CSO/NPO is legally registered</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+              <p>8.The CSO/NPO complaint with all registration requirements of the registration authority </p>
+              <ion-list [(ngModel)]="assessmentQ8" radio-group>
+                <ion-item>
+                  <ion-label>CSO/NPO is not compliant</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO is partial compliant </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO is fully complaint</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+            </ion-slide>
+  
+            <ion-slide>
+              <h2>Section two</h2>
+              <p>Infrastructure</p>
+              <p>9.The CSO/NPO has an office where ir operates for its business only.</p>
+              <ion-list [(ngModel)]="assessmentQ9" radio-group>
+                <ion-item>
+                  <ion-label>CSO/NPO does not have and office</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO operate from a temporal structure or house of a member </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has its own office</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+              <p>10.The CSO/NPO have communications devices</p>
+  
+              <ion-list [(ngModel)]="assessmentQ10" radio-group>
+                <ion-item>
+                  <ion-label>CSO/NPO does not have any communication devices</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has a cell phone only used for work </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has cell phones ,landline and computer</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+  
+              <p>11.The CSO/NPO email address/Facebook page/Twitter handle</p>
+              <ion-list [(ngModel)]="assessmentQ111" radio-group>
+                <ion-item>
+                  <ion-label>CSO/NPO does not have email address,Facebook page and Twitter handle</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO uses staff email address and personal and personal Facebook pages and Twitter handles
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has a business email address ,Facebook page and Twitter</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+            </ion-slide>
+  
+            <ion-slide>
+              <p>12.The CSO/NPO markerting and promotion material for its work</p>
+              <ion-list [(ngModel)]="assessmentQ12" radio-group>
+                <ion-item>
+                  <ion-label>CSO/NPO does not have any markerting and promotion material for its work</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has a brochure about the organisation
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has a brochures, banners and publications about its work</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+  
+              <p>13.The CSO/NPO transportation mode used for business</p>
+              <ion-list [(ngModel)]="assessmentQ13" radio-group>
+                <ion-item>
+                  <ion-label>CSO/NPO uses public transportation to do its business</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO uses personal cars to do its business
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has a car it own for its business and used by staff</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+  
+              <p>14.The CSO/NPO has office support equipment for printing,photocopying and faxing</p>
+  
+              <ion-list [(ngModel)]="assessmentQ14" radio-group>
+                <ion-item>
+                  <ion-label>CSO/NPO does not have access to printing,photocopying and faxing on site</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO uses printers ,photocopier and fax machines own by members of staff or
+                    relatives/friends
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has printers,photocopier and fax machines on site and working </ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+  
+              <p>15.The CSO/NPO has access to internet and connectivity</p>
+              <ion-list [(ngModel)]="assessmentQ15" radio-group>
+                <ion-item>
+                  <ion-label>CSO/NPO does not have access to internet and connectivity</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO does not have access to internet and connectivity in its office but uses internet
+                    cafe avaliable in the area
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO does have access to internet and connectivity in the office </ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+            </ion-slide>
+  
+  
+            <ion-slide>
+              <h2>Section three</h2>
+              <p>Staffing and Resources</p>
+              <p>16.The CSO/NPO has full time staff member</p>
+  
+              <ion-list [(ngModel)]="assessmentQ16" radio-group>
+                <ion-item>
+                  <ion-label>CSO/NPO does not have any full-time staff members but Volunteers</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO have between one to five full time paid staff members and Volunteers
+  
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has six or more full time paid staff memmbers and Volunteers </ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+  
+              <p>17.The CSO/NPO has management staff,operational staff and administrative staff</p>
+  
+              <ion-list [(ngModel)]="assessmentQ17" radio-group>
+                <ion-item>
+                  <ion-label>CSO/NPO has less than three staff members who does management,operational and administrative
+                    functions</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has only dedicated management staff but other staff they do operation staff and
+                    administrative staff
+  
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has dedicated management staff ,operations staff and administative staff</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+  
+              <p>18.The CSO/NPO has full time staff trained in the business or sector they are operating</p>
+  
+              <ion-list [(ngModel)]="assessmentQ18" radio-group>
+                <ion-item>
+                  <ion-label>CSO/NPO does not have any staff member trained in the sector they are operating
+                    functions</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has between one to three staff members trained and qualified in the sector or
+                    business they are operating
+  
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has more than four staff members trained and qualified in the sector or business they
+                    are operating </ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+  
+            </ion-slide>
+  
+            <ion-slide>
+              <p>19.The CSO/NPO has a person full time working on managing its accounts(Financial Management)</p>
+  
+              <ion-list [(ngModel)]="assessmentQ19" radio-group>
+                <ion-item>
+                  <ion-label>CSO/NPO does not have any full-time Bookkeeper or Accountant</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has a qualified Bookkeeper working full time
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has a qualified accountant working full time</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+  
+              <p>20.The CSO/NPO own its own car for transportation</p>
+  
+  
+              <ion-list [(ngModel)]="assessmentQ20" radio-group>
+                <ion-item>
+                  <ion-label>CSO/NPO does not have its own car used by staff for transport</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has one(1) shared by all staff for the organisation work
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has 2(two) or more cars used by staff to do the organisation work</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+  
+              <p>21.The CSO/NPO raised funding in the past year totalling between:</p>
+  
+  
+              <ion-list [(ngModel)]="assessmentQ21" radio-group>
+                <ion-item>
+                  <ion-label>R0 00-R100 000</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>R101 000-R500 00
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>More than R500 000</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+  
+            </ion-slide>
+  
+            <ion-slide>
+              <p>22.The CSO/NPO has the following number of regular donors for its work in a year</p>
+  
+              <ion-list [(ngModel)]="assessmentQ22" radio-group>
+                <ion-item>
+                  <ion-label>0-5 donors</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>6-10 donors
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>More than 10 donors</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+  
+              <p>23.The CSO/NPO budget per year is between the following:</p>
+              <ion-list [(ngModel)]="assessmentQ23" radio-group>
+                <ion-item>
+                  <ion-label>R0.00 R500 00</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>R501 00-R100 000
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>More than R1000 000</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+  
+  
+              <p>24.The CSO/NPO has recieved government (National,Provincial Or Municipality)funding before</p>
+              <ion-list [(ngModel)]="assessmentQ24" radio-group>
+                <ion-item>
+                  <ion-label>The CSO/NPO has never recieved funding from government institutions(National ,Provincial or
+                    Municipality)</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>The CSO/NPO has recieved funding from government institutions(National ,Provincial or
+                    Municipality) in the past year
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>The CSO/NPO has recieved funding from government institutions(National ,Provincial or
+                    Municipality) in the past two years or more</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+            </ion-slide>
+  
+            <ion-slide>
+              <p>25.The CSO/NPO has recieved private sector/business funding before</p>
+              <ion-list [(ngModel)]="assessmentQ25" radio-group>
+                <ion-item>
+                  <ion-label>CSO/NPO has never recieved funding from private /business sector</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has recieved funding from business /private sector in the past year
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has recieved funding from private/business sector in the past two years or more
+                  </ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+  
+              <p>26.The CSO/NPO has recieved international or local foundations funding before</p>
+              <ion-list [(ngModel)]="assessmentQ26" radio-group>
+                <ion-item>
+                  <ion-label>CSO/NPO has never recieved funding from international or local foundations</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has recieved funding from international or local donor foundations in the past year
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has recieved funding from international or local foundations in the past two or more
+                    years</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+  
+            </ion-slide>
+  
+  
+            <ion-slide>
+              <h2>Section four</h2>
+              <p>Networking and Membership</p>
+              <p>27.The CSO/NPO affilation to networks or professional bodies</p>
+              <ion-list [(ngModel)]="assessmentQ27" radio-group>
+                <ion-item>
+                  <ion-label>CSO/NPO does not belong to any network or professional bodies</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO belong to local,provincial or national network
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO belong to local,provincial,national network or affiliated to professional bodies
+                  </ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+              <p>28.The CSO/NPO has staff who belong to networks or professional bodies</p>
+              <ion-list [(ngModel)]="assessmentQ28" radio-group>
+                <ion-item>
+                  <ion-label>CSO/NPO does not have any staff belonging to any networks or affiliated with professional
+                    bodies</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has a member of staff that belong to local,provincial or national network
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has member of staff who belong to local,provincial,national networks or affiliated to
+                    professional bodies</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+              <p>29.The CSO/NPO has community membership belonging to the CSO/NPO</p>
+              <ion-list [(ngModel)]="assessmentQ29" radio-group>
+                <ion-item>
+                  <ion-label>CSO/NPO does not have community membership</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has community membership but they are not active
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has active community membership</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+              <P>30.The CSO/NPO staff any networking sessions(workshops,conferences,events,meetings etc)</P>
+              <ion-list [(ngModel)]="assessmentQ30" radio-group>
+                <ion-item>
+                  <ion-label>CSO/NPO staff has never attended any networking sessions</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has never attended any networking session but they have recieved invites to such
+                    sessions before
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO staff have attended networking sessions before</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+  
+            </ion-slide>
+  
+            <ion-slide>
+              <h2>Section five</h2>
+              <p>Training and Capacity Building</p>
+              <p>31.Training and skills of staff management board/commitee on conflict management/ resolution</p>
+              <ion-list [(ngModel)]="assessmentQ31" radio-group>
+                <ion-item>
+                  <ion-label>CSO/NPO staff,management,board/commitee has never benn trained on conflict
+                    management/resolution</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO staff,management has been trained on conflict management/resolution
+  
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO staff,management,board/commiteehas been trained on conflict management/resolution
+                  </ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+  
+              <p>32.Training and skills of staff,management,board/commitee on governance of organisation</p>
+              <ion-list [(ngModel)]="assessmentQ32" radio-group>
+                <ion-item>
+                  <ion-label>CSO/NPO staff,management,board/commitee has been trained on governance</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO staff,management has been trained on governance
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO staff,management,board/commitee has been trained on governance</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+  
+              <p>33.Training and skills of staff,management,board/commitee on financial management</p>
+              <ion-list [(ngModel)]="assessmentQ33" radio-group>
+                <ion-item>
+                  <ion-label>CSO/NPO staff,management,board/commitee has never been trained on financial management
+                  </ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO staff,management has been trained on financial management
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO staff,management,board/commitee has been trained on financial management</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+  
+            </ion-slide>
+  
+            <ion-slide>
+              <p>34.Training and skills of staff,management,board/commitee on reporting and compliance to reporting
+                requirements</p>
+              <ion-list [(ngModel)]="assessmentQ34" radio-group>
+                <ion-item>
+                  <ion-label>CSO/NPO staff,management,board/commitee has never been trained on reporting and reporting
+                    requirements</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO staff,management hs been trained on reporting and reporting requirements
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO staff,management,baord/commitee has been trained on reporting and reporting
+                    requirements</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+  
+              <p>35.Training and skills of staff,management,board/commitee on development of stragetic plans and operarion
+                plans</p>
+              <ion-list [(ngModel)]="assessmentQ35" radio-group>
+                <ion-item>
+                  <ion-label>CSO/NPO staff,management,baord/commitee has never been trained on stragetic plans and
+                    operation plans</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO staff,management has been trained on stargetic plans and operation plan
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO staff,management,board/commitee has been trained stargetic plans and operation plans
+                  </ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+  
+              <p>36.Training and skills of staff,management,board/commitee on organisational development and human
+                resources management</p>
+              <ion-list [(ngModel)]="assessmentQ36" radio-group>
+                <ion-item>
+                  <ion-label>CSO/NPO staff,management,board/commitee has never been trained on organisational development
+                    and human resources management</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO staff,management has been trained on organisational developmentand human resources
+                    management
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO staff,management,board/commitee has been trained on organisational development and
+                    human resources management</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+  
+            </ion-slide>
+  
+            <ion-slide>
+              <p>37.Training and skills of staff,management,board/commitee on resource mobilisation and fund raising</p>
+              <ion-list [(ngModel)]="assessmentQ37" radio-group>
+                <ion-item>
+                  <ion-label>CSO/NPO staff,management,board/commitee has never been trained on resource mobilisation and
+                    fund raising</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO staff,management has been trained on resource mobilisation and fund raising
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO staff,management,board/commitee has been trained on resource mobilisation and fund
+                    raising</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+  
+              <p>38.Training and skills of staff,management,board/commitee on project management</p>
+              <ion-list [(ngModel)]="assessmentQ38" radio-group>
+                <ion-item>
+                  <ion-label>CSO/NPO staff,management,board/commitee has never been trained on project management
+                  </ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO staff,management has been trained on project management
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO staff,management,board/commitee has been trained on project management</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+  
+              <p>39.Training and skills of staff,management,board/commitee on computer skills and information management
+              </p>
+              <ion-list [(ngModel)]="assessmentQ39" radio-group>
+                <ion-item>
+                  <ion-label>CSO/NPO staff,management,board/commitee has been trained on computer skills and information
+                    management</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO staff,management has been trained on computer skills and information management
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO staff,management,board/commitee has been trained on computer skills and information
+                    management</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+  
+              <p>40.Training and skills of staff,management,board/commitee on community needs assessment and profiling</p>
+              <ion-list [(ngModel)]="assessmentQ40" radio-group>
+                <ion-item>
+                  <ion-label>CSO/NPO staff,management,board/commitee has never been trained on community needs assessment
+                    and profiling</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO staff,management have been trained on community needs assessment and profiling
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO staff,management,board/commitee has been trained on community needs assessment and
+                    profiling</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+  
+            </ion-slide>
+  
+  
+            <ion-slide>
+              <h2>Section six</h2>
+              <p>Compliance with Laws and polities</p>
+              <p>41.The CSO/NPO produces an annual report with financial statements registration authorities for
+                compliance</p>
+              <ion-list [(ngModel)]="assessmentQ41" radio-group>
+                <ion-item>
+                  <ion-label>CSO/NPO has never produced an annual report with an annual statement before</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has produced an annual report with ana annual statement before but was never
+                    submitted to anyone
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has produces an annual report with an annual statement every year and submitted to
+                    registration authorities for compliance</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+  
+              <p>42.The CSO/NPO audit its financial books using an independent auditor</p>
+              <ion-list [(ngModel)]="assessmentQ42" radio-group>
+                <ion-item>
+                  <ion-label>CSO/NPO has never audited its finances before</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has audited its finances before but not every year
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has audited its finances every year without fail</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+  
+            </ion-slide>
+            <ion-slide>
+              <p>43.The CSO/NPO submit all required documents for renewing registration with its registering
+                authority(NPO, Cooperatives etc)</p>
+              <ion-list [(ngModel)]="assessmentQ43" radio-group>
+                <ion-item>
+                  <ion-label>CSO/NPO has never submitted any documents for renewing registration</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has submitted documents to renew its registration once
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has always submitted all documnets for renewing registration every year</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+  
+              <p>44.The CSO/NPO holds an annual general meeting with its members and present annual reports</p>
+              <ion-list [(ngModel)]="assessmentQ44" radio-group>
+                <ion-item>
+                  <ion-label>CSO/NPO has never held an annual general meeting with its members</ion-label>
+                  <ion-radio value="1"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has held an annual general meeting with its members once and presented an annual
+                    report
+                  </ion-label>
+                  <ion-radio value="2"></ion-radio>
+                </ion-item>
+  
+                <ion-item>
+                  <ion-label>CSO/NPO has always held an annual general meeting with its members and presented annual
+                    reports</ion-label>
+                  <ion-radio value="3"></ion-radio>
+                </ion-item>
+              </ion-list>
+              <div class="moveCont">
+                <button ion-button  id="btn" (click)="addAssessment()">Add Assessment</button>
+              </div>
+            </ion-slide>
+          </ion-slides>
+        </div>
+  
+      </div>
+  
+  
+      <!-- </div> -->
+    </div>
+  
+  </ion-content>

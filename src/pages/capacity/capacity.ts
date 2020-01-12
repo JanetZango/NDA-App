@@ -42,12 +42,7 @@ export class CapacityPage {
   items;
   names;
   constructor(public navCtrl: NavController, public navParams: NavParams,public sqliteService :SqliteProvider ) {
-    // this.get();
-  
-
-    
     this.viewCSoArr.push(this.navParams.get('orgObject'));
-    console.log(this.viewCSoArr);
     this.auth_key = this.viewCSoArr[0].auth_key;
     this.created_at = this.viewCSoArr[0].created_at;
     this.email = this.viewCSoArr[0].email;
@@ -65,12 +60,10 @@ export class CapacityPage {
     this.updated_at = this.viewCSoArr[0].updated_at;
     this.user_group = this.viewCSoArr[0].user_group;
     this.username = this.viewCSoArr[0].username;
-    console.log(this.viewCSoArr);
-    console.log(this.id);
+    console.log(this.id)
+    console.log(this.viewCSoArr)
 
 
-    let str="hello\\ab"
-    console.log(JSON.stringify(str))
 
     this.getcso();
 
@@ -90,8 +83,8 @@ export class CapacityPage {
   } 
 
   building() {
-    for (var x = 0; x < this.getCurrentUser.length; x++) {
-      this.navCtrl.push(BuildinginterventionsPage, { orgObject: this.getCurrentUser[x] });
+    for (var x = 0; x < this.viewCSoArr.length; x++) {
+      this.navCtrl.push(BuildinginterventionsPage, { orgObject: this.viewCSoArr[x] });
     }
 
   }
@@ -100,14 +93,16 @@ export class CapacityPage {
     this.sqliteService
     .DisplayCapacityBuilding(this.id)
     .then((s:any) => {
+      this.displayCapacity.reverse()
       this.displayCapacity = s;
+
       console.log(s)
       console.log(this.displayCapacity)
     })
   }
   viewMore(name){
     for (var x = 0; x < this.displayCapacity.length; x++) {
-     if (name == this.displayCapacity[x].Fname) {
+     if (name == this.displayCapacity[x].facilitator_name) {
        this.navCtrl.push(ViewCapacityPage, { orgObject: this.displayCapacity[x]});
        break;
      }

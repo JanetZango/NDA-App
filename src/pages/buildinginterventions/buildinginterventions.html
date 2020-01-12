@@ -12,102 +12,85 @@
     </div>
     <ion-slides pager="true" class="slide">
       <ion-slide>
-        <ion-input placeholder="Name_of_Cso" type="text" class="user-input" [(ngModel)]="CsoName" id="anim1">
-        </ion-input>
+          <ion-input placeholder="Name_of_Cso" [(ngModel)]="name_of_cso" type="text" class="user-input" id="anim1"
+          (input)="getItems($event)"></ion-input>
 
-
+          <div id="results">
+              <ion-item no-lines *ngFor="let item of items; let i=index" (click)="openMarkerInfo(item)">
+                <p>{{item}}</p>
+              </ion-item>
+            </div>
+    
   
         <ion-item id="item">
           <ion-label> Select Capacity Building Type</ion-label>
-          <ion-select [(ngModel)]="Capacity">
-            <ion-option value="Trustee">Training Governance</ion-option>
-            <ion-option value="Management">Training Conflict Management</ion-option>
-            <ion-option value="General Member">Training Financial Management</ion-option>
-            <ion-option value="5 months">Training Project Management</ion-option>
-            <ion-option value="6 months">Training Resource Mobilisation</ion-option>
-            <ion-option value="6 months">Training Mentoring Support</ion-option>
-            <ion-option value="6 months">Training Legislation Compliance</ion-option>
-            <ion-option value="6 months">Training Community Development Practice</ion-option>
-            <ion-option value="6 months">Training Organisational Development</ion-option>
-            <ion-option value="6 months">Mentoring Governance</ion-option>
-            <ion-option value="6 months">Incubation</ion-option>
-            <ion-option value="6 months">Mentoring Conflict Managment</ion-option>
-            <ion-option value="6 months">Mentoring Financial Managment</ion-option>
-            <ion-option value="6 months">Mentoring Project Managment</ion-option>
-            <ion-option value="6 months">Mentoring Resource Mobilisation </ion-option>
-            <ion-option value="6 months">Mentoring Legislation Compliance </ion-option>
-            <ion-option value="6 months">Mentoring Community Development Pratice </ion-option>
-            <ion-option value="6 months">Mentoring Organisational Development </ion-option>
+          <ion-select [(ngModel)]="capacity_building_type_id">
+            <ion-option value="1">Training Governance</ion-option>
+            <ion-option value="2">Training Conflict Management</ion-option>
+            <ion-option value="3">Training Financial Management</ion-option>
+            <ion-option value="4">Training Project Management</ion-option>
+            <ion-option value="5">Training Resource Mobilisation</ion-option>
+            <ion-option value="6 ">Training Mentoring Support</ion-option>
+            <ion-option value="7">Training Legislation Compliance</ion-option>
+            <ion-option value="8">Training Community Development Practice</ion-option>
+            <ion-option value="9">Training Organisational Development</ion-option>
+            <ion-option value="10">Mentoring Governance</ion-option>
+            <ion-option value="11">Incubation</ion-option>
+            <ion-option value="12">Mentoring Conflict Managment</ion-option>
+            <ion-option value="13">Mentoring Financial Managment</ion-option>
+            <ion-option value="14">Mentoring Project Managment</ion-option>
+            <ion-option value="15">Mentoring Resource Mobilisation </ion-option>
+            <ion-option value="16">Mentoring Legislation Compliance </ion-option>
+            <ion-option value="17">Mentoring Community Development Pratice </ion-option>
+            <ion-option value="18">Mentoring Organisational Development </ion-option>
           </ion-select>
         </ion-item>
 
         <ion-item id="item">
           <ion-label> Select Province</ion-label>
-          <ion-select [(ngModel)]="Province">
-            <ion-option value="Eastern Cape">Eastern Cape</ion-option>
-          </ion-select>
+          <ion-select (ionChange)="getDistrictFilter()" [(ngModel)]="province_id">
+              <ion-option *ngFor="let a of disDistrict" [value]="a.id">{{a.province_name}}
+              </ion-option>
+            </ion-select>
         </ion-item>
 
         <ion-item id="item">
           <ion-label> Select District</ion-label>
-          <ion-select [(ngModel)]="District">
-            <ion-option value="Sarah Baartman">Sarah Baartman</ion-option>
-            <ion-option value="Amathole">Amathole</ion-option>
-            <ion-option value="Chris Hani">Chris Hani</ion-option>
-            <ion-option value="Joe Gqabi">Joe Gqabi</ion-option>
-            <ion-option value="O.R.Tambo">O.R.Tambo</ion-option>
-            <ion-option value="Alfred Nzo">Alfred Nzo</ion-option>
-            <ion-option value="Nelson Mandela Bay">Nelson Mandela Bay</ion-option>
-            <ion-option value="Buffalo City<">Buffalo City</ion-option>
-            <ion-option value="Xhariep">Xhariep</ion-option>
-            <ion-option value="Lejweleputswa">Lejweleputswa</ion-option>
-            <ion-option value="Thabo Mofutsanyane">Thabo Mofutsanyane</ion-option>
-            <ion-option value="Fezile Dabi">Fezile Dabi</ion-option>
-            <ion-option value="Mangaung">Mangaung</ion-option>
-            <ion-option value="West Rand">West Rand</ion-option>
-            <ion-option value="City of Tshwane">City of Tshwane</ion-option>
-            <ion-option value="Sedibeng">Sedibeng</ion-option>
-          </ion-select>
+              <ion-select (ionChange)="getMunicipality()" [(ngModel)]="district_id">
+                <ion-option *ngFor="let district of disDistrict2" [value]="district.district_name">{{district.district_name}}
+                </ion-option>
+              </ion-select>
         </ion-item>
       </ion-slide>
       <ion-slide>
 
         <ion-item id="item">
           <ion-label> Select Municipality</ion-label>
-          <ion-select [(ngModel)]="Municipality">
-            <ion-option value="Dr Beyer Naude">Dr Beyer Naude</ion-option>
-            <ion-option value="Makana">Makana</ion-option>
-            <ion-option value="Ndlambe">Ndlambe</ion-option>
-            <ion-option value="Mbhashe">Mbhashe</ion-option>
-            <ion-option value="Mnquma">Mnquma</ion-option>
-            <ion-option value="Inxuba Yethemba">Inxuba Yethemba</ion-option>
-            <ion-option value="Engcono">Engcono</ion-option>
-            <ion-option value="Elundini">Elundini</ion-option>
-            <ion-option value="Senqu">Senqu</ion-option>
-            <ion-option value="Ngquza Hill">Ngquza Hill</ion-option>
-            <ion-option value="Port St Johns">Port St Johns</ion-option>
-            <ion-option value="Nyandeni">Nyandeni</ion-option>
-            <ion-option value="Mhlontlo">Mhlontlo</ion-option>
-            <ion-option value="King Sabata Dali">King Sabata Dali</ion-option>
-            <ion-option value="Matatiele">Matatiele</ion-option>
-            <ion-option value="Umzimvubu">Umzimvubu</ion-option>
-            <ion-option value="Ntabankulu">Ntabankulu</ion-option>
-            <ion-option value="Mbizana">Mbizana</ion-option>
-          </ion-select>
+          <ion-select  [(ngModel)]="municipality_id">
+              <ion-option value="1">Funder</ion-option>
+              <ion-option value="2">Service Provider</ion-option>
+              <ion-option value="3">Mantsopa</ion-option>
+              <ion-option value="4">Phumelela</ion-option>
+              <ion-option value="5">Nketoana</ion-option>
+              <ion-option value="6">Maluti a Phofung</ion-option>
+              <ion-option value="7">Dihlabeng</ion-option>
+              <ion-option value="8">Setsoto</ion-option>
+            
+            </ion-select>
         </ion-item>
 
 
         <ion-item id="item">
           <ion-label> Select Partner</ion-label>
-          <ion-select [(ngModel)]="partner">
-            <ion-option value="African">Funder</ion-option>
-            <ion-option value="Colored">Service Provider</ion-option>
-            <ion-option value="Indian">Referral Institution</ion-option>
-            <ion-option value="White">Government</ion-option>
-            <ion-option value="White">Business</ion-option>
-            <ion-option value="White">Non-profit making</ion-option>
-            <ion-option value="White">Individuals</ion-option>
-            <ion-option value="White">International</ion-option>
+          <ion-select [(ngModel)]="partner_id">
+            <ion-option value="1">Funder</ion-option>
+            <ion-option value="2">Service Provider</ion-option>
+            <ion-option value="3">Referral Institution</ion-option>
+            <ion-option value="4">Government</ion-option>
+            <ion-option value="5">Business</ion-option>
+            <ion-option value="6">Non-profit making</ion-option>
+            <ion-option value="7">Individuals</ion-option>
+            <ion-option value="8">International</ion-option>
           </ion-select>
         </ion-item>
 
@@ -116,10 +99,10 @@
       </ion-slide>
 
       <ion-slide>
-        <ion-input placeholder="Facilitor Name" type="text" class="user-input" [(ngModel)]="Fname" id="anim1">
+        <ion-input placeholder="Facilitor Name" type="text" class="user-input" [(ngModel)]="facilitator_name" id="anim1">
         </ion-input>
 
-        <ion-input placeholder="Funding Source" type="text" class="user-input" [(ngModel)]="Fsource"
+        <ion-input placeholder="Funding Source" type="text" class="user-input" [(ngModel)]="Funding_source_id"
           id="anim1" ></ion-input>
 
         <ion-input placeholder="Colllected by" type="text" class="user-input" [(ngModel)]="Collected"
@@ -130,10 +113,10 @@
 
         <div class="Contacts">
           <ion-label>Start date</ion-label>
-          <input type="date" id="input-field" [(ngModel)]="StartDate">
+          <input type="date" id="input-field" [(ngModel)]="Start_date">
           <br>
           <ion-label>End date</ion-label>
-          <input type="date" id="input-field" [(ngModel)]="EndDate">
+          <input type="date" id="input-field" [(ngModel)]="end_date">
         </div>
 
         <input type="file" accept="image*/" id="cover-image" (change)="insertpic2($event)">

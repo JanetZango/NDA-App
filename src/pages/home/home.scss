@@ -5,12 +5,11 @@ page-home {
     .logininputdiv{
         width: 60%; 
         margin: 0 auto;
-        margin-top:-50px;
      
     }
     .login{
         position: relative;
-        top: 50%;
+        top: 35%;
         left: 50%;
         transform: translate(-50%, -50%);
     }
@@ -46,12 +45,9 @@ page-home {
         background-color: rgb(255, 255, 255);
         padding-top: 10%;
         z-index: 2;
+    
         border-radius: 15px;
         padding: 100px ;
-
-        img{
-            margin-top:100px;
-        }
     }
     .right{
         height: 100%;

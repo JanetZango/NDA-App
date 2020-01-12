@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { SqliteProvider } from '../../providers/sqlite/sqlite';
+import { AssessmentPage } from '../assessment/assessment';
 /**
  * Generated class for the ViewMemberAssessPage page.
  *
@@ -39,7 +40,7 @@ export class ViewMemberAssessPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,public sqliteService :SqliteProvider) {
     
     this.viewCSoArr.push(this.navParams.get('orgObject'));
-    console.log(this.viewCSoArr);
+    // console.log(this.viewCSoArr);
     this.auth_key = this.viewCSoArr[0].auth_key;
     this.created_at = this.viewCSoArr[0].created_at;
     this.email = this.viewCSoArr[0].email;
@@ -57,8 +58,8 @@ export class ViewMemberAssessPage {
     this.updated_at = this.viewCSoArr[0].updated_at;
     this.user_group = this.viewCSoArr[0].user_group;
     this.username = this.viewCSoArr[0].username;
-    console.log(this.viewCSoArr);
-    console.log(this.id);
+    // console.log(this.viewCSoArr);
+    // console.log(this.id);
 
     this.getcso();
   }
@@ -71,9 +72,16 @@ export class ViewMemberAssessPage {
     .DisplayAssessment(this.id)
     .then((s:any) => {
       this.displayCapacity = s;
-      console.log(s)
+      // console.log(s)
       console.log(this.displayCapacity)
     })
+  }
+
+  building(){
+    for (var x = 0; x < this.viewCSoArr.length; x++) {
+      this.navCtrl.push(AssessmentPage, { orgObject: this.viewCSoArr[x] });
+    }
+    
   }
 
 }

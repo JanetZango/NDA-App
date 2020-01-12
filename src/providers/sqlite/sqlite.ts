@@ -1,10 +1,10 @@
 
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone, ɵConsole } from '@angular/core';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { Platform, AlertController } from 'ionic-angular';
 import { LoadingController } from "ionic-angular";
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
-// import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { ThrowStmt } from '@angular/compiler';
+
 
 
 
@@ -36,26 +36,26 @@ export class SqliteProvider {
   cso_mobilisation_method_id = null;
   mobilisation_date = null;
   insertCso = new Array();
-  constructor(public database: SQLite, private platform: Platform, public alert: AlertController, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
+  scoreAarr = new Array();
+  Score;
+  constructor(public ngzone: NgZone, public database: SQLite, private platform: Platform, public alert: AlertController, public alertCtrl: AlertController, public loadingCtrl: LoadingController) {
     console.log('Hello SqliteProvider Provider');
-
+    let loading = this.loadingCtrl.create({
+      spinner: 'bubbles',
+      content: 'Please wait Information is still loading...',
+      duration: 4000000000000000000000
+    });
+    loading.present();
     platform.ready().then(() => {
       this.Remoteconnection();
-      this.checkNetwork();
-      this.UserData();
       this.sqlitestate();
-      console.log(String.fromCharCode(92));
+      loading.dismiss();
     })
-
 
   }
 
-  // getName() {
-  //   return this.orgNames;
-  // }
 
   CsoName = new Array();
-
   storeOrgNames(name_of_cso) {
     this.CsoName.push(name_of_cso);
   }
@@ -64,39 +64,43 @@ export class SqliteProvider {
   }
 
   checkNetwork() {
-    this.platform.ready().then(() => {
-      var networkState = navigator.connection.type;
-      var states = {};
-      states[Connection.UNKNOWN] = 'Unknown connection';
-      states[Connection.ETHERNET] = 'Ethernet connection';
-      states[Connection.WIFI] = 'WiFi connection';
-      states[Connection.CELL_2G] = 'Cell 2G connection';
-      states[Connection.CELL_3G] = 'Cell 3G connection';
-      states[Connection.CELL_4G] = 'Cell 4G connection';
-      states[Connection.CELL] = 'Cell generic connection';
-      states[Connection.NONE] = 'No network connection';
+    this.ngzone.run(() => {
+      this.platform.ready().then(() => {
+        var networkState = navigator.connection.type;
+        var states = {};
+        states[Connection.UNKNOWN] = 'Unknown connection';
+        states[Connection.ETHERNET] = 'Ethernet connection';
+        states[Connection.WIFI] = 'WiFi connection';
+        states[Connection.CELL_2G] = 'Cell 2G connection';
+        states[Connection.CELL_3G] = 'Cell 3G connection';
+        states[Connection.CELL_4G] = 'Cell 4G connection';
+        states[Connection.CELL] = 'Cell generic connection';
+        states[Connection.NONE] = 'No network connection';
 
-      // const confirm = this.alertCtrl.create({
-      //   title: "Connection Status",
-      //   message: states[networkState],
-      //   buttons: ["OK"]
-      // });
-      // confirm.present();
-    });
+        const confirm = this.alertCtrl.create({
+          title: "Connection Status",
+          message: states[networkState],
+          buttons: ["OK"]
+        });
+        confirm.present();
+      });
+    })
   }
 
 
 
 
   VPNConnection() {
+
     window['plugins'].VPNConnection.enable(
       function (result) {
-        console.log('result ', result);
+        // console.log('result ', result);
         // alert('connected');
       },
       function (error) {
-        console.log('error ', error);
+        // console.log('error ', error);
         // alert(error);
+
       },
       // options
     );
@@ -104,46 +108,43 @@ export class SqliteProvider {
 
   Remoteconnection() {
     SqlServer.init("156.38.140.58", "MSSQLSERVER", "sa", "T1r1s@n", "cso_tra", function (event) {
-      // alert("successful:" + JSON.stringify(event));
     }, function (error) {
-      // alert("Not Successful:" + JSON.stringify(error));
     });
 
-    // SqlServer.init('NDASQLPOC69'+String.fromCharCode(92) +'CSO_POC', "MSSQLSERVER", "csomobapp", "K@kany02019", "cso_tra", function (event) {
-    //   alert("successful:" + JSON.stringify(event));
-    //   console.log(JSON.stringify(event))
+    // SqlServer.init("NDASQLPOC69CSO_POC", "MSSQLSERVER", "csomobapp", "K@kany02019", "cso_tra", function (event) {
+    //   // alert("successful:" + JSON.stringify(event));
+    //   // loading.dismiss();
+    //   // console.log(JSON.stringify(event))
+    //   loading.dismiss()
     // }, function (error) {
-    //   alert("Not Successful:" + JSON.stringify(error));
-    //   console.log(JSON.stringify(error))
+    //   // alert("Not Successful:" + JSON.stringify(error));
+    //   // console.log(JSON.stringify(error))
     // });
 
-
     SqlServer.testConnection(function (event) {
-      // alert(JSON.stringify(event));
-      // console.log(JSON.stringify(event))
     }, function (error) {
-      // alert("Error : " + JSON.stringify(error));
-      // console.log(JSON.stringify(error))
     });
-
-    this.remoteCsoData();
 
   }
 
   sqlitestate() {
+    // let loading = this.loadingCtrl.create({
+    //   spinner: 'bubbles',
+    //   content: 'Please wait Information is still loading...',
+    //   duration: 400000000
+    // });
+    // loading.present();
     if (!this.isOpen) {
+
       this.sql = new SQLite();
-      this.sql.create({ name: "csoapp.db", location: "default" }).then((db: SQLiteObject) => {
+      this.sql.create({ name: "testphase.db", location: "default" }).then((db: SQLiteObject) => {
         this.db = db;
-
-        // db.executeSql("DROP TABLE IF EXISTS district;")
-
+        // db.executeSql("DROP TABLE IF EXISTS assessment")
         db.executeSql("CREATE TABLE IF NOT EXISTS user (id int CONSTRAINT pk_id PRIMARY KEY NOT NULL,username TEXT,auth_key TEXT,password_hash TEXT,password_reset_token TEXT,verification_token TEXT,full_name TEXT,email TEXT,province_id INTEGER,status INTEGER,role TEXT,legacy_user_id INTEGER,created_at INTEGER,updated_at INTEGER,office TEXT,title TEXT,province_name TEXT,user_group TEXT)", [])
         db.executeSql("CREATE TABLE IF NOT EXISTS cso (id int CONSTRAINT pk_id PRIMARY KEY NOT NULL,cso_type_id INTEGER ,cso_sector_id INTEGER ,province_id INTEGER ,district_id INTEGER ,municipality_id INTEGER ,ward_number INTEGER ,registration_number TEXT,nda_registration TEXT,name_of_cso TEXT ,contact_person TEXT,physical_address TEXT,contact_number TEXT,email_address TEXT,total_staff INTEGER,collected_by INTEGER,modified_by INTEGER,modified_date DATE,created_by INTEGER,created_date DATE,cso_mobilisation_method_id INTEGER,mobilisation_date DATE)", [])
         db.executeSql("CREATE TABLE IF NOT EXISTS tbl_cso_member (id INTEGER CONSTRAINT pk_id PRIMARY KEY NOT NULL,cso_id INTEGER ,member_position_id INTEGER ,first_name TEXT ,last_name TEXT,id_number TEXT ,passport_number TEXT,nationality TEXT,race TEXT,gender TEXT,disability TEXT,physical_address TEXT,contact_number TEXT,start_date DATE ,end_date DATE ,modified_by INTEGER ,modified_date DATE ,created_by INTEGER ,created_date DATE)", [])
-        db.executeSql("CREATE TABLE IF NOT EXISTS tbl_cso_assessment (id INTEGER CONSTRAINTEGER pk_id PRIMARY KEY  ,cso_id INTEGER  ,assessment_type_id INTEGER ,calc_assessment_score decimal(18, 5) ,calc_assessment_level INTEGER ,poe_link TEXT ,assessment_DATE DATE ,assessment_completed bit  ,collected_by TEXT ,modified_by INTEGER ,modified_DATE DATE ,created_by INTEGER ,created_DATE DATE)", [])
-        db.executeSql("CREATE TABLE IF NOT EXISTS tbl_capacity_building (id INTEGER CONSTRAINT pk_id PRIMARY KEY  ,capacity_building_type_id INTEGER  ,province_id INTEGER  ,district_id INTEGER  ,municipality_id INTEGER  ,partner_id INTEGER ,venue TEXT ,facilitator_name TEXT ,co_facilitator_name TEXT ,start_date date  ,end_date date  ,funding_source_id INTEGER ,collected_by TEXT ,modified_by INTEGER ,modified_date DATE ,created_by INTEGER ,created_date DATE ,attendance_register TEXT ,poe_link TEXT )", [])
-       
+        db.executeSql("CREATE TABLE IF NOT EXISTS cso_assessment (id INTEGER CONSTRAINT pk_id PRIMARY KEY NOT NULL ,cso_id INTEGER ,assessment_type_id INTEGER,calc_assessment_score INTEGER,calc_assessment_level INTEGER ,poe_link TEXT ,assessment_date DATE ,assessment_completed INTEGER ,collected_by TEXT ,modified_by INTEGER,created_by INTEGER)", [])
+        db.executeSql("CREATE TABLE IF NOT EXISTS tbl_capacity_building (id INTEGER CONSTRAINT pk_id PRIMARY KEY NOT NULL ,capacity_building_type_id INTEGER  ,province_id INTEGER  ,district_id INTEGER  ,municipality_id INTEGER  ,partner_id INTEGER ,venue TEXT ,facilitator_name TEXT ,co_facilitator_name TEXT ,start_date date  ,end_date date  ,funding_source_id INTEGER ,collected_by TEXT ,modified_by INTEGER ,modified_date DATE ,created_by INTEGER ,created_date DATE ,attendance_register TEXT ,poe_link TEXT )", [])
         //lookups
         db.executeSql("CREATE TABLE IF NOT EXISTS lkp_local_municipality (id INTEGER CONSTRAINT pk_id PRIMARY KEY NOT NULL, district_id INTEGER,municipality_name TEXT,municipality_code TEXT,map_title TEXT)", [])
         db.executeSql("CREATE TABLE IF NOT EXISTS district (id INTEGER CONSTRAINT pk_id PRIMARY KEY NOT NULL,province_id INTEGER,district_name TEXT,district_code TEXT)", [])
@@ -154,37 +155,170 @@ export class SqliteProvider {
         // db.executeSql("CREATE TABLE IF NOT EXISTS lkp_capacity_building_type (id INTEGER CONSTRAINT pk_id PRIMARY KEY NOT NULL,capacity_building_type_name TEXT NOT NULL,capacity_building_type_description TEXT NULL,modified_by INTEGER NULL,modified_date datetime NULL,created_by INTEGER NULL,created_date datetime NULL)", [])
         // db.executeSql("CREATE TABLE IF NOT EXISTS lkp_assessment_type_section (id INTEGER CONSTRAINT pk_id PRIMARY KEY NOT NULL,assessment_type_id INTEGER NOT NULL,assessment_type_section_name TEXT NOT NULL,assessment_type_section_description TEXT NULL,modified_by INTEGER NULL,modified_date datetime NULL,created_by INTEGER NULL,created_date datetime NULL)", [])
         // db.executeSql("CREATE TABLE IF NOT EXISTS lkp_assessment_type (id INTEGER CONSTRAINT pk_id PRIMARY KEY NOT NULL,assessment_type_name TEXT NOT NULL,assessment_type_description TEXT NULL,modified_by INTEGER NULL,modified_date datetime NULL,created_by INTEGER NULL,created_date datetime NULL)", [])
-        // db.executeSql("CREATE TABLE IF NOT EXISTS lkp_assessment_question (id INTEGER CONSTRAINT pk_id PRIMARY KEY NOT NULL,assessment_type_section_id INTEGER NOT NULL,question TEXT NOT NULL,assessment_question_description TEXT NULL,answer_source TEXT NULL,answer_option TEXT NOT NULL,answer_data_type TEXT NULL,modified_by INTEGER NULL,modified_date datetime NULL,created_by INTEGER NULL,created_date datetime NULL,question_number INTEGER NULL)", [])
-        // db.executeSql("CREATE TABLE IF NOT EXISTS lkp_assessment_answer (id INTEGER CONSTRAINT pk_id PRIMARY KEY NOT NULL,assessment_question_id INTEGER NOT NULL,answer TEXT NOT NULL,weight INTEGER NULL,modified_by INTEGER NULL,modified_date datetime NULL,created_by INTEGER NULL,created_date datetime NULL)", [])
-
-
+        db.executeSql("CREATE TABLE IF NOT EXISTS assessment_question (id INTEGER CONSTRAINT pk_id PRIMARY KEY NOT NULL,assessment_type_section_id INTEGER ,question TEXT ,assessment_question_description TEXT ,answer_source TEXT,answer_option TEXT ,answer_data_type TEXT ,question_number INTEGER)", [])
+        db.executeSql("CREATE TABLE IF NOT EXISTS assessment_answer (id INTEGER CONSTRAINT pk_id PRIMARY KEY NOT NULL,assessment_question_id INTEGER ,answer TEXT ,weight INTEGER)", [])
         // db.executeSql("CREATE TABLE IF NOT EXISTS tbl_capacity_building (id INTEGER CONSTRAINT pk_id PRIMARY KEY NOT NULL,capacity_building_type_id INTEGER NOT NULL,province_id INTEGER NOT NULL,district_id INTEGER NOT NULL,municipality_id INTEGER NOT NULL,partner_id INTEGER NULL,venue TEXT NULL,facilitator_name TEXT NULL,co_facilitator_name TEXT NULL,start_date date NOT NULL,end_date date NOT NULL,funding_source_id INTEGER NULL,collected_by TEXT NULL,modified_by INTEGER NULL,modified_date datetime NULL,created_by INTEGER NULL,created_date datetime NULL,attendance_register TEXT NULL,poe_link TEXT NULL)", [])
         // db.executeSql("CREATE TABLE IF NOT EXISTS tbl_capacity_building_participant (id INTEGER CONSTRAINT pk_id PRIMARY KEY NOT NULL,capacity_building_id INTEGER NOT NULL,cso_member_id INTEGER NOT NULL,date_attended date NULL,modified_by INTEGER NULL,modified_date datetime NULL,created_by INTEGER NULL,created_date datetime NULL)", [])
-        // db.executeSql("CREATE TABLE IF NOT EXISTS tbl_assessment_question_answer (id INTEGER CONSTRAINT pk_id PRIMARY KEY NOT NULL, cso_assessment_id INTEGER NOT NULL,assessment_question_id INTEGER NOT NULL,assessment_answer_id INTEGER NOT NULL,user_answer TEXT NULL,modified_by INTEGER NULL,modified_date datetime NULL,created_by INTEGER NULL,created_date datetime NULL )", [])
-        // db.executeSql("CREATE TABLE IF NOT EXISTS tbl_cso_assessment (id INTEGER CONSTRAINT pk_id PRIMARY KEY NOT NULL,cso_id INTEGER NOT NULL,assessment_type_id INTEGER NULL,calc_assessment_score decimal(18, 5) NULL,calc_assessment_level INTEGER NULL,poe_link TEXT NULL,assessment_date date NULL,assessment_completed bit NOT NULL,collected_by TEXT NULL,modified_by INTEGER NULL,modified_date datetime NULL,created_by INTEGER NULL,created_date datetime NULL)", [])
-
-
+        db.executeSql("CREATE TABLE IF NOT EXISTS assessment_question_answer (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, cso_assessment_id INTEGER NOT NULL,assessment_question_id INTEGER NOT NULL,assessment_answer_id INTEGER NOT NULL,user_answer TEXT NULL,modified_by INTEGER NULL,modified_date datetime NULL,created_by INTEGER NULL,created_date datetime NULL )", [])
+        // db.executeSql("CREATE TABLE IF NOT EXISTS tbl_cso_assessment (id INTEGER CONSTRAINT pk_id PRIMARY KEY NOT NULL,cso_id INTEGER ,assessment_type_id INTEGER ,calc_assessment_score decimal(18, 5) ,calc_assessment_level INTEGER NULL,poe_link TEXT NULL,assessment_date date NULL,assessment_completed bit NOT NULL,collected_by TEXT NULL,modified_by INTEGER NULL,modified_date datetime NULL,created_by INTEGER NULL,created_date datetime NULL)", [])
         this.isOpen = true;
-        console.log('TABLE CREATED: ')
 
-      // this.LookUpMunicipality();
-      // this.remotelocalProvince()
-      // this.LookUpProvince();
-      // this.remoteDistrict();
-      this.LookDistrict();
-      // this.getLookUpMunicipality();
-      // this.getLookUpDistrict()
-      // this.getLookUpProvince()
-      this.remoteDistrict()
-      // this.getLookUpDistrict();
-      // this.LookDistrict()
+
+
+        // this.UserData();
+
+        // this.getUser()
+        // this.CSOData();
+        // this.CsoMemberData();
+        // this.getCsoMember()
+        // this.LookUpMunicipality();
+        // this.LookUpProvince();
+        // this.getLookUpProvince();
+        // this.LookDistrict();
+        // this.CsoAssessmentData()
+        // this.insertcapacityBuilding();
+        // this.CsoAssesmentA();
+        // this.remoteCapacityBuildingParticipantData()
+        // this.remoteCsoAssessmentData()
+        // this.DisplayCapacityBuildingdemo();
+        this.DisplayAssessmentss();
+        // this.remoteCsoAssessmentData();
+        // loading.dismiss();
+
       }).catch((error) => {
         console.log(error);
       });
+
     }
   }
 
   //lookups
+
+
+  remotLkpAssessmentQuestion() {
+    return new Promise((resolve, reject) => {
+      SqlServer.executeQuery("select * from [cso_tra].[dbo].[lkp_assessment_answer]", function (data) {
+        let results = JSON.parse(data);
+        resolve(results);
+        // alert(results)
+        console.log(results)
+      })
+    })
+  }
+
+
+  AnswerArr = new Array();
+  CsoAssesmentA() {
+    return new Promise((resolve, db) => {
+      let results = this.remotLkpAssessmentQuestion().then((data) => {
+        console.log(data)
+        for (var i = 0; i < data[0].length; i++) {
+          let obj = {
+            id: data[0][i].id,
+            assessment_question_id: data[0][i].assessment_question_id,
+            answer: data[0][i].answer,
+            weight: data[0][i].weight,
+          }
+          let sql = "INSERT INTO assessment_answer (id ,assessment_question_id ,answer,weight ) VALUES (?,?,?,?)";
+          this.db.executeSql(sql, [obj.id, obj.assessment_question_id, obj.answer, obj.weight]).then((data) => {
+            console.log("INSERTED: " + JSON.stringify(data) + sql);
+            resolve("true")
+            console.log("true")
+          }, (error) => {
+          })
+          this.AnswerArr.push(obj)
+        }
+        resolve(this.AnswerArr)
+      });
+    });
+  }
+
+
+  remotAssessmentQuestion() {
+    return new Promise((resolve, reject) => {
+      SqlServer.executeQuery("select * from [cso_tra].[dbo].[lkp_assessment_question]", function (data) {
+        let results = JSON.parse(data);
+        resolve(results);
+        // alert(results)
+        console.log(results)
+      })
+    })
+  }
+
+
+  QnAArr = new Array();
+  assessment_question_description = null
+  CsoAssesmentQnA() {
+    return new Promise((resolve, db) => {
+      let results = this.remotAssessmentQuestion().then((data) => {
+        console.log(data)
+        for (var i = 0; i < data[0].length; i++) {
+          let obj = {
+            id: data[0][i].id,
+            assessment_type_section_id: data[0][i].assessment_type_section_id,
+            question: data[0][i].question,
+            answer_source: data[0][i].answer_source,
+            answer_option: data[0][i].answer_option,
+            answer_data_type: data[0][i].answer_data_type,
+            question_number: data[0][i].question_number,
+          }
+          let sql = "INSERT INTO assessment_question (id,assessment_type_section_id,question ,assessment_question_description ,answer_source,answer_option ,answer_data_type ,question_number ) VALUES (?,?,?,?,?,?,?,?)";
+          this.db.executeSql(sql, [obj.id, obj.assessment_type_section_id, obj.question, this.assessment_question_description, obj.answer_source, obj.answer_option, obj.answer_data_type, obj.question_number]).then((data) => {
+            console.log("INSERTED: " + JSON.stringify(data) + sql);
+            resolve("true")
+            console.log("true")
+          }, (error) => {
+          })
+          this.QnAArr.push(obj)
+        }
+        resolve(this.QnAArr)
+      });
+    });
+  }
+
+
+  getLookUpAssessmentQnA() {
+    return new Promise((resolve, reject) => {
+      this.db.executeSql("SELECT * FROM assessment_question", []).then((data) => {
+        let getLocalAssessmentArr = [];
+        if (data.rows.length > 0) {
+          for (var i = 0; i < data.rows.length; i++) {
+            getLocalAssessmentArr.push({
+              id: data.rows.item(i).id,
+              assessment_type_section_id: data.rows.item(i).assessment_type_section_id,
+              question: data.rows.item(i).question,
+              answer_source: data.rows.item(i).answer_source,
+              answer_option: data.rows.item(i).answer_option,
+              answer_data_type: data.rows.item(i).answer_data_type,
+              question_number: data.rows.item(i).question_number,
+            });
+          }
+        }
+        resolve(getLocalAssessmentArr);
+        console.log(getLocalAssessmentArr);
+      }, (error) => {
+        reject(error);
+      })
+    })
+  }
+
+
+  remoteAssessmentQuestionsAnswerData() {
+    console.log("results")
+    return new Promise((resolve, reject) => {
+      SqlServer.executeQuery("select * from [cso_tra].[dbo].[tbl_assessment_question_answer]", function (data) {
+        console.log(data)
+        let results = JSON.parse(data);
+        console.log(results);
+        resolve(results);
+        alert(results)
+      })
+    })
+  }
+
+
+
+
   remotelocalMunicipality() {
     return new Promise((resolve, reject) => {
       SqlServer.executeQuery("select * from [cso_tra].[dbo].[lkp_local_municipality]", function (data) {
@@ -209,7 +343,7 @@ export class SqliteProvider {
             municipality_name: data[0][i].municipality_name,
           }
           let sql = "INSERT INTO lkp_local_municipality (id, district_id ,municipality_name,municipality_code,map_title) VALUES (?,?,?,?,?)";
-          this.db.executeSql(sql, [obj.id, obj.district_id, obj.municipality_name,obj.municipality_code,obj.map_title]).then((data) => {
+          this.db.executeSql(sql, [obj.id, obj.district_id, obj.municipality_name, obj.municipality_code, obj.map_title]).then((data) => {
             console.log("INSERTED: " + JSON.stringify(data) + sql);
             resolve("true")
             console.log("true")
@@ -223,10 +357,11 @@ export class SqliteProvider {
   }
 
 
-;
-  getLookUpMunicipality() {
+  ;
+  getLookUpMunicipality(district_id) {
     return new Promise((resolve, reject) => {
-      this.db.executeSql("SELECT * FROM lkp_local_municipality", []).then((data) => {
+      this.db.executeSql("SELECT * FROM lkp_local_municipality WHERE district_id=" + district_id, []).then((data) => {
+        console.log(data)
         let getLocalMunicipalityArr = [];
         if (data.rows.length > 0) {
           for (var i = 0; i < data.rows.length; i++) {
@@ -236,7 +371,30 @@ export class SqliteProvider {
               map_title: data.rows.item(i).map_title,
               municipality_code: data.rows.item(i).municipality_code,
               municipality_name: data.rows.item(i).municipality_name,
-              
+            });
+          }
+        }
+        resolve(getLocalMunicipalityArr);
+        console.log(getLocalMunicipalityArr);
+      }, (error) => {
+        reject(error);
+      })
+    })
+  }
+
+  getLookUpMunicipalitytest() {
+    return new Promise((resolve, reject) => {
+      this.db.executeSql("SELECT * FROM lkp_local_municipality WHERE district_id=" + 11, []).then((data) => {
+        console.log(data)
+        let getLocalMunicipalityArr = [];
+        if (data.rows.length > 0) {
+          for (var i = 0; i < data.rows.length; i++) {
+            getLocalMunicipalityArr.push({
+              id: data.rows.item(i).id,
+              district_id: data.rows.item(i).district_id,
+              map_title: data.rows.item(i).map_title,
+              municipality_code: data.rows.item(i).municipality_code,
+              municipality_name: data.rows.item(i).municipality_name,
             });
           }
         }
@@ -309,6 +467,7 @@ export class SqliteProvider {
     })
   }
 
+
   remoteDistrict() {
     return new Promise((resolve, reject) => {
       SqlServer.executeQuery("select * from [cso_tra].[dbo].[lkp_district]", function (data) {
@@ -326,14 +485,14 @@ export class SqliteProvider {
       let results = this.remoteDistrict().then((data) => {
         console.log(data)
         for (var i = 0; i < data[0].length; i++) {
-          let obj = {  
+          let obj = {
             id: data[0][i].id,
             province_id: data[0][i].province_id,
             district_name: data[0][i].district_name,
             district_code: data[0][i].district_code,
           }
           let sql = "INSERT INTO district (id,province_id,district_name,district_code) VALUES (?,?,?,?)";
-          this.db.executeSql(sql, [obj.id,obj.province_id,obj.district_name,obj.district_code]).then((data) => {
+          this.db.executeSql(sql, [obj.id, obj.province_id, obj.district_name, obj.district_code]).then((data) => {
             console.log("INSERTED: " + JSON.stringify(data) + sql);
             resolve("true")
             console.log("true")
@@ -348,7 +507,7 @@ export class SqliteProvider {
 
   getLookUpDistrict(province_id) {
     return new Promise((resolve, reject) => {
-      this.db.executeSql("SELECT * FROM district WHERE province_id="+province_id, []).then((data) => {
+      this.db.executeSql("SELECT * FROM district WHERE province_id=" + province_id, []).then((data) => {
         console.log()
         let getlookUpDistrict = [];
         if (data.rows.length > 0) {
@@ -370,6 +529,50 @@ export class SqliteProvider {
   }
 
 
+  getLookUpprovinceCapacity(province_id) {
+    return new Promise((resolve, reject) => {
+      this.db.executeSql("SELECT * FROM province WHERE id=" + province_id, []).then((data) => {
+        console.log()
+        let getlookUpDistrict = [];
+        if (data.rows.length > 0) {
+          for (var i = 0; i < data.rows.length; i++) {
+            getlookUpDistrict.push({
+              id: data.rows.item(i).id,
+              // province_id: data.rows.item(i).province_id,
+              province_name: data.rows.item(i).province_name,
+              province_code: data.rows.item(i).province_code,
+            });
+          }
+        }
+        resolve(getlookUpDistrict);
+        console.log(getlookUpDistrict);
+      }, (error) => {
+        reject(error);
+      })
+    })
+  }
+
+
+
+
+  checkLastRecordCsoAssessment() {
+    return new Promise((resolve, reject) => {
+      this.db.executeSql("SELECT id FROM cso_assessment ORDER BY id desc limit 1", []).then((data) => {
+        let CsoAssArr = [];
+        if (data.rows.length > 0) {
+          for (var i = 0; i < data.rows.length; i++) {
+            CsoAssArr.push({
+              id: data.rows.item(i).id,
+            });
+          }
+        }
+        resolve(CsoAssArr);
+        // console.log(CsoAssArr);
+      })
+    })
+  }
+
+
   checkLastRecordCso() {
     return new Promise((resolve, reject) => {
       this.db.executeSql("SELECT id FROM cso ORDER BY id desc limit 1", []).then((data) => {
@@ -382,7 +585,7 @@ export class SqliteProvider {
           }
         }
         resolve(adUsersArr);
-        console.log(adUsersArr);
+        // console.log(adUsersArr);
       })
     })
   }
@@ -417,22 +620,22 @@ export class SqliteProvider {
               id: data.rows.item(i).id,
             });
           }
-        
+
         }
         resolve(adUsersArr);
-        console.log(adUsersArr);
+        // console.log(adUsersArr);
       })
     })
   }
 
-  regsiterCsoMember(id,cso_id  ,member_position_id ,first_name ,last_name ,id_number  ,passport_number ,nationality ,race ,gender ,disability ,physical_address ,contact_number ,start_date  ,end_date  ,modified_by  ,modified_date  ,created_by  ,created_date) {
+  regsiterCsoMember(id, cso_id, member_position_id, first_name, last_name, id_number, passport_number, nationality, race, gender, disability, physical_address, contact_number, start_date, end_date, modified_by, modified_date, created_by, created_date) {
     return new Promise((resolve, reject) => {
       let LastRecordCso = this.checkLastRecordCsoMember().then((data) => {
         console.log(data)
         let CsoId = data[0].id + 1
         console.log(CsoId)
         let sql = "INSERT INTO tbl_cso_member (id,cso_id  ,member_position_id ,first_name ,last_name ,id_number  ,passport_number ,nationality ,race ,gender ,disability ,physical_address ,contact_number ,start_date  ,end_date  ,modified_by  ,modified_date  ,created_by  ,created_date ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        this.db.executeSql(sql, [CsoId,cso_id  ,member_position_id ,first_name ,last_name ,id_number  ,passport_number ,nationality ,race ,gender ,disability ,physical_address ,contact_number ,start_date  ,end_date  ,modified_by  ,modified_date  ,created_by  ,created_date]).then((data) => {
+        this.db.executeSql(sql, [CsoId, cso_id, member_position_id, first_name, last_name, id_number, passport_number, nationality, race, gender, disability, physical_address, contact_number, start_date, end_date, modified_by, modified_date, created_by, created_date]).then((data) => {
           console.log("INSERTED: " + JSON.stringify(data) + sql);
           resolve("true")
           console.log("true")
@@ -447,6 +650,12 @@ export class SqliteProvider {
 
   checkingEmail(email_address) {
     return new Promise((resolve, reject) => {
+      // let loading = this.loadingCtrl.create({
+      //   spinner: 'bubbles',
+      //   content: 'Please wait...',
+      //   duration: 400000000
+      // });
+      // loading.present();
       this.db.executeSql("SELECT * FROM user WHERE email='" + email_address + "'", []).then((data) => {
         let adUsersArr = [];
         if (data.rows.length > 0) {
@@ -474,7 +683,8 @@ export class SqliteProvider {
           }
         }
         resolve(adUsersArr);
-        console.log(adUsersArr);
+        // console.log(adUsersArr);
+        // loading.dismiss();
       }, (error) => {
         reject(error);
       })
@@ -487,7 +697,11 @@ export class SqliteProvider {
     return new Promise((resolve, reject) => {
       this.db.executeSql("UPDATE user SET password_hash ='" + password_hash + "' WHERE id=" + id, []).then((data) => {
         console.log("updated")
-        // console.log(data)
+        const alert = this.alertCtrl.create({
+          subTitle: 'Your Password has been created!',
+          buttons: ['OK']
+        });
+        alert.present()
       })
     })
   }
@@ -498,44 +712,44 @@ export class SqliteProvider {
     return new Promise((resolve, reject) => {
       let Csoresults = this.getCso().then((data) => {
         console.log(data[0])
-        // for (var i = 0; i < data[0].length; i++) {
-        let obj = {
-          collected_by: data[0].collected_by,
-          contact_number: data[0].contact_number,
-          contact_person: data[0].contact_person,
-          created_by: data[0].created_by,
-          created_date: data[0].created_date,
-          cso_sector_id: data[0].cso_sector_id,
-          cso_type_id: data[0].cso_type_id,
-          district_id: data[0].district_id,
-          email_address: data[0].email_address,
-          id: data[0].id,
-          modified_by: data[0].modified_by,
-          modified_date: data[0].modified_date,
-          municipality_id: data[0].municipality_id,
-          name_of_cso: data[0].name_of_cso,
-          nda_registration: data[0].nda_registration,
-          physical_address: data[0].physical_address,
-          province_id: data[0].province_id,
-          total_staff: data[0].total_staff,
-          ward_number: data[0].ward_number
+        for (var i = 0; i < data[0].length; i++) {
+          let obj = {
+            collected_by: data[0].collected_by,
+            contact_number: data[0].contact_number,
+            contact_person: data[0].contact_person,
+            created_by: data[0].created_by,
+            created_date: data[0].created_date,
+            cso_sector_id: data[0].cso_sector_id,
+            cso_type_id: data[0].cso_type_id,
+            district_id: data[0].district_id,
+            email_address: data[0].email_address,
+            id: data[0].id,
+            modified_by: data[0].modified_by,
+            modified_date: data[0].modified_date,
+            municipality_id: data[0].municipality_id,
+            name_of_cso: data[0].name_of_cso,
+            nda_registration: data[0].nda_registration,
+            physical_address: data[0].physical_address,
+            province_id: data[0].province_id,
+            total_staff: data[0].total_staff,
+            ward_number: data[0].ward_number
+          }
+          console.log(obj.created_date)
+          SqlServer.execute("INSERT INTO [cso_tra].[dbo].[tbl_cso] (cso_type_id ,cso_sector_id ,province_id,district_id ,municipality_id ,ward_number ,registration_number ,nda_registration,name_of_cso ,contact_person ,physical_address ,contact_number,email_address ,total_staff ,collected_by ,modified_by ,modified_date ,created_by ,created_date ,cso_mobilisation_method_id , mobilisation_date) VALUES (" + obj.cso_type_id + "," + obj.cso_sector_id + "," + obj.province_id + "," + obj.district_id + "," + obj.municipality_id + "," + obj.ward_number + ",'" + obj.name_of_cso + "','" + obj.contact_person + "','" + obj.physical_address + "','" + obj.contact_number + "','" + obj.email_address + "'," + obj.total_staff, obj.collected_by, obj.modified_by + ",'" + obj.modified_date + "'," + obj.created_by + ",'" + obj.created_date + "')")
+          console.log("INSERTED: " + JSON.stringify(data));
+          resolve("resolve")
+          console.log("true")
         }
-        console.log(obj.created_date)
-        SqlServer.execute("INSERT INTO [cso_tra].[dbo].[tbl_cso] (id, cso_type_id ,cso_sector_id ,province_id,district_id ,municipality_id ,ward_number ,registration_number ,nda_registration,name_of_cso ,contact_person ,physical_address ,contact_number,email_address ,total_staff ,collected_by ,modified_by ,modified_date ,created_by ,created_date ,cso_mobilisation_method_id , mobilisation_date) VALUES (" + obj.id + "," + obj.cso_type_id + "," + obj.cso_sector_id + "," + obj.province_id + "," + obj.district_id + "," + obj.municipality_id + "," + obj.ward_number + ",'" + obj.name_of_cso + "','" + obj.contact_person + "','" + obj.physical_address + "','" + obj.contact_number + "','" + obj.email_address + "'," + obj.total_staff, obj.collected_by, obj.modified_by + ",'" + obj.modified_date + "'," + obj.created_by + ",'" + obj.created_date + "')")
-        console.log("INSERTED: " + JSON.stringify(data));
-        resolve(resolve)
-        console.log("true")
-
       }, (error) => {
         reject(error);
       })
       // console.log(obj.username)
       // this.adUsersArr.push(obj)
 
-      // }
+
 
       resolve(this.adUsersArr)
-      console.log(this.adUsersArr)
+      // console.log(this.adUsersArr)
       // });
     });
 
@@ -580,18 +794,20 @@ export class SqliteProvider {
           this.db.executeSql(sql, [obj.id, obj.username, obj.auth_key, this.password_hash, this.password_reset_token, this.verification_token, obj.full_name, obj.email, obj.province_id, obj.status, obj.role, obj.legacy_user_id, obj.created_at, obj.updated_at, obj.office, obj.title, obj.province_name, obj.user_group]).then((data) => {
             console.log("INSERTED: " + JSON.stringify(data) + sql);
             resolve("true")
-            console.log("true")
+
           }, (error) => {
           })
           this.insertUser.push(obj)
         }
         resolve(this.insertUser)
+        // alert("Adding information ")
       });
     });
   }
 
   getUser() {
     return new Promise((resolve, reject) => {
+
       this.db.executeSql("SELECT * FROM user", []).then((data) => {
         let adUsersArr = [];
         if (data.rows.length > 0) {
@@ -619,7 +835,8 @@ export class SqliteProvider {
           }
         }
         resolve(adUsersArr);
-        console.log(adUsersArr);
+        // console.log(adUsersArr);
+        // loading.dismiss();
       }, (error) => {
         reject(error);
       })
@@ -684,12 +901,12 @@ export class SqliteProvider {
 
   getCso() {
     return new Promise((resolve, reject) => {
-      let loading = this.loadingCtrl.create({
-        spinner: 'bubbles',
-        content: 'loading...',
-        duration: 4000000
-      });
-      loading.present();
+      // let loading = this.loadingCtrl.create({
+      //   spinner: 'bubbles',
+      //   content: 'loading...',
+      //   duration: 4000000
+      // });
+      // loading.present();
       this.db.executeSql("SELECT * FROM cso", []).then((data) => {
         let adUsersArr = [];
         if (data.rows.length > 0) {
@@ -715,11 +932,60 @@ export class SqliteProvider {
               modified_date: data.rows.item(i).modified_date,
               created_by: data.rows.item(i).created_by
             });
+            this.storeOrgNames(data.rows.item(i).name_of_cso)
+          }
+        }
+        resolve(adUsersArr);
+        // loading.dismiss();
+        // console.log(adUsersArr);
+      }, (error) => {
+        reject(error);
+        // loading.dismiss();
+      })
+    })
+  }
+
+
+  getCsoForSearching(name_of_cso) {
+    return new Promise((resolve, reject) => {
+      let loading = this.loadingCtrl.create({
+        spinner: 'bubbles',
+        content: 'loading...',
+        duration: 4000000
+      });
+      loading.present();
+      this.db.executeSql("SELECT * FROM cso WHERE name_of_cso='" + name_of_cso + "'", []).then((data) => {
+        console.log(data)
+        let adUsersArr = [];
+        if (data.rows.length > 0) {
+          for (var i = 0; i < data.rows.length; i++) {
+            adUsersArr.push({
+              id: data.rows.item(i).id,
+              cso_type_id: data.rows.item(i).cso_type_id,
+              cso_sector_id: data.rows.item(i).cso_sector_id,
+              province_id: data.rows.item(i).province_id,
+              district_id: data.rows.item(i).district_id,
+              municipality_id: data.rows.item(i).municipality_id,
+              ward_number: data.rows.item(i).ward_number,
+              nda_registration: data.rows.item(i).nda_registration,
+              registration_number: data.rows.item(i).registration_number,
+              name_of_cso: data.rows.item(i).name_of_cso,
+              contact_person: data.rows.item(i).contact_person,
+              physical_address: data.rows.item(i).physical_address,
+              contact_number: data.rows.item(i).contact_number,
+              email_address: data.rows.item(i).email_address,
+              total_staff: data.rows.item(i).total_staff,
+              collected_by: data.rows.item(i).collected_by,
+              modified_by: data.rows.item(i).modified_by,
+              modified_date: data.rows.item(i).modified_date,
+              created_by: data.rows.item(i).created_by
+            });
+            this.storeOrgNames(data.rows.item(i).name_of_cso)
           }
         }
         resolve(adUsersArr);
         loading.dismiss();
-        console.log(adUsersArr);
+        // console.log(adUsersArr);
       }, (error) => {
         reject(error);
         loading.dismiss();
@@ -733,7 +999,7 @@ export class SqliteProvider {
       console.log(user_id)
       let loading = this.loadingCtrl.create({
         spinner: 'bubbles',
-        content: 'loading...',
+        content: 'Please wait...',
         duration: 4000000
       });
       loading.present();
@@ -930,16 +1196,16 @@ export class SqliteProvider {
             calc_assessment_score: data[0][i].calc_assessment_score,
             collected_by: data[0][i].collected_by,
             created_by: data[0][i].created_by,
-            created_date: data[0][i].created_date,
             cso_id: data[0][i].cso_id,
             id: data[0][i].id,
             modified_by: data[0][i].modified_by,
-            modified_date: data[0][i].modified_date,
             poe_link: data[0][i].poe_link,
+            created_date: data[0][i].created_date,
+            modified_date: data[0][i].modified_date
           }
           // console.log(obj)
-          let sql = "INSERT INTO tbl_cso_assessment (id,assessment_completed,assessment_date,assessment_type_id,calc_assessment_level,calc_assessment_score,collected_by,created_by,cso_id,modified_bymodified_date,poe_link) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-          this.db.executeSql(sql, [obj.id, obj.assessment_completed, obj.assessment_date, obj.assessment_type_id, obj.calc_assessment_level, obj.calc_assessment_score, obj.collected_by, obj.created_by, obj.cso_id, obj.modified_by, obj.modified_date, obj.poe_link]).then((data) => {
+          let sql = "INSERT INTO cso_assessment (id ,cso_id,assessment_type_id,calc_assessment_score,calc_assessment_level,poe_link,assessment_date,assessment_completed,collected_by,modified_by,created_by) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+          this.db.executeSql(sql, [obj.id, obj.cso_id, obj.assessment_type_id, obj.calc_assessment_score, obj.calc_assessment_level, obj.poe_link, obj.assessment_date, obj.assessment_completed, obj.collected_by, obj.modified_by, obj.created_by]).then((data) => {
             console.log("INSERTED: " + JSON.stringify(data) + sql);
             resolve("true")
             console.log("true")
@@ -953,7 +1219,39 @@ export class SqliteProvider {
   }
 
 
-  DisplayAssessment(cso_id) {
+
+  DisplayAssessmentss() {
+    return new Promise((resolve, reject) => {
+      this.db.executeSql("SELECT * FROM cso_assessment", []).then((data) => {
+        console.log(data)
+        let addAssesmentDiplsy = [];
+        if (data.rows.length > 0) {
+          for (var i = 0; i < data.rows.length; i++) {
+            addAssesmentDiplsy.push({
+              assessment_completed: data.rows.item(i).assessment_completed,
+              assessment_date: data.rows.item(i).assessment_date,
+              assessment_type_id: data.rows.item(i).assessment_type_id,
+              calc_assessment_level: data.rows.item(i).calc_assessment_level,
+              calc_assessment_score: data.rows.item(i).calc_assessment_score,
+              collected_by: data.rows.item(i).collected_by,
+              created_by: data.rows.item(i).created_by,
+              cso_id: data.rows.item(i).cso_id,
+              id: data.rows.item(i).id,
+              modified_by: data.rows.item(i).modified_by,
+              poe_link: data.rows.item(i).poe_link,
+            });
+          }
+        }
+        resolve(addAssesmentDiplsy);
+        console.log(addAssesmentDiplsy);
+      }, (error) => {
+        reject(error);
+
+      })
+    })
+  }
+
+  DisplayAssessment(created_by) {
     return new Promise((resolve, reject) => {
       let loading = this.loadingCtrl.create({
         spinner: 'bubbles',
@@ -961,7 +1259,7 @@ export class SqliteProvider {
         duration: 4000000
       });
       loading.present();
-      this.db.executeSql("SELECT * FROM tbl_cso_assessment WHERE cso_id =" + cso_id, []).then((data) => {
+      this.db.executeSql("SELECT * FROM cso_assessment WHERE created_by=" + created_by, []).then((data) => {
         let addAssesment = [];
         if (data.rows.length > 0) {
           for (var i = 0; i < data.rows.length; i++) {
@@ -973,18 +1271,196 @@ export class SqliteProvider {
               calc_assessment_score: data.rows.item(i).calc_assessment_score,
               collected_by: data.rows.item(i).collected_by,
               created_by: data.rows.item(i).created_by,
-              created_date: data.rows.item(i).created_date,
               cso_id: data.rows.item(i).cso_id,
               id: data.rows.item(i).id,
               modified_by: data.rows.item(i).modified_by,
-              modified_date: data.rows.item(i).modified_date,
               poe_link: data.rows.item(i).poe_link,
             });
           }
         }
         resolve(addAssesment);
         loading.dismiss();
-        console.log(addAssesment);
+        // console.log(addAssesment);
+      }, (error) => {
+        reject(error);
+        loading.dismiss();
+      })
+    })
+  }
+
+
+
+
+  AssessmentAdd(cso_id, assessment_type_id, calc_assessment_score, calc_assessment_level, poe_link, assessment_date, assessment_completed, collected_by, modified_by, created_by) {
+    console.log(assessment_completed)
+    console.log(assessment_date)
+    console.log(assessment_type_id)
+    console.log(poe_link)
+    console.log(calc_assessment_level)
+    console.log(calc_assessment_score)
+    console.log(collected_by)
+    console.log(cso_id)
+    console.log(modified_by)
+    return new Promise((resolve, reject) => {
+      let LastRecordCso = this.checkLastRecordCsoAssessment().then((data) => {
+        console.log(data)
+        let CsoID = data[0].id + 1
+        console.log(CsoID)
+        let sql = "INSERT INTO cso_assessment (id ,cso_id,assessment_type_id,calc_assessment_score,calc_assessment_level,poe_link,assessment_date,assessment_completed,collected_by,modified_by,created_by) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+        this.db.executeSql(sql, [CsoID, cso_id, assessment_type_id, calc_assessment_score, calc_assessment_level, poe_link, assessment_date, assessment_completed, collected_by, modified_by, created_by]).then((data) => {
+          console.log("INSERTED: " + JSON.stringify(data) + sql);
+          resolve("true")
+          console.log("true")
+        }, (error) => {
+          reject(error)
+        })
+      })
+    });
+  }
+  testing_lkp_assessment() {
+    return new Promise((resolve, reject) => {
+      this.db.executeSql("SELECT  * FROM assessment_answer", []).then((data) => {
+        console.log(data)
+        let CsoAssArr = [];
+        if (data.rows.length > 0) {
+          for (var i = 0; i < data.rows.length; i++) {
+            CsoAssArr.push({
+              assessment_question_id: data.rows.item(i).assessment_question_id,
+            });
+          }
+        }
+        resolve(CsoAssArr);
+        console.log(CsoAssArr);
+      })
+    })
+  }
+
+
+
+  GetAssessmentQuestionId(answer_id) {
+    return new Promise((resolve, reject) => {
+      this.db.executeSql("SELECT assessment_question_id,weight FROM assessment_answer WHERE id=" + answer_id, []).then((data) => {
+        let CsoAssArr = [];
+        if (data.rows.length > 0) {
+          for (var i = 0; i < data.rows.length; i++) {
+            CsoAssArr.push({
+              assessment_question_id: data.rows.item(i).assessment_question_id,
+              weight: data.rows.item(i).weight,
+            });
+          }
+        }
+        resolve(CsoAssArr);
+        console.log(CsoAssArr);
+      })
+    })
+  }
+
+
+  checkLastRecordCsoAssessmenTable() {
+    return new Promise((resolve, reject) => {
+      this.db.executeSql("SELECT id FROM cso_assessment ORDER BY id desc limit 1", []).then((data) => {
+        let CsoAssArr = [];
+        if (data.rows.length > 0) {
+          for (var i = 0; i < data.rows.length; i++) {
+            CsoAssArr.push({
+              id: data.rows.item(i).id,
+            });
+          }
+        }
+        resolve(CsoAssArr);
+        console.log(CsoAssArr);
+      })
+    })
+  }
+
+
+
+
+  Score1 = 0
+  AssessmentAddQnA(assessment_answer_id, user_answer, modified_by, modified_date, created_by, created_date) {
+    console.log(assessment_answer_id)
+    return new Promise((resolve, reject) => {
+      let LastRecordCso = this.checkLastRecordCsoAssessmenTable().then((data) => {
+        console.log(data)
+        let cso_assessment_id = data[0].id + 1
+        console.log(cso_assessment_id)
+        let getAssessmentID = this.GetAssessmentQuestionId(assessment_answer_id).then((data2) => {
+          console.log(data2)
+          let assessment_question_id = data2[0].assessment_question_id
+
+          this.Score1 = this.Score1 + data2[0].weight
+          this.Score = this.Score1
+          console.log(this.Score)
+
+          this.scoreAarr.push(this.Score1)
+
+
+          let sql = "INSERT INTO assessment_question_answer ( cso_assessment_id,assessment_question_id,assessment_answer_id,user_answer,modified_by,modified_date,created_by,created_date) VALUES (?,?,?,?,?,?,?,?)";
+          this.db.executeSql(sql, [cso_assessment_id, assessment_question_id, assessment_answer_id, user_answer, modified_by, modified_date, created_by, created_date]).then((data) => {
+            console.log(data)
+            // this.db.executeSql("UPDATE cso_assessment SET  calc_assessment_score =" + this.Score + " WHERE id=" + cso_assessment_id, []).then((data) => {
+            //   console.log(data)
+            //   console.log("updated")
+            //   // console.log(data)
+            // })
+            resolve("true")
+          }, (error) => {
+            reject("false");
+          })
+
+
+
+        })
+
+      });
+      resolve(this.scoreAarr)
+      console.log(this.scoreAarr)
+    });
+  }
+
+  updateScoreAssessment() {
+    let i = this.scoreAarr.length
+    console.log(this.scoreAarr.length)
+    return new Promise((resolve, reject) => {
+      let LastRecordCso = this.checkLastRecordCsoAssessmenTable().then((data) => {
+        console.log(data)
+        let cso_assessment_id = data[0].id + 1
+        console.log(cso_assessment_id)
+        console.log(this.Score)
+        this.db.executeSql("UPDATE cso_assessment SET  calc_assessment_score =" + this.Score + " WHERE id=" + cso_assessment_id, []).then((data) => {
+          console.log("updated")
+          // console.log(data)
+        })
+      })
+    })
+
+  }
+
+  DisplayAssessmentdata() {
+    return new Promise((resolve, reject) => {
+      let loading = this.loadingCtrl.create({
+        spinner: 'bubbles',
+        content: 'loading...',
+        duration: 4000000
+      });
+      loading.present();
+      this.db.executeSql("SELECT * FROM assessment_question_answer", []).then((data) => {
+        console.log(data)
+        let displayCapacaityArr = [];
+        if (data.rows.length > 0) {
+          for (var i = 0; i < data.rows.length; i++) {
+            displayCapacaityArr.push({
+              cso_assessment_id: data.rows.item(i).cso_assessment_id,
+              assessment_question_id: data.rows.item(i).creatassessment_question_ided_by,
+              assessment_answer_id: data.rows.item(i).assessment_answer_id,
+              user_answer: data.rows.item(i).user_answer,
+              modified_by: data.rows.item(i).modified_by,
+            });
+          }
+        }
+        resolve(displayCapacaityArr);
+        loading.dismiss();
+        console.log(displayCapacaityArr);
       }, (error) => {
         reject(error);
         loading.dismiss();
@@ -1045,6 +1521,51 @@ export class SqliteProvider {
     });
   }
 
+  DisplayCapacityBuildingdemo() {
+    return new Promise((resolve, reject) => {
+      let loading = this.loadingCtrl.create({
+        spinner: 'bubbles',
+        content: 'loading...',
+        duration: 4000000
+      });
+      loading.present();
+      this.db.executeSql("SELECT * FROM tbl_capacity_building").then((data) => {
+        let displayCapacaityArrSecond = [];
+        if (data.rows.length > 0) {
+          for (var i = 0; i < data.rows.length; i++) {
+            displayCapacaityArrSecond.push({
+              capacity_building_type_id: data.rows.item(i).capacity_building_type_id,
+              created_by: data.rows.item(i).created_by,
+              created_date: data.rows.item(i).created_date,
+              district_id: data.rows.item(i).district_id,
+              end_date: data.rows.item(i).end_date,
+              funding_source_id: data.rows.item(i).funding_source_id,
+              facilitator_name: data.rows.item(i).facilitator_name,
+              id: data.rows.item(i).id,
+              modified_by: data.rows.item(i).modified_by,
+              modified_date: data.rows.item(i).modified_date,
+              municipality_id: data.rows.item(i).municipality_id,
+              province_id: data.rows.item(i).province_id,
+              start_date: data.rows.item(i).start_date,
+              venue: data.rows.item(i).venue,
+              partner_id: data.rows.item(i).partner_id,
+              co_facilitator_name: data.rows.item(i).co_facilitator_name,
+              collected_by: data.rows.item(i).collected_by,
+              attendance_register: data.rows.item(i).attendance_register,
+              poe_link: data.rows.item(i).poe_link,
+            });
+          }
+        }
+        resolve(displayCapacaityArrSecond);
+        loading.dismiss();
+        console.log(displayCapacaityArrSecond);
+      }, (error) => {
+        reject(error);
+        loading.dismiss();
+      })
+    })
+  }
+
   DisplayCapacityBuilding(user_id) {
     return new Promise((resolve, reject) => {
       let loading = this.loadingCtrl.create({
@@ -1092,16 +1613,7 @@ export class SqliteProvider {
 
 
 
-  remoteAssessmentQuestionsAnswerData() {
-    return new Promise((resolve, reject) => {
-      SqlServer.executeQuery("select * from [cso_tra].[dbo].[tbl_assessment_question_answer]", function (data) {
-        let results = JSON.parse(data);
-        resolve(results);
-        console.log(results)
-        // alert(results)
-      })
-    })
-  }
+
 
 
   remoteCapacityBuildingParticipantData() {
@@ -1158,9 +1670,9 @@ export class SqliteProvider {
 
 
 
-  getregsiterCsoMember() {
+  getregsiterCso() {
     return new Promise((resolve, reject) => {
-      this.db.executeSql("SELECT * FROM cso", []).then((data) => {
+      this.db.executeSql("SELECT * FROM cso WHERE ", []).then((data) => {
         let regCso = [];
         if (data.rows.length > 0) {
           for (var i = 0; i < data.rows.length; i++) {
@@ -1193,19 +1705,37 @@ export class SqliteProvider {
 
   }
 
-  Addcapacity_building(key, CsoName, Capacity, Province, District, Municipality, partner, venue, Fname, Fsource, Collected, StartDate, EndDate) {
+  checkLastRecordAddcapacity_building() {
     return new Promise((resolve, reject) => {
-      let sql = "INSERT INTO capacitybuilding (key, CsoName, Capacity, Province, District, Municipality,partner,venue,Fname,Fsource,Collected,StartDate,EndDate) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
-      this.db.executeSql(sql, [key, CsoName, Capacity, Province, District, Municipality, partner, venue, Fname, Fsource, Collected, StartDate, EndDate]).then((data) => {
-        console.log("INSERTED: " + JSON.stringify(data) + sql);
-        this
-          .getUser()
-          .then(s => {
-            resolve(true)
-          });
-      }, (error) => {
-        reject(false);
+      this.db.executeSql("SELECT id FROM tbl_capacity_building ORDER BY id desc limit 1", []).then((data) => {
+        let CsoAssArr = [];
+        if (data.rows.length > 0) {
+          for (var i = 0; i < data.rows.length; i++) {
+            CsoAssArr.push({
+              id: data.rows.item(i).id,
+            });
+          }
+        }
+        resolve(CsoAssArr);
+        console.log(CsoAssArr);
+      })
+    })
+  }
 
+
+  Addcapacity_building(capacity_building_type_id, province_id, district_id, municipality_id, partner_id, venue, facilitator_name, co_facilitator_name, start_date, end_date, funding_source_id, collected_by, modified_by, modified_date, created_by, created_date, attendance_register, poe_link) {
+    return new Promise((resolve, reject) => {
+      let capacityresults = this.checkLastRecordAddcapacity_building().then((data) => {
+        console.log(data)
+        let CsoId = data[0].id + 1
+        console.log(CsoId)
+        let sql = "INSERT INTO tbl_capacity_building (id,capacity_building_type_id,province_id,district_id,municipality_id,partner_id,venue,facilitator_name,co_facilitator_name,start_date,end_date,funding_source_id,collected_by,modified_by,modified_date,created_by,created_date,attendance_register,poe_link  ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        this.db.executeSql(sql, [CsoId, capacity_building_type_id, province_id, district_id, municipality_id, partner_id, venue, facilitator_name, co_facilitator_name, start_date, end_date, funding_source_id, collected_by, modified_by, modified_date, created_by, created_date, attendance_register, poe_link]).then((data) => {
+          console.log("INSERTED: " + JSON.stringify(data) + sql);
+          resolve("true")
+          console.log("true")
+        }, (error) => {
+        })
       });
     });
   }

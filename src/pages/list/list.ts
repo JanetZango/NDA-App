@@ -41,7 +41,7 @@ export class ListPage {
   id;
   constructor(public navCtrl: NavController, public navParams: NavParams, public sqliteService: SqliteProvider,platform: Platform) {
     this.viewCSoArr.push(this.navParams.get('orgObject'));
-    console.log(this.viewCSoArr);
+    // console.log(this.viewCSoArr);
     this.auth_key = this.viewCSoArr[0].auth_key;
     this.created_at = this.viewCSoArr[0].created_at;
     this.email = this.viewCSoArr[0].email;

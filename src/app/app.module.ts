@@ -3,7 +3,7 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
-
+import { IonicSelectableModule } from 'ionic-selectable';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -24,6 +24,7 @@ import { ViewCapacityPage } from '../pages/view-capacity/view-capacity';
 import { DisplaydatesofmemberPage } from '../pages/displaydatesofmember/displaydatesofmember';
 import { AddPasswordPage } from '../pages/add-password/add-password';
 import { ProfilePage } from '../pages/profile/profile';
+import { AssessmentPage } from '../pages/assessment/assessment';
 
 
 @NgModule({
@@ -44,12 +45,14 @@ import { ProfilePage } from '../pages/profile/profile';
     ViewCapacityPage,
     DisplaydatesofmemberPage,
     AddPasswordPage,
-    ProfilePage
+    ProfilePage,
+    AssessmentPage
   
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
+    IonicSelectableModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -69,7 +72,8 @@ import { ProfilePage } from '../pages/profile/profile';
     ViewCapacityPage,
     DisplaydatesofmemberPage,
     AddPasswordPage,
-    ProfilePage
+    ProfilePage,
+    AssessmentPage
   
   ],
   providers: [

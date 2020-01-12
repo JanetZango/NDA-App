@@ -86,7 +86,7 @@ export class MembersPage {
         console.log(s)
         this.navCtrl.push(ViewMemberPage)
         const toast = this.toastCtrl.create({
-          message: 'cso was added successfully',
+          message: 'cso memberwas added successfully',
           duration: 3000
         });
         toast.present();

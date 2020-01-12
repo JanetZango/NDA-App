@@ -3,14 +3,14 @@
     <div class="test1"></div>
     <div class="test"></div>
     <div class="left" padding>
-      <img class="logo" src="../../assets/logo.png">
+      <img [hidden]="keyboard.isOpen()" class="logo" src="../../assets/logo.png">
       <div class="login">
-        <div class="h1" text-center>LogIn</div>
+        <div [hidden]="keyboard.isOpen()" class="h1" text-center>LogIn</div>
         <br>
         <div class="logininputdiv">
           <ion-list>
             <ion-item no-lines class="inputs">
-              <ion-input type="text" placeholder="Email" [(ngModel)]="email_address"></ion-input>
+              <ion-input type="email" placeholder="Email" [(ngModel)]="email_address"></ion-input>
             </ion-item>
           </ion-list>
           <ion-list>

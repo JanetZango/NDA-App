@@ -1,4 +1,4 @@
-page-register {
+page-assessment {
     .move{
         height:100%;
         // margin-top:60px;
@@ -11,8 +11,8 @@ page-register {
         }
         p{
             font-size: 1.7em;
-            color:black;
-            font-family: 'ZCOOL XiaoWei', serif;
+            color:#00919E;
+            font-family: 'Righteous', cursive;
         }
 
     }
@@ -26,7 +26,7 @@ page-register {
         height: 350px;
     }
     .insideSlide{
-        margin-top:-10px;
+        margin-top:-80px;
     }
     .insideSlide1{
         // margin-top:-60px;
@@ -58,10 +58,6 @@ page-register {
           border-radius: 10px;
           box-shadow: 0px 15px 30px -15px rgb(0, 0, 0); 
       }
-      #results{
-          margin-top:20px;
-      }
-
       .round{
         height: 80vh;
         width: 100vh;
@@ -71,6 +67,30 @@ page-register {
         background-color: #00919E;
         border-radius: 100%;
    
+    }
+    #label{
+        color:black;
+    }
+    ion-label{
+        word-wrap: break-word;
+    }
+    #item2{
+        // border:2px solid red;
+        // color:pink
+        
+    }
+    .button-inner{
+        color: white;
+    }
+    .Qcard{
+        height: 60%;
+        width:97%;
+        background-color: rgb(255, 255, 255);
+        position: relative;
+        margin:0px auto;
+        margin-top:150px;
+        border-radius: 10px;
+        box-shadow: 0px 15px 30px -15px rgb(0, 0, 0); 
     }
     #anim1{
         background-color:  whitesmoke;
@@ -97,19 +117,17 @@ page-register {
     .moveCont{
         text-align: center;
         margin-top:35px;
+        color:white;
         
+    }
+    #btn{
         button{
-            background-color:  #00919E;
+            width:70%;
+            // background-color:  #00919E;
             color:white;
         }
     }
-    .moveCont{
-        text-align: center;
-        button{
-            width:70%;
-            // border-radius: 100px;
-        }
-    }
+  
     span{
         justify-content: center;
     }
@@ -120,7 +138,7 @@ page-register {
         text-align: center; 
         // margin-top:30px;
         button{
-
+            color:white;
             text-transform: capitalize;
         }
         b{
