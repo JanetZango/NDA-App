@@ -27,6 +27,8 @@ export class RegisterPage {
   ViewMemberArr = new Array();
   disDistrict = new Array()
   disMunicipality = new Array()
+  disDistrict2 = new Array();
+  disDistrict3 = new Array();
   name_of_cso
   MobiMethod
   created_date
@@ -69,7 +71,6 @@ export class RegisterPage {
   getCsoId;;
   constructor(public navCtrl: NavController, public navParams: NavParams, public sqliteService: SqliteProvider, public toastCtrl: ToastController) {
     this.viewCSoArr.push(this.navParams.get('orgObject'));
-
     this.auth_key = this.viewCSoArr[0].auth_key;
     this.created_at = this.viewCSoArr[0].created_at;
     this.email = this.viewCSoArr[0].email;
@@ -87,7 +88,9 @@ export class RegisterPage {
     this.updated_at = this.viewCSoArr[0].updated_at;
     this.user_group = this.viewCSoArr[0].user_group;
     this.username = this.viewCSoArr[0].username;
-    console.log(this.id);
+    console.log(this.province_id1);
+
+  
 
 
     this.get();
@@ -115,19 +118,28 @@ export class RegisterPage {
   }
 
   getDistrict(){
-    this.sqliteService.getLookUpDistrict(this.province_id).then((data:any)=>{
-      console.log(data)
+    this.sqliteService.getLookUpprovinceCapacity(this.province_id1).then((data:any)=>{
+      console.log(data) 
       this.disDistrict = data
       console.log(this.disDistrict)
     })
   }
+
+  
+  getDistrictFilter(){
+    this.sqliteService.getLookUpDistrict(this.province_id1).then((data:any)=>{
+      console.log(data)
+      this.disDistrict2 = data
+      console.log(this.disDistrict2)
+    })
+  }
   getMunicipality(){
-    this.sqliteService.getLookUpMunicipality(this.district_id).then((data)=>{
+    this.sqliteService.getLookUpMunicipality(this.district_id).then((data:any)=>{
+      this.disDistrict3 = data
+      console.log(this.disDistrict3)
       console.log(data)
     })
   }
-  
-
 
   getItems(ev: any) {
     this.initializeItems();
@@ -171,10 +183,15 @@ export class RegisterPage {
   openMarkerInfo(name){
     for (var x = 0; x < this.ViewMemberArr.length; x++) {
       if (name == this.ViewMemberArr[x].name_of_cso) {
-       console.log(name)
+        // console.log(name)
+        // console.log(this.items)
       }
-      
     }
+    this.sqliteService.getCsoForSearching(name).then((data) => {
+      // console.log(data)
+      this.getCsoId = data[0].id
+      console.log(this.getCsoId)
+    })
    
   }
 

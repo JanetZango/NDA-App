@@ -1,23 +1,26 @@
 <ion-content>
-  <div class="top">
-      <div class="btn">
-          <button ion-button clear (click)="gotoback()">
-              <ion-icon ios="ios-arrow-round-back" md="md-arrow-round-back"></ion-icon>
-          </button>
-      </div>
-      <div class="btnCreate">
-          <button ion-button (click)="building()">Create Capacity Building Intervention</button>
-      </div>
-  </div>
-  <div class="Bottom">
-      <h3>*Manage Capacity Building Interventions</h3>
-      <ion-card *ngFor="let x of displayCapacity">
-          <div class="card">
-              <p><b>facilitor Name:</b>{{x.facilitator_name}}</p>
-              <p><b>venue:</b>{{x.venue}}</p>
-              <button ion-button (click)="viewMore(x.facilitator_name)">View More</button>
-          </div>
-      </ion-card>
-  </div>
+    <div class="top">
+        <div class="btn">
+            <button ion-button clear (click)="gotoback()">
+                <ion-icon ios="ios-arrow-round-back" md="md-arrow-round-back"></ion-icon>
+            </button>
+        </div>
+        <div class="btnCreate">
+            <button ion-button (click)="building()">Create Capacity Building Intervention</button>
+        </div>
+    </div>
+    <div class="Bottom">
+        <h3>*Manage Capacity Building Interventions</h3>
+        <ion-card *ngFor="let x of displayCapacity">
+            <div class="card">
+                <p><b>Capacity Building:{{x.capacity_building_type_name}}</b></p>
+                <p><b>facilitor Name:</b>{{x.facilitator_name}}</p>
+                <p><b>venue:</b>{{x.venue}}</p>
+                <p><b>Start Date:{{x.start_date}}</b></p>
+                <p><b>End Date:{{x.end_date}}</b></p>
+                <button ion-button (click)="viewMore(x.facilitator_name)">View More</button>
+            </div>
+        </ion-card>
+    </div>
 
 </ion-content>

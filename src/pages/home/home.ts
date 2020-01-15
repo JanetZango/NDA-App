@@ -23,7 +23,7 @@ export class HomePage {
   email;
   email_address
   constructor(private keyboard: Keyboard, public loadingCtrl: LoadingController, public navCtrl: NavController, public sqliteService: SqliteProvider, public alertCtrl: AlertController) {
-    // this.displayDta();
+  ;
 
   }
 
@@ -31,7 +31,7 @@ export class HomePage {
     let loading = this.loadingCtrl.create({
       spinner: 'bubbles',
       content: 'Please wait...',
-      duration: 400000
+      duration: 400000000000000000000000000000
     });
     loading.present();
     this.sqliteService.checkingEmail(this.email_address).then((data: any) => {
@@ -58,7 +58,12 @@ export class HomePage {
       }
     })
 
+    
+
   }
 
+  onInput(e) {
+    console.log(e)
+  }
 
 }

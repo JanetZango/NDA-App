@@ -9,8 +9,8 @@
         <br>
         <div class="logininputdiv">
           <ion-list>
-            <ion-item no-lines class="inputs">
-              <ion-input type="email" placeholder="Email" [(ngModel)]="email_address"></ion-input>
+            <ion-item  no-lines class="inputs" (ionFocus)='onInput($event)'>
+              <ion-input type="email" (ionFocus)='onInput($event)' placeholder="Email" [(ngModel)]="email_address"></ion-input>
             </ion-item>
           </ion-list>
           <ion-list>

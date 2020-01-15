@@ -79,7 +79,7 @@ export class ViewMemberPage {
 
   get() {
     console.log(this.id)
-    this.sqliteService.DisplayCso(this.id).then((data: any) => {
+    this.sqliteService.DisplayCso(this.province_id).then((data: any) => {
       this.ViewMemberArr = data;
       this.ViewMemberArr.reverse();
       this.storeNames();

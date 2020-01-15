@@ -37,8 +37,9 @@ export class ViewMemberAssessPage {
   id;
   items;
   names;
-  constructor(public navCtrl: NavController, public navParams: NavParams,public sqliteService :SqliteProvider) {
-    
+  cso_id;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public sqliteService: SqliteProvider) {
+
     this.viewCSoArr.push(this.navParams.get('orgObject'));
     // console.log(this.viewCSoArr);
     this.auth_key = this.viewCSoArr[0].auth_key;
@@ -62,26 +63,45 @@ export class ViewMemberAssessPage {
     // console.log(this.id);
 
     this.getcso();
+
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ViewMemberAssessPage');
   }
-  getcso(){
+  getcso() {
     this.sqliteService
-    .DisplayAssessment(this.id)
-    .then((s:any) => {
-      this.displayCapacity = s;
-      // console.log(s)
-      console.log(this.displayCapacity)
+      .combineBothTablesAssessment(this.id)
+      .then((s: any) => {
+        this.displayCapacity = s;
+        console.log(this.displayCapacity)
+        for (var x = 0; x < this.displayCapacity.length; x++) {
+          this.cso_id = this.displayCapacity[x].cso_id
+          // console.log(this.cso_id)
+        }
+
+      })
+
+      this.sqliteService.getCsoName(this.cso_id).then((data) => {
+        // console.log(data)
+      })
+
+     
+  }
+
+ 
+
+  getcsoname() {
+    this.sqliteService.getCsoName(this.cso_id).then((data) => {
+      console.log(data)
     })
   }
 
-  building(){
+  building() {
     for (var x = 0; x < this.viewCSoArr.length; x++) {
       this.navCtrl.push(AssessmentPage, { orgObject: this.viewCSoArr[x] });
     }
-    
+
   }
 
 }

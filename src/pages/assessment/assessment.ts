@@ -90,7 +90,7 @@ export class AssessmentPage {
   assessment_type_id;
   assessment_completed = true
   calc_assessment_level = 6
-  calc_assessment_score =0;
+  calc_assessment_score =1.83;
   assessment_date;
   modified_date = null
   modified_by = null
@@ -211,12 +211,12 @@ export class AssessmentPage {
       console.log(data)
     })
 
-    // for (var x = 0; x < this.totalQuestion.length; x++) {
-     
-    // }
-    this.sqliteService.AssessmentAddQnA(this.totalQuestion, this.user_answer, this.id, this.modified_date, this.id, this.assessment_date).then((data) => {
+    for (var x = 0; x < this.totalQuestion.length; x++) {
+      this.sqliteService.AssessmentAddQnA(this.totalQuestion[x], this.user_answer, this.id, this.modified_date, this.id, this.assessment_date).then((data) => {
 
-    })
+      })
+    }
+   
  
     // this.sqliteService.updateScoreAssessment().then((data) => {
     //   console.log(data)

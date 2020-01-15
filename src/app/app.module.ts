@@ -25,6 +25,8 @@ import { DisplaydatesofmemberPage } from '../pages/displaydatesofmember/displayd
 import { AddPasswordPage } from '../pages/add-password/add-password';
 import { ProfilePage } from '../pages/profile/profile';
 import { AssessmentPage } from '../pages/assessment/assessment';
+import { Camera } from '@ionic-native/camera';
+import { Keyboard } from '@ionic-native/keyboard';
 
 
 @NgModule({
@@ -80,8 +82,10 @@ import { AssessmentPage } from '../pages/assessment/assessment';
     StatusBar,
     SplashScreen,
     SQLite,
+    Camera,
+    Keyboard,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    SqliteProvider,
+    SqliteProvider, Camera, Keyboard,
     
   ]
 })

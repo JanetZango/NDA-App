@@ -12,16 +12,16 @@
     </div>
     <ion-slides pager="true" class="slide">
       <ion-slide>
-          <ion-input placeholder="Name_of_Cso" [(ngModel)]="name_of_cso" type="text" class="user-input" id="anim1"
+        <ion-input placeholder="Name_of_Cso" [(ngModel)]="name_of_cso" type="text" class="user-input" id="anim1"
           (input)="getItems($event)"></ion-input>
 
-          <div id="results">
-              <ion-item no-lines *ngFor="let item of items; let i=index" (click)="openMarkerInfo(item)">
-                <p>{{item}}</p>
-              </ion-item>
-            </div>
-    
-  
+        <div id="results">
+          <ion-item no-lines *ngFor="let item of items; let i=index" (click)="openMarkerInfo(item)">
+            <p>{{item}}</p>
+          </ion-item>
+        </div>
+
+
         <ion-item id="item">
           <ion-label> Select Capacity Building Type</ion-label>
           <ion-select [(ngModel)]="capacity_building_type_id">
@@ -49,36 +49,29 @@
         <ion-item id="item">
           <ion-label> Select Province</ion-label>
           <ion-select (ionChange)="getDistrictFilter()" [(ngModel)]="province_id">
-              <ion-option *ngFor="let a of disDistrict" [value]="a.id">{{a.province_name}}
-              </ion-option>
-            </ion-select>
+            <ion-option *ngFor="let a of disDistrict" [value]="a.id">{{a.province_name}}
+            </ion-option>
+          </ion-select>
         </ion-item>
 
         <ion-item id="item">
           <ion-label> Select District</ion-label>
-              <ion-select (ionChange)="getMunicipality()" [(ngModel)]="district_id">
-                <ion-option *ngFor="let district of disDistrict2" [value]="district.district_name">{{district.district_name}}
-                </ion-option>
-              </ion-select>
+          <ion-select (ionChange)="getMunicipality()" [(ngModel)]="district_id">
+            <ion-option *ngFor="let district of disDistrict2" [value]="district.id">{{district.district_name}}
+            </ion-option>
+          </ion-select>
         </ion-item>
       </ion-slide>
       <ion-slide>
 
         <ion-item id="item">
           <ion-label> Select Municipality</ion-label>
-          <ion-select  [(ngModel)]="municipality_id">
-              <ion-option value="1">Funder</ion-option>
-              <ion-option value="2">Service Provider</ion-option>
-              <ion-option value="3">Mantsopa</ion-option>
-              <ion-option value="4">Phumelela</ion-option>
-              <ion-option value="5">Nketoana</ion-option>
-              <ion-option value="6">Maluti a Phofung</ion-option>
-              <ion-option value="7">Dihlabeng</ion-option>
-              <ion-option value="8">Setsoto</ion-option>
-            
-            </ion-select>
+          <ion-select [(ngModel)]="municipality_id">
+            <ion-option *ngFor="let district of disDistrict3" [value]="district.municipality_name">
+              {{district.municipality_name}}
+            </ion-option>
+          </ion-select>
         </ion-item>
-
 
         <ion-item id="item">
           <ion-label> Select Partner</ion-label>
@@ -99,14 +92,15 @@
       </ion-slide>
 
       <ion-slide>
-        <ion-input placeholder="Facilitor Name" type="text" class="user-input" [(ngModel)]="facilitator_name" id="anim1">
+        <ion-input placeholder="Facilitor Name" type="text" class="user-input" [(ngModel)]="facilitator_name"
+          id="anim1">
         </ion-input>
 
         <ion-input placeholder="Funding Source" type="text" class="user-input" [(ngModel)]="Funding_source_id"
-          id="anim1" ></ion-input>
+          id="anim1"></ion-input>
 
-        <ion-input placeholder="Colllected by" type="text" class="user-input" [(ngModel)]="Collected"
-        id="anim1" ></ion-input>
+        <ion-input placeholder="Colllected by" type="text" class="user-input" [(ngModel)]="Collected" id="anim1">
+        </ion-input>
 
       </ion-slide>
       <ion-slide>
@@ -116,21 +110,27 @@
           <input type="date" id="input-field" [(ngModel)]="Start_date">
           <br>
           <ion-label>End date</ion-label>
-          <input type="date" id="input-field" [(ngModel)]="end_date">
+          <input type="date" id="input-field" (click)="disableData()" name="txtDate" [(ngModel)]="end_date">
         </div>
 
         <input type="file" accept="image*/" id="cover-image" (change)="insertpic2($event)">
 
+
+        <button icon-only class="BTNs" ion-button (click)="takepic()">
+          <ion-icon name="camera"></ion-icon>
+        </button>
+
+
+
         <div class="moveCont">
-          <button ion-button round class="btnSign" id="anim2"
-            (click)="addCapacity()">Rgister
+          <button ion-button round class="btnSign" id="anim2" (click)="addCapacity()">Rgister
             A Member</button>
         </div>
 
       </ion-slide>
     </ion-slides>
   </div>
-\
+  \
 
 
 </ion-content>
