@@ -31,7 +31,7 @@ export class HomePage {
     let loading = this.loadingCtrl.create({
       spinner: 'bubbles',
       content: 'Please wait...',
-      duration: 400000000000000000000000000000
+      duration: 400000000000
     });
     loading.present();
     this.sqliteService.checkingEmail(this.email_address).then((data: any) => {
@@ -47,7 +47,7 @@ export class HomePage {
         loading.dismiss();
         this.navCtrl.push(AddPasswordPage, { orgObject: this.displayUser });
       }
-      else {
+      else if (obj.email.toUpperCase() != this.email_address.toUpperCase()){
         console.log("false")
         const alert = this.alertCtrl.create({
           title: 'Error',
@@ -55,6 +55,7 @@ export class HomePage {
           buttons: ['OK']
         });
         alert.present();
+        loading.dismiss();
       }
     })
 

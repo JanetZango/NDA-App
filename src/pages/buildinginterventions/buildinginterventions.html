@@ -67,7 +67,7 @@
         <ion-item id="item">
           <ion-label> Select Municipality</ion-label>
           <ion-select [(ngModel)]="municipality_id">
-            <ion-option *ngFor="let district of disDistrict3" [value]="district.municipality_name">
+            <ion-option *ngFor="let district of disDistrict3" [value]="district.id">
               {{district.municipality_name}}
             </ion-option>
           </ion-select>
@@ -107,7 +107,7 @@
 
         <div class="Contacts">
           <ion-label>Start date</ion-label>
-          <input type="date" id="input-field" [(ngModel)]="Start_date">
+          <input type="date" id="input-field" [(ngModel)]="start_date">
           <br>
           <ion-label>End date</ion-label>
           <input type="date" id="input-field" (click)="disableData()" name="txtDate" [(ngModel)]="end_date">

@@ -63,15 +63,15 @@ export class BuildinginterventionsPage {
   names;
   getCsoId;
   province_id2
-  district_id;
+  district_id =1;
   capacity_building_type_id
-  municipality_id;
+  municipality_id =1;
   modified_date;
   funding_source_id;
   end_date;
   facilitator_name
   partner_id
-  co_facilitator_name
+  co_facilitator_name =null
   start_date
   modified_by
   created_date;
@@ -103,7 +103,7 @@ export class BuildinginterventionsPage {
     this.get()
     // this.getDistrict()
 
-
+  //  this.getprovince()
    
   }
 
@@ -126,11 +126,11 @@ export class BuildinginterventionsPage {
       reader.readAsDataURL(event.target.files[0]);
     }
   }
-
+  
   addCapacity() {
     this
       .sqliteService
-      .Addcapacity_building(this.capacity_building_type_id, this.province_id, this.district_id, this.municipality_id, this.partner_id, this.venue, this.facilitator_name, this.co_facilitator_name, this.start_date, this.end_date, this.funding_source_id, this.id, this.modified_by, this.modified_date, this.id, this.start_date, this.attendance_register, this.attendance_register)
+      .Addcapacity_building(this.capacity_building_type_id, this.province_id, this.district_id, this.municipality_id, this.partner_id, this.venue, this.facilitator_name,this.co_facilitator_name, this.start_date, this.end_date, this.funding_source_id, this.id, this.modified_by, this.modified_date, this.id, this.start_date, this.attendance_register,this.poe_link)
       .then(s => {
         console.log(s)
         this.navCtrl.push(CapacityPage)
@@ -201,6 +201,14 @@ export class BuildinginterventionsPage {
       console.log(this.disDistrict)
     })
 
+  }
+
+  getprovince(){
+    this.sqliteService.getLookUpprovinceCapacity(this.province_id2).then((data: any) => {
+      console.log(data)
+      this.disDistrict = data
+      console.log(this.disDistrict)
+    })
   }
 
 

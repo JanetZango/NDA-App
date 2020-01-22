@@ -58,6 +58,7 @@ export class MembersPage {
     console.log(this.viewCSoArr);
     this.name_of_cso = this.viewCSoArr[0].name_of_cso;
     this.Collected_by = this.viewCSoArr[0].Collected_by;
+    this.created_by = this.viewCSoArr[0].created_by;
     this.email_address = this.viewCSoArr[0].email_address;
     this.contact_person = this.viewCSoArr[0].contact_person;
     this.contact_number = this.viewCSoArr[0].contact_number;
@@ -77,7 +78,7 @@ export class MembersPage {
    console.log(this.cso_id)
 
   }
-
+  
   addMemember() {
     this
       .sqliteService

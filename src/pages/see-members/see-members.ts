@@ -39,11 +39,13 @@ export class SeeMembersPage {
   modified_date;
   modified_by;
   id;
+  created_by
   constructor(public navCtrl: NavController, public navParams: NavParams, public sqliteService: SqliteProvider,platform: Platform) {
     this.viewCSoArr.push(this.navParams.get('orgObject'));
     console.log(this.viewCSoArr);
     this.name_of_cso = this.viewCSoArr[0].name_of_cso;
     this.Collected_by = this.viewCSoArr[0].Collected_by;
+    this.created_by = this.viewCSoArr[0].created_by;
     this.email_address = this.viewCSoArr[0].email_address;
     this.contact_person = this.viewCSoArr[0].contact_person;
     this.contact_number = this.viewCSoArr[0].contact_number;

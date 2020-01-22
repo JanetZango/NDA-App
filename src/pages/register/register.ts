@@ -43,7 +43,7 @@ export class RegisterPage {
   cso_type_id
   cso_sector_id;
   province_id
-  municipality_id;
+  municipality_id =1 ;
   auth_key;
   created_at;
   email;
@@ -63,7 +63,7 @@ export class RegisterPage {
   id;
   ward_number
   district_id;
-  collected_by;
+  collected_by= 1;
   total_staff;
   contact_number;
   contact_person;
@@ -104,13 +104,13 @@ export class RegisterPage {
   SignUp() {
     this
       .sqliteService
-      .regsiterCso(this.cso_type_id, this.cso_sector_id, this.province_id, this.district_id, this.municipality_id, this.ward_number, this.registration_number, this.nda_registration, this.name_of_cso, this.contact_person, this.physical_address, this.contact_number, this.email_address, this.total_staff, this.collected_by, this.modified_by, this.modified_date, this.id, this.created_date, this.cso_mobilisation_method_id, this.mobilisation_date)
+      .regsiterCso(this.cso_type_id, this.cso_sector_id, this.province_id, this.district_id, this.municipality_id, this.ward_number, this.registration_number, this.nda_registration, this.name_of_cso, this.contact_person, this.physical_address, this.contact_number, this.email_address, this.total_staff, this.collected_by, this.modified_by, this.created_date, this.id, this.created_date, this.cso_mobilisation_method_id, this.mobilisation_date)
       .then(s => {
         this.navCtrl.pop()
         console.log(s)
         const toast = this.toastCtrl.create({
           message: 'cso was added successfully',
-          duration: 3000
+          duration: 4000
         });
         toast.present();
         

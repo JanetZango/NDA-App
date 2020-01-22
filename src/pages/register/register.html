@@ -98,35 +98,12 @@
         <ion-item id="item">
           <ion-label> Select Municipality</ion-label>
           <ion-select [(ngModel)]="municipality_id">
-            <ion-option *ngFor="let district of disDistrict3" [value]="district.municipality_name">
+            <ion-option *ngFor="let district of disDistrict3" [value]="district.id">
               {{district.municipality_name}}
             </ion-option>
           </ion-select>
         </ion-item>
-        <!-- 
-        <ion-item id="item">
-          <ion-label> Select Municipality</ion-label>
-          <ion-select [(ngModel)]="municipality_id">
-            <ion-option value="Dr Beyer Naude">Dr Beyer Naude</ion-option>
-            <ion-option value="Makana">Makana</ion-option>
-            <ion-option value="Ndlambe">Ndlambe</ion-option>
-            <ion-option value="Mbhashe">Mbhashe</ion-option>
-            <ion-option value="Mnquma">Mnquma</ion-option>
-            <ion-option value="Inxuba Yethemba">Inxuba Yethemba</ion-option>
-            <ion-option value="Engcono">Engcono</ion-option>
-            <ion-option value="Elundini">Elundini</ion-option>
-            <ion-option value="Senqu">Senqu</ion-option>
-            <ion-option value="Ngquza Hill">Ngquza Hill</ion-option>
-            <ion-option value="Port St Johns">Port St Johns</ion-option>
-            <ion-option value="Nyandeni">Nyandeni</ion-option>
-            <ion-option value="Mhlontlo">Mhlontlo</ion-option>
-            <ion-option value="King Sabata Dali">King Sabata Dali</ion-option>
-            <ion-option value="Matatiele">Matatiele</ion-option>
-            <ion-option value="Umzimvubu">Umzimvubu</ion-option>
-            <ion-option value="Ntabankulu">Ntabankulu</ion-option>
-            <ion-option value="Mbizana">Mbizana</ion-option>
-          </ion-select>
-        </ion-item> -->
+
       </ion-slide>
       <ion-slide class="insideSlide">
         <ion-input placeholder="Ward_number" type="number" class="user-input" [(ngModel)]="ward_number" id="anim1">

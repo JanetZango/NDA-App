@@ -142,7 +142,7 @@ export class AssessmentPage {
 
   get() {
 
-    this.sqliteService.getCso().then((data: any) => {
+    this.sqliteService.getCsoDisplay().then((data: any) => {
       this.ViewMemberArr = data;
       this.storeNames();
       console.log(this.ViewMemberArr)
@@ -193,7 +193,7 @@ export class AssessmentPage {
     })
   }
 
-
+  // cso_id, assessment_type_id, calc_assessment_score, calc_assessment_level, poe_link, assessment_date, assessment_completed, collected_by, modified_by, created_by
   addAssessment() {
     this.totalQuestion = [this.assessmentQ, this.assessmentQ2, this.assessmentQ3, this.assessmentQ4,
     this.assessmentQ5, this.assessmentQ6, this.assessmentQ7, this.assessmentQ8, this.assessmentQ9,
@@ -207,8 +207,14 @@ export class AssessmentPage {
     this.assessmentQ41, this.assessmentQ42, this.assessmentQ43, this.assessmentQ44]
     console.log(this.totalQuestion)
     // id,assessment_completed,assessment_date,assessment_type_id,calc_assessment_level,calc_assessment_score,collected_by,created_by,cso_id,modified_by,modified_date,poe_link
-    this.sqliteService.AssessmentAdd(this.getCsoId,this.assessment_type_id, this.calc_assessment_score, this.calc_assessment_level, this.poe_link, this.assessment_date,this.assessment_completed, this.id, this.id, this.id).then((data) => {
+    this.sqliteService.AssessmentAdd(this.getCsoId,this.assessment_type_id, this.calc_assessment_score, this.calc_assessment_level, this.poe_link, this.assessment_date,this.assessment_completed, this.id, this.modified_by, this.id).then((data) => {
       console.log(data)
+      this.navCtrl.pop()
+      const toast = this.toastCtrl.create({
+        message: 'Assessment was added successfully',
+        duration: 3000
+      });
+      toast.present();
     })
 
     for (var x = 0; x < this.totalQuestion.length; x++) {
@@ -222,12 +228,7 @@ export class AssessmentPage {
     //   console.log(data)
     // })
 
-    this.navCtrl.pop()
-    const toast = this.toastCtrl.create({
-      message: 'Assessment was added successfully',
-      duration: 3000
-    });
-    toast.present();
+    
   }
 
 }
