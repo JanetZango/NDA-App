@@ -21,6 +21,7 @@
     <ion-card *ngFor="let a of ViewMemberArr">
       <div class="card">
         <p><b>CsoName:</b>{{a.name_of_cso}}</p>
+        <p><b>Physical Address:</b>{{a.physical_address}}</p>
         <div class="viewBtn">
           <button ion-button (click)="viewMore(a.name_of_cso)">View more
           </button>

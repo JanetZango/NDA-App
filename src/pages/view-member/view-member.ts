@@ -60,7 +60,7 @@ export class ViewMemberPage {
     this.updated_at = this.viewCSoArr[0].updated_at;
     this.user_group = this.viewCSoArr[0].user_group;
     this.username = this.viewCSoArr[0].username;
-    console.log(this.id)
+    console.log(this.province_id)
     console.log(this.viewCSoArr)
 
     this.get();
@@ -79,7 +79,7 @@ export class ViewMemberPage {
 
   get() {
     console.log(this.id)
-    this.sqliteService.DisplayCso(this.id).then((data: any) => {
+    this.sqliteService.DisplayCso(this.province_id).then((data: any) => {
       this.ViewMemberArr = data;
       this.ViewMemberArr.reverse();
       this.storeNames();

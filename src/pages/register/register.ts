@@ -27,6 +27,8 @@ export class RegisterPage {
   ViewMemberArr = new Array();
   disDistrict = new Array()
   disMunicipality = new Array()
+  disDistrict2 = new Array();
+  disDistrict3 = new Array();
   name_of_cso
   MobiMethod
   created_date
@@ -41,7 +43,7 @@ export class RegisterPage {
   cso_type_id
   cso_sector_id;
   province_id
-  municipality_id;
+  municipality_id =1 ;
   auth_key;
   created_at;
   email;
@@ -61,7 +63,7 @@ export class RegisterPage {
   id;
   ward_number
   district_id;
-  collected_by;
+  collected_by= 1;
   total_staff;
   contact_number;
   contact_person;
@@ -69,7 +71,6 @@ export class RegisterPage {
   getCsoId;;
   constructor(public navCtrl: NavController, public navParams: NavParams, public sqliteService: SqliteProvider, public toastCtrl: ToastController) {
     this.viewCSoArr.push(this.navParams.get('orgObject'));
-
     this.auth_key = this.viewCSoArr[0].auth_key;
     this.created_at = this.viewCSoArr[0].created_at;
     this.email = this.viewCSoArr[0].email;
@@ -87,7 +88,9 @@ export class RegisterPage {
     this.updated_at = this.viewCSoArr[0].updated_at;
     this.user_group = this.viewCSoArr[0].user_group;
     this.username = this.viewCSoArr[0].username;
-    console.log(this.id);
+    console.log(this.province_id1);
+
+  
 
 
     this.get();
@@ -101,13 +104,13 @@ export class RegisterPage {
   SignUp() {
     this
       .sqliteService
-      .regsiterCso(this.cso_type_id, this.cso_sector_id, this.province_id, this.district_id, this.municipality_id, this.ward_number, this.registration_number, this.nda_registration, this.name_of_cso, this.contact_person, this.physical_address, this.contact_number, this.email_address, this.total_staff, this.collected_by, this.modified_by, this.modified_date, this.id, this.created_date, this.cso_mobilisation_method_id, this.mobilisation_date)
+      .regsiterCso(this.cso_type_id, this.cso_sector_id, this.province_id, this.district_id, this.municipality_id, this.ward_number, this.registration_number, this.nda_registration, this.name_of_cso, this.contact_person, this.physical_address, this.contact_number, this.email_address, this.total_staff, this.collected_by, this.modified_by, this.created_date, this.id, this.created_date, this.cso_mobilisation_method_id, this.mobilisation_date)
       .then(s => {
         this.navCtrl.pop()
         console.log(s)
         const toast = this.toastCtrl.create({
           message: 'cso was added successfully',
-          duration: 3000
+          duration: 4000
         });
         toast.present();
         
@@ -115,19 +118,28 @@ export class RegisterPage {
   }
 
   getDistrict(){
-    this.sqliteService.getLookUpDistrict(this.province_id).then((data:any)=>{
-      console.log(data)
+    this.sqliteService.getLookUpprovinceCapacity(this.province_id1).then((data:any)=>{
+      console.log(data) 
       this.disDistrict = data
       console.log(this.disDistrict)
     })
   }
+
+  
+  getDistrictFilter(){
+    this.sqliteService.getLookUpDistrict(this.province_id1).then((data:any)=>{
+      console.log(data)
+      this.disDistrict2 = data
+      console.log(this.disDistrict2)
+    })
+  }
   getMunicipality(){
-    this.sqliteService.getLookUpMunicipality(this.district_id).then((data)=>{
+    this.sqliteService.getLookUpMunicipality(this.district_id).then((data:any)=>{
+      this.disDistrict3 = data
+      console.log(this.disDistrict3)
       console.log(data)
     })
   }
-  
-
 
   getItems(ev: any) {
     this.initializeItems();
@@ -171,10 +183,15 @@ export class RegisterPage {
   openMarkerInfo(name){
     for (var x = 0; x < this.ViewMemberArr.length; x++) {
       if (name == this.ViewMemberArr[x].name_of_cso) {
-       console.log(name)
+        // console.log(name)
+        // console.log(this.items)
       }
-      
     }
+    this.sqliteService.getCsoForSearching(name).then((data) => {
+      // console.log(data)
+      this.getCsoId = data[0].id
+      console.log(this.getCsoId)
+    })
    
   }
 

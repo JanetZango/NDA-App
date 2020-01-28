@@ -4,6 +4,7 @@ import { SqliteProvider } from '../../providers/sqlite/sqlite';
 import { Platform } from 'ionic-angular';
 import { ViewMemberPage } from '../view-member/view-member';
 import { CapacityPage } from '../capacity/capacity';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 /**
  * Generated class for the BuildinginterventionsPage page.
  *
@@ -62,20 +63,21 @@ export class BuildinginterventionsPage {
   names;
   getCsoId;
   province_id2
-  district_id;
+  district_id =1;
   capacity_building_type_id
-  municipality_id;
+  municipality_id =1;
   modified_date;
   funding_source_id;
   end_date;
   facilitator_name
   partner_id
-  co_facilitator_name
+  co_facilitator_name =null
   start_date
   modified_by
   created_date;
-  poe_link
-  constructor(public navCtrl: NavController, public navParams: NavParams, public sqliteService: SqliteProvider, public toastCtrl: ToastController) {
+  poe_link;
+  Start_date
+  constructor(public navCtrl: NavController, public navParams: NavParams, public sqliteService: SqliteProvider, public toastCtrl: ToastController, private camera: Camera) {
     this.viewCSoArr.push(this.navParams.get('orgObject'));
     this.auth_key = this.viewCSoArr[0].auth_key;
     this.created_at = this.viewCSoArr[0].created_at;
@@ -100,10 +102,18 @@ export class BuildinginterventionsPage {
 
     this.get()
     // this.getDistrict()
+
+  //  this.getprovince()
+   
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BuildinginterventionsPage');
+  }
+
+  disableData(){
+    var today = new Date().toISOString().split('T')[0];
+    document.getElementsByName("txtDate")[0].setAttribute('min', this.Start_date);
   }
 
 
@@ -116,11 +126,11 @@ export class BuildinginterventionsPage {
       reader.readAsDataURL(event.target.files[0]);
     }
   }
-
+  
   addCapacity() {
     this
       .sqliteService
-      .Addcapacity_building(this.capacity_building_type_id, this.province_id, this.district_id, this.municipality_id, this.partner_id, this.venue, this.facilitator_name, this.co_facilitator_name, this.start_date, this.end_date, this.funding_source_id, this.id, this.modified_by, this.modified_date, this.id, this.start_date, this.attendance_register, this.attendance_register)
+      .Addcapacity_building(this.capacity_building_type_id, this.province_id, this.district_id, this.municipality_id, this.partner_id, this.venue, this.facilitator_name,this.co_facilitator_name, this.start_date, this.end_date, this.funding_source_id, this.id, this.modified_by, this.modified_date, this.id, this.start_date, this.attendance_register,this.poe_link)
       .then(s => {
         console.log(s)
         this.navCtrl.push(CapacityPage)
@@ -172,10 +182,10 @@ export class BuildinginterventionsPage {
     })
   }
 
-  openMarkerInfo(name){
+  openMarkerInfo(name) {
     for (var x = 0; x < this.ViewMemberArr.length; x++) {
       if (name == this.ViewMemberArr[x].name_of_cso) {
-       console.log(name)
+        console.log(name)
       }
     }
     this.sqliteService.getCsoForSearching(name).then((data) => {
@@ -185,40 +195,63 @@ export class BuildinginterventionsPage {
       console.log(this.province_id2)
     })
 
-    this.sqliteService.getLookUpprovinceCapacity(this.province_id2).then((data:any)=>{
+    this.sqliteService.getLookUpprovinceCapacity(this.province_id2).then((data: any) => {
       console.log(data)
       this.disDistrict = data
       console.log(this.disDistrict)
     })
-    this.sqliteService.getLookUpDistrict(this.province_id2).then((data:any)=>{
-      console.log(data)
-      this.disDistrict2 = data
-      console.log(this.disDistrict2)
-    })
+
   }
 
-  
-  getDistrict(){
-    this.sqliteService.getLookUpprovinceCapacity(this.province_id2).then((data:any)=>{
+  getprovince(){
+    this.sqliteService.getLookUpprovinceCapacity(this.province_id2).then((data: any) => {
       console.log(data)
       this.disDistrict = data
       console.log(this.disDistrict)
     })
   }
 
-  getDistrictFilter(){
-    this.sqliteService.getLookUpDistrict(this.province_id2).then((data:any)=>{
+
+  getDistrictFilter() {
+    this.sqliteService.getLookUpDistrict(this.province_id2).then((data: any) => {
       console.log(data)
       this.disDistrict2 = data
       console.log(this.disDistrict2)
     })
   }
-  getMunicipality(){
-    this.sqliteService.getLookUpMunicipality(this.district_id).then((data:any)=>{
+
+  getMunicipality() {
+    this.sqliteService.getLookUpMunicipality(this.district_id).then((data: any) => {
       console.log(data)
       this.disDistrict3 = data
       console.log(this.disDistrict3)
-  
+
     })
+  }
+
+  takepic = function () {
+    this.d = 1;
+
+    let opts = document.getElementsByClassName('options') as HTMLCollectionOf<HTMLElement>;
+
+    // if (this.d == 1) {
+    //   opts[0].style.top = "10vh";
+
+    // }
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+
+    this.camera.getPicture(options).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64 (DATA_URL):
+      this.attendance_register = 'data:image/jpeg;base64,' + imageData;
+    }, (err) => {
+      // Handle error
+    });
+
   }
 }

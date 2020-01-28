@@ -21,7 +21,7 @@
           <ion-select [(ngModel)]="cso_mobilisation_method_id">
             <ion-option value="1">SASSA ICROP</ion-option>
             <ion-option value="2">DSD Outreach Program</ion-option>
-            <ion-option value="3">Government Outreach  Program</ion-option>
+            <ion-option value="3">Government Outreach Program</ion-option>
             <ion-option value="4">Community Dialogues</ion-option>
             <ion-option value="5">Community Consultations</ion-option>
             <ion-option value="6">Partnership</ion-option>
@@ -79,26 +79,18 @@
 
       <ion-slide class="insideSlide">
 
-
         <ion-item id="item">
           <ion-label> Select Province</ion-label>
-          <ion-select (ionChange)="getDistrict()" [(ngModel)]="province_id">
-            <ion-option value="1">Eastern Cape</ion-option>
-            <ion-option value="2">Free State</ion-option>
-            <ion-option value="3">Gauteng</ion-option>
-            <ion-option value="4">Kwazulu Natal</ion-option>
-            <ion-option value="5">Limpopo</ion-option>
-            <ion-option value="6">Mpumalanga</ion-option>
-            <ion-option value="7">Northern Cape</ion-option>
-            <ion-option value="8">North West</ion-option>
-            <ion-option value="9">Western Cape</ion-option>
+          <ion-select (ionChange)="getDistrictFilter()" [(ngModel)]="province_id">
+            <ion-option *ngFor="let a of disDistrict" [value]="a.id">{{a.province_name}}
+            </ion-option>
           </ion-select>
         </ion-item>
 
         <ion-item id="item">
           <ion-label> Select District</ion-label>
           <ion-select (ionChange)="getMunicipality()" [(ngModel)]="district_id">
-            <ion-option *ngFor="let district of disDistrict" [value]="district.district_name">{{district.district_name}}
+            <ion-option *ngFor="let district of disDistrict2" [value]="district.id">{{district.district_name}}
             </ion-option>
           </ion-select>
         </ion-item>
@@ -106,26 +98,12 @@
         <ion-item id="item">
           <ion-label> Select Municipality</ion-label>
           <ion-select [(ngModel)]="municipality_id">
-            <ion-option value="Dr Beyer Naude">Dr Beyer Naude</ion-option>
-            <ion-option value="Makana">Makana</ion-option>
-            <ion-option value="Ndlambe">Ndlambe</ion-option>
-            <ion-option value="Mbhashe">Mbhashe</ion-option>
-            <ion-option value="Mnquma">Mnquma</ion-option>
-            <ion-option value="Inxuba Yethemba">Inxuba Yethemba</ion-option>
-            <ion-option value="Engcono">Engcono</ion-option>
-            <ion-option value="Elundini">Elundini</ion-option>
-            <ion-option value="Senqu">Senqu</ion-option>
-            <ion-option value="Ngquza Hill">Ngquza Hill</ion-option>
-            <ion-option value="Port St Johns">Port St Johns</ion-option>
-            <ion-option value="Nyandeni">Nyandeni</ion-option>
-            <ion-option value="Mhlontlo">Mhlontlo</ion-option>
-            <ion-option value="King Sabata Dali">King Sabata Dali</ion-option>
-            <ion-option value="Matatiele">Matatiele</ion-option>
-            <ion-option value="Umzimvubu">Umzimvubu</ion-option>
-            <ion-option value="Ntabankulu">Ntabankulu</ion-option>
-            <ion-option value="Mbizana">Mbizana</ion-option>
+            <ion-option *ngFor="let district of disDistrict3" [value]="district.id">
+              {{district.municipality_name}}
+            </ion-option>
           </ion-select>
         </ion-item>
+
       </ion-slide>
       <ion-slide class="insideSlide">
         <ion-input placeholder="Ward_number" type="number" class="user-input" [(ngModel)]="ward_number" id="anim1">
@@ -144,8 +122,15 @@
         <ion-input placeholder="Total_Staff" type="number" class="user-input" [(ngModel)]="total_staff" id="anim1">
         </ion-input>
 
-        <ion-input placeholder="Collected_by" type="text" class="user-input" [(ngModel)]="collected_by" id="anim1">
-        </ion-input>
+
+        <ion-input placeholder="Collected_by" [(ngModel)]="collected_by" type="text" class="user-input" id="anim1"
+          (input)="getItems($event)"></ion-input>
+
+        <div id="results">
+          <ion-item no-lines *ngFor="let item of items; let i=index" (click)="openMarkerInfo(item)">
+            <p>{{item}}</p>
+          </ion-item>
+        </div>
 
         <div id="results">
           <ion-item no-lines *ngFor="let item of items; let i=index" (click)="openMarkerInfo()">

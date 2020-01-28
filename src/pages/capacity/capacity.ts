@@ -41,7 +41,8 @@ export class CapacityPage {
   id;
   items;
   names;
-  constructor(public navCtrl: NavController, public navParams: NavParams,public sqliteService :SqliteProvider ) {
+  capacity_building_id
+  constructor(public navCtrl: NavController, public navParams: NavParams, public sqliteService: SqliteProvider) {
     this.viewCSoArr.push(this.navParams.get('orgObject'));
     this.auth_key = this.viewCSoArr[0].auth_key;
     this.created_at = this.viewCSoArr[0].created_at;
@@ -72,15 +73,15 @@ export class CapacityPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad CapacityPage');
   }
-  get(){
+  get() {
     this.sqliteService
-    .getUser()
-    .then((s:any) => {
-      this.getCurrentUser = s;
-      console.log(s)
-      console.log(this.getCurrentUser)
-    })
-  } 
+      .getUser()
+      .then((s: any) => {
+        this.getCurrentUser = s;
+        console.log(s)
+        console.log(this.getCurrentUser)
+      })
+  }
 
   building() {
     for (var x = 0; x < this.viewCSoArr.length; x++) {
@@ -89,23 +90,47 @@ export class CapacityPage {
 
   }
 
-  getcso(){
+  displayCapacityname = new Array();
+  getcso() {
     this.sqliteService
-    .DisplayCapacityBuilding(this.id)
-    .then((s:any) => {
-      this.displayCapacity.reverse()
-      this.displayCapacity = s;
+      .combineBothTables(this.province_id)
+      .then((s: any) => {
+        this.displayCapacity.reverse()
+        this.displayCapacity = s;
+        // console.log(this.displayCapacity)
+// 
+        this.capacity_building_id = s.capacity_building_type_id
+        // console.log(this.capacity_building_id)
 
-      console.log(s)
-      console.log(this.displayCapacity)
-    })
+        for (var x = 0; x < this.displayCapacity.length; x++) {
+          this.capacity_building_id = this.displayCapacity[x].capacity_building_type_id
+          // console.log(this.capacity_building_id)
+
+          this.sqliteService.getLookUpCapacityBuilding(this.capacity_building_id).then((data: any) => {
+            console.log(data)
+            this.displayCapacity = data
+            // console.log(this.displayCapacity)
+          })
+       
+        }
+
+
+
+
+
+
+      })
   }
-  viewMore(name){
+
+  getcapacity() {
+
+  }
+  viewMore(name) {
     for (var x = 0; x < this.displayCapacity.length; x++) {
-     if (name == this.displayCapacity[x].facilitator_name) {
-       this.navCtrl.push(ViewCapacityPage, { orgObject: this.displayCapacity[x]});
-       break;
-     }
-   }
- }
+      if (name == this.displayCapacity[x].facilitator_name) {
+        this.navCtrl.push(ViewCapacityPage, { orgObject: this.displayCapacity[x] });
+        break;
+      }
+    }
+  }
 }
