@@ -37,13 +37,26 @@ export class AddPasswordPage {
     console.log('ionViewDidLoad AddPasswordPage');
   }
   displayDta(){
-   this.sqliteService.updateUserPssword(this.id,this.password_hash).then((data)=>{
-     this.sqliteService.checkingEmail(this.email).then((data)=>{
-       console.log(data)
-    ;
-       this.navCtrl.push(ListPage);
-     })
-   })
+    if(this.password_hash == null || this.password_hash == undefined){
+      const alert = this.alertCtrl.create({
+        subTitle: 'Please enter password!',
+        buttons: ['OK']
+      });
+      alert.present()
+    }
+      this.sqliteService.updateUserPssword(this.id,this.password_hash).then((data)=>{
+        this.sqliteService.checkingEmail(this.email).then((data)=>{
+          console.log(data)
+   
+          const alert = this.alertCtrl.create({
+           subTitle: 'Your Password has been created!',
+           buttons: ['OK']
+         });
+         alert.present()
+       ;
+          this.navCtrl.push(ListPage);
+        })
+      })
   }
 
   login(){

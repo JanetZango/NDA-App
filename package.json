@@ -23,6 +23,7 @@
     "@ionic-native/camera": "^4.20.0",
     "@ionic-native/core": "~4.20.0",
     "@ionic-native/keyboard": "^4.20.0",
+    "@ionic-native/network": "^4.20.0",
     "@ionic-native/splash-screen": "~4.20.0",
     "@ionic-native/sqlite": "^4.20.0",
     "@ionic-native/status-bar": "~4.20.0",
@@ -69,12 +70,12 @@
       },
       "cordova-plugin-ionic-keyboard": {},
       "cordova-plugin-sqlserver": {},
-      "cordova-plugin-network-information": {},
       "cordova-plugin-camera": {
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
       },
       "cordova-plugin-appcenter-analytics": {},
-      "cordova-plugin-appcenter-crashes": {}
+      "cordova-plugin-appcenter-crashes": {},
+      "cordova-plugin-network-information": {}
     },
     "platforms": [
       "android",

@@ -27,6 +27,7 @@ import { ProfilePage } from '../pages/profile/profile';
 import { AssessmentPage } from '../pages/assessment/assessment';
 import { Camera } from '@ionic-native/camera';
 import { Keyboard } from '@ionic-native/keyboard';
+import { Network } from '@ionic-native/network';
 
 
 @NgModule({
@@ -85,7 +86,7 @@ import { Keyboard } from '@ionic-native/keyboard';
     Camera,
     Keyboard,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
-    SqliteProvider, Camera, Keyboard,
+    SqliteProvider, Camera, Keyboard,Network,
     
   ]
 })
