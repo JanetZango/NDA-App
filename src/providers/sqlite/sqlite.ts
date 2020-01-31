@@ -186,13 +186,7 @@ export class SqliteProvider {
             this.CsoAssesmentA();
             this.CsoAssesmentQnA();
           }
-          else{
-            const alert = this.alertCtrl.create({
-              subTitle: 'There is no internet connection',
-              buttons: ['OK']
-            });
-            alert.present()
-          }
+       
         }
         else {
           if (this.Remoteconnection()) {
