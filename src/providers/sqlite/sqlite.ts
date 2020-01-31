@@ -172,13 +172,16 @@ export class SqliteProvider {
    
 
             this.UserData();
+            this.LookUpMunicipality();
+            this.LookUpProvince();
+            this.LookDistrict();
             this.remoteUserData();
             this.remoteCsoData();
             this.remoteCsoMemberData();
             this.remoteCsoAssessmentData();
             this.remoteCapacityBuildingData();
 
-
+            this.UserData();
             this.CSOData();
             this.CsoMemberData();
             this.CsoAssessmentData();
@@ -186,7 +189,13 @@ export class SqliteProvider {
             this.CsoAssesmentA();
             this.CsoAssesmentQnA();
           }
-       
+          // else{
+          //   const alert = this.alertCtrl.create({
+          //     subTitle: 'There is no internet connection',
+          //     buttons: ['OK']
+          //   });
+          //   alert.present()
+          // }
         }
         else {
           if (this.Remoteconnection()) {
@@ -1552,12 +1561,12 @@ export class SqliteProvider {
 
   getCsoMember() {
     return new Promise((resolve, reject) => {
-      let loading = this.loadingCtrl.create({
-        spinner: 'bubbles',
-        content: 'loading...',
-        duration: 4000000
-      });
-      loading.present();
+      // let loading = this.loadingCtrl.create({
+      //   spinner: 'bubbles',
+      //   content: 'loading...',
+      //   duration: 4000000
+      // });
+      // loading.present();
       this.db.executeSql("SELECT * FROM tbl_cso_member WHERE modified_date is null", []).then((data) => {
         let addMemberArr = [];
         if (data.rows.length > 0) {
@@ -1588,23 +1597,23 @@ export class SqliteProvider {
 
         }
         resolve(addMemberArr);
-        loading.dismiss();
+        // loading.dismiss();
         console.log(addMemberArr);
       }, (error) => {
         reject(error);
-        loading.dismiss();
+        // loading.dismiss();
       })
     })
   }
 
   DisplayCsoMembers(cso_id) {
     return new Promise((resolve, reject) => {
-      let loading = this.loadingCtrl.create({
-        spinner: 'bubbles',
-        content: 'loading...',
-        duration: 4000000
-      });
-      loading.present();
+      // let loading = this.loadingCtrl.create({
+      //   spinner: 'bubbles',
+      //   content: 'loading...',
+      //   duration: 4000000
+      // });
+      // loading.present();
       this.db.executeSql("SELECT * FROM tbl_cso_member WHERE cso_id =" + cso_id, []).then((data) => {
         let addMemberArr = [];
         if (data.rows.length > 0) {
@@ -1625,11 +1634,11 @@ export class SqliteProvider {
           }
         }
         resolve(addMemberArr);
-        loading.dismiss();
+        // loading.dismiss();
         console.log(addMemberArr);
       }, (error) => {
         reject(error);
-        loading.dismiss();
+        // loading.dismiss();
       })
     })
   }
@@ -1717,12 +1726,12 @@ export class SqliteProvider {
 
   DisplayAssessment(created_by) {
     return new Promise((resolve, reject) => {
-      let loading = this.loadingCtrl.create({
-        spinner: 'bubbles',
-        content: 'loading...',
-        duration: 4000000
-      });
-      loading.present();
+      // let loading = this.loadingCtrl.create({
+      //   spinner: 'bubbles',
+      //   content: 'loading...',
+      //   duration: 4000000
+      // });
+      // loading.present();
       this.db.executeSql("SELECT * FROM cso_assessment WHERE created_by=" + created_by, []).then((data) => {
         let addAssesment = [];
         if (data.rows.length > 0) {
@@ -1743,11 +1752,11 @@ export class SqliteProvider {
           }
         }
         resolve(addAssesment);
-        loading.dismiss();
+        // loading.dismiss();
         // console.log(addAssesment);
       }, (error) => {
         reject(error);
-        loading.dismiss();
+        // loading.dismiss();
       })
     })
   }
@@ -1875,12 +1884,12 @@ export class SqliteProvider {
 
   DisplayAssessmentdata() {
     return new Promise((resolve, reject) => {
-      let loading = this.loadingCtrl.create({
-        spinner: 'bubbles',
-        content: 'loading...',
-        duration: 4000000
-      });
-      loading.present();
+      // let loading = this.loadingCtrl.create({
+      //   spinner: 'bubbles',
+      //   content: 'loading...',
+      //   duration: 4000000
+      // });
+      // loading.present();
       this.db.executeSql("SELECT * FROM assessment_question_answer", []).then((data) => {
         console.log(data)
         let displayCapacaityArr = [];
@@ -1896,11 +1905,11 @@ export class SqliteProvider {
           }
         }
         resolve(displayCapacaityArr);
-        loading.dismiss();
+        // loading.dismiss();
         console.log(displayCapacaityArr);
       }, (error) => {
         reject(error);
-        loading.dismiss();
+        // loading.dismiss();
       })
     })
   }
@@ -1960,12 +1969,12 @@ export class SqliteProvider {
 
   DisplayCapacityBuildingdemo() {
     return new Promise((resolve, reject) => {
-      let loading = this.loadingCtrl.create({
-        spinner: 'bubbles',
-        content: 'loading...',
-        duration: 4000000
-      });
-      loading.present();
+      // let loading = this.loadingCtrl.create({
+      //   spinner: 'bubbles',
+      //   content: 'loading...',
+      //   duration: 4000000
+      // });
+      // loading.present();
       this.db.executeSql("SELECT * FROM tbl_capacity_building WHERE funding_source_id is null ", []).then((data) => {
         let capacityArr = [];
         if (data.rows.length > 0) {
@@ -1994,11 +2003,11 @@ export class SqliteProvider {
           }
         }
         resolve(capacityArr);
-        loading.dismiss();
+        // loading.dismiss();
         console.log(capacityArr);
       }, (error) => {
         reject(error);
-        loading.dismiss();
+        // loading.dismiss();
       })
     })
   }
@@ -2010,12 +2019,12 @@ export class SqliteProvider {
 
   DisplayCapacityBuilding(user_id) {
     return new Promise((resolve, reject) => {
-      let loading = this.loadingCtrl.create({
-        spinner: 'bubbles',
-        content: 'loading...',
-        duration: 4000000
-      });
-      loading.present();
+      // let loading = this.loadingCtrl.create({
+      //   spinner: 'bubbles',
+      //   content: 'loading...',
+      //   duration: 4000000
+      // });
+      // loading.present();
       this.db.executeSql("SELECT * FROM tbl_capacity_building WHERE province_id =" + user_id, []).then((data) => {
         let displayCapacaityArr = [];
         if (data.rows.length > 0) {
@@ -2044,11 +2053,11 @@ export class SqliteProvider {
           }
         }
         resolve(displayCapacaityArr);
-        loading.dismiss();
+        // loading.dismiss();
         console.log(displayCapacaityArr);
       }, (error) => {
         reject(error);
-        loading.dismiss();
+        // loading.dismiss();
       })
     })
   }

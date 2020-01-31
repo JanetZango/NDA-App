@@ -73,7 +73,7 @@ export class HomePage {
     //   alert.present();
     //   setTimeout(() => {
     //     alert.dismiss();
-    //   }, 3000);
+    //   }, 1000);
     // });
 
     // let connectSubscription = this.network.onConnect().subscribe(() => {
@@ -85,7 +85,7 @@ export class HomePage {
     //   alert.present();
     //   setTimeout(() => {
     //     alert.dismiss();
-    //   }, 3000);
+    //   }, 1000);
     // });
   }
 
