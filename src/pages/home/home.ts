@@ -4,7 +4,7 @@ import { SqliteProvider } from '../../providers/sqlite/sqlite';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { AddPasswordPage } from '../add-password/add-password';
 import { AlertController, LoadingController } from 'ionic-angular';
-import { Network } from '@ionic-native/network';
+
 
 
 
@@ -22,7 +22,7 @@ export class HomePage {
   displayUser = new Array();
   email;
   email_address
-  constructor(private keyboard: Keyboard, public loadingCtrl: LoadingController, public navCtrl: NavController, public sqliteService: SqliteProvider, public alertCtrl: AlertController,public network: Network) {
+  constructor(private keyboard: Keyboard, public loadingCtrl: LoadingController, public navCtrl: NavController, public sqliteService: SqliteProvider, public alertCtrl: AlertController) {
   ;
 
   }
@@ -64,29 +64,29 @@ export class HomePage {
   }
 
   ionViewDidEnter() {
-    let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
-      let alert = this.alertCtrl.create({
-        title: '',
-        subTitle: 'Please check your connection.',
-        cssClass: "myAlert",
-      });
-      alert.present();
-      setTimeout(() => {
-        alert.dismiss();
-      }, 1000);
-    });
+    // let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
+    //   let alert = this.alertCtrl.create({
+    //     title: '',
+    //     subTitle: 'Please check your connection.',
+    //     cssClass: "myAlert",
+    //   });
+    //   alert.present();
+    //   setTimeout(() => {
+    //     alert.dismiss();
+    //   }, 1000);
+    // });
 
-    let connectSubscription = this.network.onConnect().subscribe(() => {
-      let alert = this.alertCtrl.create({
-        title: '',
-        subTitle: 'network connection has been established',
-        cssClass: "myAlert",
-      });
-      alert.present();
-      setTimeout(() => {
-        alert.dismiss();
-      }, 1000);
-    });
+    // let connectSubscription = this.network.onConnect().subscribe(() => {
+    //   let alert = this.alertCtrl.create({
+    //     title: '',
+    //     subTitle: 'network connection has been established',
+    //     cssClass: "myAlert",
+    //   });
+    //   alert.present();
+    //   setTimeout(() => {
+    //     alert.dismiss();
+    //   }, 1000);
+    // });
   }
 
   onInput(e) {
